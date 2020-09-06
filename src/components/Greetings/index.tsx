@@ -1,7 +1,7 @@
 import React from "react";
 
 const Greetings = (): JSX.Element => {
-  return <div>WelCome Page</div>;
+  return <div>yoyo</div>;
 };
 
 export default Greetings;

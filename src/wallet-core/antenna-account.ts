@@ -15,9 +15,13 @@ const sources = [
 
 export class AntennaAccount implements IAccount {
   type: string;
+
   antenna: Antenna;
+
   providers: Array<IProviderSource>;
-  currentProvider: number = 0;
+
+  currentProvider = 0;
+
   privateKey: string;
 
   constructor(

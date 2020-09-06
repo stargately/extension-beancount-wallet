@@ -20,3 +20,4 @@
 secrets.*.js
 
 .idea
+dist

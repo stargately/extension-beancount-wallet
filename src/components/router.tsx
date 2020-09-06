@@ -6,7 +6,9 @@ const BasicRoute = (route: IRouteConfig) => {
   return (
     <Route
       path={route.path}
-      render={(props) => <route.component {...props} routes={route.routes} />}
+      render={(props) =>
+        React.createElement(route.component, { ...props, routes: route.routes })
+      }
     />
   );
 };

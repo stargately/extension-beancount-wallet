@@ -32,7 +32,7 @@
     /* Enables experimental support for emitting type metadata for decorators. */
     "lib": ["es7", "es6", "dom", "esnext"],
     "resolveJsonModule": true,
-    "types": ["node"],
+    "types": ["node", "chrome"],
     "typeRoots": ["node_modules/@types", "src/types"],
     "skipLibCheck": true
   },

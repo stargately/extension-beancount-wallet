@@ -29,7 +29,7 @@ class WalletCore {
     return this.accounts[address];
   }
 
-  async addAccount(privateKey: string, _: string = "iotex"): Promise<string> {
+  async addAccount(privateKey: string, _ = "iotex"): Promise<string> {
     const acc = new AntennaAccount(privateKey);
     const addr = await acc.getAddress();
     const normalizedAddr = `${acc.type}:${addr}`;
@@ -37,7 +37,7 @@ class WalletCore {
     return normalizedAddr;
   }
 
-  async createAccount(_: string = "iotex"): Promise<string> {
+  async createAccount(_ = "iotex"): Promise<string> {
     const acc = new AntennaAccount();
     const addr = await acc.getAddress();
     const normalizedAddr = `${acc.type}:${addr}`;
