@@ -1,14 +1,7 @@
-import React, { useState } from "react";
-import icon from "../../assets/img/icon-128.png";
+import React from "react";
 
 const Greetings = (): JSX.Element => {
-  const [name] = useState("dev");
-  return (
-    <div>
-      <p>Hello, {name}!</p>
-      <img src={icon} alt="extension icon" />
-    </div>
-  );
+  return <div>WelCome Page</div>;
 };
 
-export { Greetings };
+export default Greetings;
