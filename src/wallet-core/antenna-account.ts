@@ -76,7 +76,7 @@ export class AntennaAccount implements IAccount {
     });
   }
 
-  async getAddress(): Promise<string> {
-    return Promise.resolve(this.antenna.iotx.accounts[0].address);
+  getAddress(): string {
+    return this.antenna.iotx.accounts[0].address;
   }
 }
