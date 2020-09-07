@@ -5,6 +5,11 @@ export interface IProviderSource {
   uri: string;
 }
 
+export type LeanAccount = {
+  name: string;
+  address: string;
+};
+
 export interface IAccount {
   getProviders(): Array<IProviderSource>;
 
@@ -22,34 +27,43 @@ export interface IAccount {
   estimateGas(): Promise<{ gasPrice: string; gasLimit: string }>;
 
   getAddress(): string;
+
+  getName(): string;
 }
 
 class WalletCore {
-  accounts: Record<string, IAccount>;
+  accounts: Array<IAccount>;
 
   constructor() {
-    this.accounts = {};
+    this.accounts = [];
   }
 
-  getAccount(address?: string): IAccount {
+  getAccount(address?: string): IAccount | undefined {
     if (!address) {
-      return this.accounts[Object.keys(this.accounts)[0]];
+      return this.accounts[0];
     }
-    return this.accounts[address];
+    return this.accounts.find((acc) => acc.getAddress() === address);
   }
 
-  async addAccount(privateKey: string, _ = "iotex"): Promise<string> {
-    const acc = new AntennaAccount(privateKey);
-    const addr = await acc.getAddress();
-    this.accounts[addr] = acc;
+  addAccount(name: string, privateKey: string, _ = "iotex"): string {
+    const acc = new AntennaAccount(name, privateKey);
+    const addr = acc.getAddress();
+    this.accounts.push(acc);
     return addr;
   }
 
-  async createAccount(_ = "iotex"): Promise<string> {
-    const acc = new AntennaAccount();
-    const addr = await acc.getAddress();
-    this.accounts[addr] = acc;
+  createAccount(name: string, _ = "iotex"): string {
+    const acc = new AntennaAccount(name);
+    const addr = acc.getAddress();
+    this.accounts.push(acc);
     return addr;
+  }
+
+  getAccounts(): Array<LeanAccount> {
+    return this.accounts.map((acc) => ({
+      address: acc.getAddress(),
+      name: acc.getName(),
+    }));
   }
 }
 

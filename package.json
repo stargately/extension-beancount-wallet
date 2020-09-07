@@ -12,7 +12,7 @@
     "start": "node utils/webserver.js",
     "prettier": "prettier --write '**/*.{js,jsx,css,html}'",
     "lint": "pretty-quick --staged && eslint src --fix --ext .js,.tsx,.ts --quiet",
-    "test": "npm run lint"
+    "test": "npm run lint && tsc"
   },
   "eslintConfig": {
     "extends": [

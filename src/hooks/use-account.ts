@@ -1,6 +1,6 @@
 import { atom, useRecoilState } from "recoil";
-import { useEffect } from "react";
-import { IAccount, walletSingleton } from "../wallet-core/wallet-core";
+import { useCallback } from "react";
+import { LeanAccount, walletSingleton } from "../wallet-core/wallet-core";
 
 // current account info
 const addressState = atom<string | null>({
@@ -8,23 +8,34 @@ const addressState = atom<string | null>({
   default: "",
 });
 
-const useAccount = (): [IAccount | null, (addr: string) => void] => {
+type AccountState = {
+  address: string | null;
+  accounts: Array<LeanAccount>;
+  createAccount: (name: string) => void;
+  setAddress: (addr: string) => void;
+};
+
+const useAccount = (): AccountState => {
   const [address, setAddress] = useRecoilState(addressState);
 
-  // TODO(tian): should remove but mock new account for now
-  useEffect(() => {
-    (async () => {
-      await walletSingleton.createAccount("yo");
-      const acct = await walletSingleton.getAccount();
-      const addr = await acct.getAddress();
-      setAddress(addr);
-    })();
-  }, [setAddress]);
+  const createAccount = useCallback(
+    (name: string) => {
+      (async () => {
+        const addr = await walletSingleton.createAccount(name);
+        setAddress(addr);
+      })();
+    },
+    [setAddress]
+  );
 
-  if (!address) {
-    return [null, setAddress];
-  }
+  const accounts = walletSingleton.getAccounts();
 
-  return [walletSingleton.getAccount(address), setAddress];
+  return {
+    address,
+    accounts,
+    createAccount,
+    setAddress,
+  };
 };
+
 export { useAccount };

@@ -16,6 +16,8 @@ const sources = [
 export class AntennaAccount implements IAccount {
   type: string;
 
+  name: string;
+
   antenna: Antenna;
 
   providers: Array<IProviderSource>;
@@ -25,9 +27,11 @@ export class AntennaAccount implements IAccount {
   privateKey: string;
 
   constructor(
+    name: string,
     privateKey?: string,
     providers: Array<IProviderSource> = sources
   ) {
+    this.name = name;
     this.type = "iotex";
     this.antenna = new Antenna(providers[this.currentProvider].uri);
     if (privateKey) {
@@ -78,5 +82,9 @@ export class AntennaAccount implements IAccount {
 
   getAddress(): string {
     return this.antenna.iotx.accounts[0].address;
+  }
+
+  getName(): string {
+    return this.name;
   }
 }
