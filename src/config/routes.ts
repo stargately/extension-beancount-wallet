@@ -1,10 +1,10 @@
-import Greetings from "../components/Greetings";
-import CreateAccount from "../components/CreateAccount";
-import Unlock from "../components/Unlock";
+import { Greetings } from "../components/Greetings";
+import { CreateAccount } from "../components/CreateAccount";
+import { Unlock } from "../components/Unlock";
 
 export interface IRouteConfig {
   path: string;
-  component: () => JSX.Element;
+  component: React.FC;
   routes?: [];
 }
 
