@@ -4,7 +4,7 @@ import { Unlock } from "../components/Unlock";
 
 export interface IRouteConfig {
   path: string;
-  component: React.FC;
+  component: () => JSX.Element;
   routes?: [];
 }
 
