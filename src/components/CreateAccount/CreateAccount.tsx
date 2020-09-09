@@ -1,5 +1,5 @@
 import React from "react";
 
-export const CreateAccount: React.FC = (): JSX.Element => {
+export const CreateAccount = (): JSX.Element => {
   return <div>Create Account</div>;
 };

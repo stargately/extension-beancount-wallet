@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useAccount } from "../../hooks/use-account";
 import { walletSingleton } from "../../wallet-core";
 
-export const Greetings: React.FC = () => {
+export const Greetings = () => {
   const { address, setAddress, accounts } = useAccount();
   // TODO(tian): should remove but mock new account for now
   useEffect(() => {
