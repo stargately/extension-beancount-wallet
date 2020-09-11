@@ -10,28 +10,28 @@ export type LeanAccount = {
   address: string;
 };
 
+export type CoinType = "iotex";
+
 export interface IAccount {
-  getProviders(): Array<IProviderSource>;
+  setProvider(uri: string): void;
 
-  setProvider(index: number): void;
-
-  addProvider(source: IProviderSource): void;
-
-  transfer(
-    to: string,
-    amount: string,
-    gasPrice: string,
-    gasLimit: string
-  ): Promise<{ hash: string }>;
+  transfer(opts: {
+    to: string;
+    amount: string;
+    gasPrice: string;
+    gasLimit: string;
+  }): Promise<{ hash: string }>;
 
   estimateGas(): Promise<{ gasPrice: string; gasLimit: string }>;
 
   getAddress(): string;
 
   getName(): string;
+
+  getCoinType(): CoinType;
 }
 
-class WalletCore {
+export class WalletCore {
   accounts: Array<IAccount>;
 
   constructor() {
@@ -45,11 +45,23 @@ class WalletCore {
     return this.accounts.find((acc) => acc.getAddress() === address);
   }
 
-  addAccount(name: string, privateKey: string, _ = "iotex"): string {
+  addAccount(
+    name: string,
+    privateKey: string,
+    coinType: CoinType = "iotex"
+  ): string {
+    if (coinType !== "iotex") {
+      throw new Error(`unimplemented coin type ${coinType}`);
+    }
     const acc = new AntennaAccount(name, privateKey);
     const addr = acc.getAddress();
     this.accounts.push(acc);
     return addr;
+  }
+
+  removeAccount(address: string): void {
+    const idx = this.accounts.findIndex((acc) => acc.getAddress() === address);
+    this.accounts.splice(idx, 1);
   }
 
   createAccount(name: string, _ = "iotex"): string {

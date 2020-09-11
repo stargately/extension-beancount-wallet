@@ -1,18 +1,23 @@
 import { atom, useRecoilState } from "recoil";
 import { useCallback } from "react";
-import { LeanAccount, walletSingleton } from "../wallet-core/wallet-core";
+import {
+  IAccount,
+  LeanAccount,
+  walletSingleton,
+} from "../wallet-core/wallet-core";
 
 // current account info
-const addressState = atom<string | null>({
+const addressState = atom<string | undefined>({
   key: "accountState",
   default: "",
 });
 
 type AccountState = {
-  address: string | null;
+  address?: string;
   accounts: Array<LeanAccount>;
   createAccount: (name: string) => void;
   setAddress: (addr: string) => void;
+  account?: IAccount;
 };
 
 const useAccount = (): AccountState => {
@@ -33,6 +38,7 @@ const useAccount = (): AccountState => {
   return {
     address,
     accounts,
+    account: walletSingleton.getAccount(address),
     createAccount,
     setAddress,
   };
