@@ -1,43 +1,83 @@
-import React, { useEffect, useState } from "react";
-import { useAccount, useNetwork } from "../../hooks";
-import { walletSingleton } from "../../wallet-core";
+import React from "react";
+import { styled } from "onefx/lib/styletron-react";
+import Button from "antd/lib/button";
+import { withRouter } from "react-router";
+import { Logo } from "../../styles/logo";
+import { CommonMargin } from "../../styles/common-margin";
+import { fonts } from "../../styles/style-font";
 
-export const Greetings = () => {
-  const { address, account, setAddress, accounts } = useAccount();
-  // TODO(tian): should remove but mock new account for now
-  useEffect(() => {
-    (async () => {
-      await walletSingleton.createAccount("Mock acct 1");
-      const acct = await walletSingleton.getAccount();
-      const addr = await acct!.getAddress();
-      setAddress(addr);
-    })();
-  }, [setAddress]);
-  const [txHash, setTxHash] = useState("");
-  const { current, availableNetworks, networkIndex } = useNetwork();
+// import { useAccount } from "../../hooks/use-account";
+import { useAccount, useWallet } from "../../hooks";
+
+export const Greetings = withRouter(({ history }) => {
+  const { hasPwd } = useWallet();
+  const { address } = useAccount();
+
+  // If has logined account, redirect to detail page
+  if (address) {
+    history.push("/detail");
+  }
+  // If has no password, redirect to create password page
+  if (!hasPwd) {
+    history.push("/createPassword");
+  }
+
   return (
     <>
-      <div>{address}</div>
-      <pre>{JSON.stringify(accounts, null, 2)}</pre>
-      <pre>
-        now we are using the network {networkIndex} of{" "}
-        {JSON.stringify(availableNetworks, null, 2)}
-      </pre>
-      <button
-        onClick={async () => {
-          account?.setProvider(current.uri);
-          const txResult = await account?.transfer({
-            to: String(address),
-            amount: "1",
-            gasPrice: "100000000000000000",
-            gasLimit: "1000000",
-          });
-          setTxHash(txResult?.hash || "");
+      <Logo />
+      <CommonMargin />
+      <Title
+        style={{
+          textAlign: "center",
+          marginTop: "16px",
         }}
       >
-        transfer
-      </button>
-      {txHash && <pre>{txHash}</pre>}
+        Welcome to <br />
+        Beancount Wallet
+      </Title>
+      <CommonMargin />
+      <Paragraph>
+        Connecting you to IoTeX and the
+        <br />
+        Decentralized Web.
+        <br />
+        We’re happy to see you.
+      </Paragraph>
+      <div
+        style={{
+          marginTop: "50px",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <Button
+          size="large"
+          onClick={() => {
+            // TODO
+          }}
+        >
+          Import
+        </Button>
+        <Button
+          type="primary"
+          size="large"
+          onClick={() => {
+            // TODO
+          }}
+        >
+          Create
+        </Button>
+      </div>
     </>
   );
-};
+});
+
+const Title = styled("h1", {
+  ...fonts.h1,
+  textAlign: "center",
+});
+
+const Paragraph = styled("div", {
+  ...fonts.normal,
+  textAlign: "center",
+});
