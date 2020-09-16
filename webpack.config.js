@@ -51,7 +51,7 @@ var options = {
     rules: [
       {
         // look for .css or .scss files
-        test: /\.(css|scss)$/,
+        test: /\.(css|less)$/,
         // in the `src` directory
         use: [
           {
@@ -61,8 +61,11 @@ var options = {
             loader: "css-loader",
           },
           {
-            loader: "sass-loader",
+            loader: "less-loader",
             options: {
+              lessOptions: {
+                javascriptEnabled: true,
+              },
               sourceMap: true,
             },
           },
