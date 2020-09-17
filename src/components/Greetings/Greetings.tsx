@@ -6,7 +6,6 @@ import { Logo } from "../../styles/logo";
 import { CommonMargin } from "../../styles/common-margin";
 import { fonts } from "../../styles/style-font";
 
-// import { useAccount } from "../../hooks/use-account";
 import { useAccount, useWallet } from "../../hooks";
 
 export const Greetings = withRouter(({ history }) => {
