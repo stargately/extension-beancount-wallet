@@ -1,24 +1,25 @@
+import { RouteConfig } from "react-router-config";
 import { Greetings } from "../components/Greetings";
-import { CreateAccount } from "../components/CreateAccount";
+import { CreatePassword } from "../components/CreatePassword";
 import { Unlock } from "../components/Unlock";
+import { AccountDetail } from "../components/AccountDetail";
 
-export interface IRouteConfig {
-  path: string;
-  component: () => JSX.Element;
-  routes?: [];
-}
-
-const RouteConfig: IRouteConfig[] = [
+const RouteConfig: RouteConfig[] = [
   {
     path: "/unlock",
     component: Unlock,
   },
   {
-    path: "/createAccount",
-    component: CreateAccount,
+    path: "/createPassword",
+    component: CreatePassword,
+  },
+  {
+    path: "/detail",
+    component: AccountDetail,
   },
   {
     path: "/",
+    // component: AccountDetail,
     component: Greetings,
   },
 ];
