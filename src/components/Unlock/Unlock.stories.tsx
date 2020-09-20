@@ -1,13 +1,11 @@
 import React from "react";
-import { Story, Meta } from "@storybook/react/types-6-0";
-
+import { themeDecorator } from "../../storybookUtils";
 import { Unlock } from "./Unlock";
+
+export const Standard: React.FC = () => <Unlock />;
 
 export default {
   title: "Components/Unlock",
+  decorators: [themeDecorator()],
   component: Unlock,
-} as Meta;
-
-const Template: Story = (args) => <Unlock {...args} />;
-
-export const Default = Template.bind({});
+};
