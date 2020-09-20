@@ -28,7 +28,6 @@ export const Greetings = withRouter(({ history }) => {
       <Title
         style={{
           textAlign: "center",
-          marginTop: "16px",
         }}
       >
         Welcome to <br />

@@ -20,7 +20,7 @@ type FormValues = {
 
 export const CreatePassword = withRouter(({ history }) => {
   const { setPwd } = useWallet();
-  const onFinish = async (values: FormValues) => {
+  const onFinish = (values: FormValues) => {
     if (values.newPassword !== values.confirmPassword) {
       message.error("Password and Confirm Password should be the same");
       return;
