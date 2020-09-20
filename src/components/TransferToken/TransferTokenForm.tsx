@@ -10,13 +10,16 @@ import { Amount } from "./Amount";
 import { AddRecipient } from "./AddRecipient";
 
 export const TransferTokenForm: React.FC = () => {
+  const [form] = Form.useForm();
+
   return (
-    <div>
+    <CreatePasswordWrap>
       <Form
+        form={form}
         name="basic"
         initialValues={{ remember: true }}
         onFinish={() => {
-          console.log("submitted");
+          console.log(form.getFieldsValue());
         }}
       >
         <StyledRow>
@@ -30,7 +33,7 @@ export const TransferTokenForm: React.FC = () => {
 
         <Amount />
 
-        <TransactionFee />
+        <TransactionFee form={form} />
 
         <Form.Item>
           <StyledRow>
@@ -44,7 +47,7 @@ export const TransferTokenForm: React.FC = () => {
           </StyledRow>
         </Form.Item>
       </Form>
-    </div>
+    </CreatePasswordWrap>
   );
 };
 
@@ -57,3 +60,6 @@ const StyledRow = styled(Row, ({ $theme }) => ({
   alignItems: "center",
   padding: `${$theme.sizing[2]} 0`,
 }));
+const CreatePasswordWrap = styled("div", {
+  textAlign: "left",
+});

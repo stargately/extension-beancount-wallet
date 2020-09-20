@@ -2,11 +2,13 @@ import React from "react";
 import Form, { RuleObject } from "antd/lib/form";
 import Input from "antd/lib/input";
 import { validateAddress } from "iotex-antenna/lib/account/utils";
+import { formItemLayout } from "./formStyles";
 
 export const AddRecipient: React.FC = () => {
   return (
     <div>
       <Form.Item
+        {...formItemLayout}
         name="recipient"
         label="Recipient"
         rules={[

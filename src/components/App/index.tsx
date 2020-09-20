@@ -2,17 +2,17 @@
 import React from "react";
 import { RecoilRoot } from "recoil";
 import RouterConfig from "../router";
-import { WrapTemeProvider } from "../../styles/theme-provider";
+import { WrapThemeProvider } from "../../styles/theme-provider";
 
 import "../../styles/antd.less";
 
-const App = () => {
+const App: React.FC = () => {
   return (
-    <WrapTemeProvider>
+    <WrapThemeProvider>
       <RecoilRoot>
-        <RouterConfig></RouterConfig>
+        <RouterConfig />
       </RecoilRoot>
-    </WrapTemeProvider>
+    </WrapThemeProvider>
   );
 };
 

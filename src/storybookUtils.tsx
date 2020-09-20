@@ -3,18 +3,21 @@ import React from "react";
 import "./styles/antd.less";
 import { Story } from "@storybook/react/types-6-0";
 import { BrowserRouter } from "react-router-dom";
-import { WrapTemeProvider } from "./styles/theme-provider";
+import { RecoilRoot } from "recoil";
+import { WrapThemeProvider } from "./styles/theme-provider";
 
 export const themeDecorator = () =>
   function Inner(story: Story): JSX.Element {
     return (
-      <WrapTemeProvider>
-        <Overlay>
-          <MobileContent>
-            <BrowserRouter>{React.createElement(story)}</BrowserRouter>
-          </MobileContent>
-        </Overlay>
-      </WrapTemeProvider>
+      <WrapThemeProvider>
+        <RecoilRoot>
+          <Overlay>
+            <MobileContent>
+              <BrowserRouter>{React.createElement(story)}</BrowserRouter>
+            </MobileContent>
+          </Overlay>
+        </RecoilRoot>
+      </WrapThemeProvider>
     );
   };
 

@@ -4,13 +4,19 @@ import Select from "antd/lib/select";
 import Row from "antd/lib/grid/row";
 import Col from "antd/lib/grid/col";
 import Avatar from "antd/lib/avatar/avatar";
+import { formItemLayout } from "./formStyles";
 
 const { Option } = Select;
 
 export const AssetSelect: React.FC = () => {
   return (
-    <Form.Item label="Asset" name="asset" rules={[{ required: true }]}>
-      <Select size={"large"} defaultValue="iotex">
+    <Form.Item
+      {...formItemLayout}
+      label="Asset"
+      name="asset"
+      initialValue={"iotex"}
+    >
+      <Select size={"large"}>
         <Option value="iotex">
           <Row gutter={8}>
             <Col>

@@ -35,7 +35,7 @@ const light: Theme = {
   sizing: THEME.sizing,
 };
 
-export const WrapTemeProvider: React.FC = ({ children }) => {
+export const WrapThemeProvider: React.FC = ({ children }) => {
   return (
     <StyletronProvider value={styletron}>
       <ThemeProvider light={light} setTheme={() => null}>

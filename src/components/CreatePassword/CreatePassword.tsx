@@ -47,7 +47,7 @@ export const CreatePassword = withRouter(({ history }) => {
             { required: true, message: "Please input your New Password!" },
           ]}
         >
-          <Input.Password />
+          <Input.Password size={"large"} />
         </Form.Item>
 
         <Form.Item
@@ -60,7 +60,7 @@ export const CreatePassword = withRouter(({ history }) => {
             },
           ]}
         >
-          <Input.Password />
+          <Input.Password size={"large"} />
         </Form.Item>
 
         <Form.Item {...layout} name="remember" valuePropName="checked">
