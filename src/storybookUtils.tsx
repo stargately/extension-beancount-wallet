@@ -30,4 +30,5 @@ const Overlay = styled("div", ({ $theme }) => ({
   width: "100%",
   height: "700px",
   backgroundColor: $theme.colors.black10,
+  textAlign: "center",
 }));
