@@ -1,3 +1,8 @@
+import {
+  IGetActionsByAddressRequest,
+  IActionInfo,
+  IAccountMeta,
+} from "iotex-antenna/lib/rpc-method/types";
 import { AntennaAccount } from "./antenna-account";
 
 export interface IProviderSource {
@@ -10,7 +15,18 @@ export type LeanAccount = {
   address: string;
 };
 
+// TODO(di): later remove, should define for different coin to implement
+export type Action = IActionInfo;
+
+// TODO(di): later remove, should define for different coin to implement
+export type AccountMeta = IAccountMeta;
+
 export type CoinType = "iotex";
+
+// TODO(di): later remove, should define for different coin to implement
+export type IGetActionsRequest = {
+  byAddr?: IGetActionsByAddressRequest;
+};
 
 export interface IAccount {
   setProvider(uri: string): void;
@@ -29,6 +45,10 @@ export interface IAccount {
   getName(): string;
 
   getCoinType(): CoinType;
+
+  getActions(): Promise<{ actionInfo: Action[] }>;
+
+  getAccountMeta(): Promise<{ accountMeta: AccountMeta | undefined }>;
 }
 
 export class WalletCore {
@@ -76,6 +96,18 @@ export class WalletCore {
       address: acc.getAddress(),
       name: acc.getName(),
     }));
+  }
+
+  getActions(address?: string): Promise<{ actionInfo: Action[] } | undefined> {
+    const acc = this.getAccount(address);
+    return Promise.resolve(acc?.getActions());
+  }
+
+  getAccountMeta(
+    address?: string
+  ): Promise<{ accountMeta: AccountMeta | undefined } | undefined> {
+    const acc = this.getAccount(address);
+    return Promise.resolve(acc?.getAccountMeta());
   }
 }
 
