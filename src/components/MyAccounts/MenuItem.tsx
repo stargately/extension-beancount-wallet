@@ -1,6 +1,6 @@
 import React from "react";
-import { fonts } from "../../styles/style-font";
 import { styled } from "onefx/lib/styletron-react";
+import { fonts } from "../../styles/style-font";
 
 interface MenuItemProps {
   icon: () => JSX.Element;
