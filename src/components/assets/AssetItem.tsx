@@ -14,42 +14,49 @@ interface AssetItemProps {
 
 export const AssetItem = (props: AssetItemProps) => {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        paddingTop: "20px",
-        paddingBottom: "20px",
-        justifyContent: "space-between",
-      }}
-    >
-      <CircleAssetIcon
-        src={props.asset.imageUrl}
-        style={{
-          marginLeft: "20px",
-        }}
-      />
+    <AssetContainer>
+      <CircleAssetIcon src={props.asset.imageUrl} />
 
-      <div style={{ flexGrow: 1, marginLeft: "15px" }}>
-        <div style={{ fontSize: "16px", color: "black" }}>
-          {props.asset.name}
-        </div>
-        <div style={{ fontSize: "12px", color: "gray" }}>
-          {props.asset.description}
-        </div>
-      </div>
+      <RightContainer>
+        <AssetNameText>{props.asset.name}</AssetNameText>
+        <AssetAmountText>{props.asset.description}</AssetAmountText>
+      </RightContainer>
 
-      <RightOutlined
-        style={{
-          marginRight: "5px",
-        }}
-      />
-    </div>
+      <RightArrowIcon />
+    </AssetContainer>
   );
 };
 
-const CircleAssetIcon = styled("img", {
+const AssetContainer = styled("div", ({ $theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  paddingTop: $theme.sizing[4],
+  paddingBottom: $theme.sizing[4],
+}));
+
+const RightContainer = styled("div", ({ $theme }) => ({
+  flexGrow: 1,
+  marginLeft: $theme.sizing[3],
+}));
+
+const CircleAssetIcon = styled("img", ({ $theme }) => ({
   width: "30px",
   height: "30px",
   borderRadius: "50%",
-});
+  marginLeft: $theme.sizing[4],
+}));
+
+const AssetNameText = styled("div", ({ $theme }) => ({
+  fontSize: "16px",
+  color: $theme.colors.black,
+}));
+
+const AssetAmountText = styled("div", ({ $theme }) => ({
+  fontSize: "12px",
+  color: $theme.colors.black60,
+}));
+
+const RightArrowIcon = styled(RightOutlined, ({ $theme }) => ({
+  marginRight: $theme.sizing[1],
+}));

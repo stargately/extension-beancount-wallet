@@ -9,53 +9,55 @@ interface AccountItemProps {
 
 export const AccountItem = (props: AccountItemProps) => {
   return (
-    <div
-      style={{
-        paddingTop: "10px",
-        paddingBottom: "10px",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-        }}
-      >
-        <CheckOutlined
+    <ItemContainer>
+      <TopContentContainer>
+        <CheckIcon
           style={{
-            ...fonts.normal,
-            color: "white",
-            marginLeft: "15px",
             visibility: props.checked ? "visible" : "hidden",
           }}
         />
 
-        <CircleAvatar
-          src={require("../../assets/img/logo.png")}
-          style={{ marginLeft: "5px" }}
-        />
+        <CircleAvatar src={require("../../assets/img/logo.png")} />
 
-        <div style={{ ...fonts.normal, color: "white", marginLeft: "10px" }}>
-          Account 1
-        </div>
-      </div>
+        <AccountNameText>Account 1</AccountNameText>
+      </TopContentContainer>
 
-      <div
-        style={{
-          color: "#A9A9A9",
-          fontSize: "14px",
-          marginLeft: "76px",
-        }}
-      >
-        $504.40 USD
-      </div>
-    </div>
+      <BalanceText>$504.40 USD</BalanceText>
+    </ItemContainer>
   );
 };
 
-const CircleAvatar = styled("img", {
+const ItemContainer = styled("div", ({ $theme }) => ({
+  paddingTop: $theme.sizing[2],
+  paddingBottom: $theme.sizing[2],
+}));
+
+const TopContentContainer = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-start",
+});
+
+const CheckIcon = styled(CheckOutlined, ({ $theme }) => ({
+  color: $theme.colors.white,
+  marginLeft: $theme.sizing[4],
+}));
+
+const CircleAvatar = styled("img", ({ $theme }) => ({
   width: "30px",
   height: "30px",
   borderRadius: "50%",
-});
+  marginLeft: $theme.sizing[1],
+}));
+
+const AccountNameText = styled("div", ({ $theme }) => ({
+  ...fonts.normal,
+  color: $theme.colors.white,
+  marginLeft: $theme.sizing[1],
+}));
+
+const BalanceText = styled("div", ({ $theme }) => ({
+  color: $theme.colors.black80,
+  fontSize: "14px",
+  marginLeft: "78px",
+}));

@@ -18,57 +18,25 @@ export const MyAccounts = () => {
   return (
     <>
       <Container>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <div
-            style={{
-              ...fonts.normal,
-              color: "white",
-              margin: "10px",
-            }}
-          >
-            My Accounts
-          </div>
+        <FlexContainer>
+          <MyAccountsText>My Accounts</MyAccountsText>
 
-          <div
-            style={{
-              width: "80px",
-              margin: "10px",
-            }}
-          >
+          <LockButtonContainer>
             <Button type={"default"} ghost block size={"small"}>
               Lock
             </Button>
-          </div>
-        </div>
+          </LockButtonContainer>
+        </FlexContainer>
 
         <HDivider />
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            marginLeft: "10px",
-            marginTop: "5px",
-            marginRight: "10px",
-            justifyContent: "space-between",
-          }}
-        >
-          <SearchOutlined style={{ color: "#ffffff", fontSize: "20px" }} />
+        <SearchContainer>
+          <SearchIcon />
 
           <div style={{ flexGrow: 1 }}>
-            <Input
-              placeholder={"Search Accounts"}
-              bordered={false}
-              style={{ ...fonts.normal, color: "white" }}
-            />
+            <SearchInput placeholder={"Search Accounts"} bordered={false} />
           </div>
-        </div>
+        </SearchContainer>
 
         <HDivider />
 
@@ -78,44 +46,20 @@ export const MyAccounts = () => {
 
         <HDivider />
 
-        <MenuItem
-          icon={() => (
-            <PlusOutlined style={{ color: "white", fontSize: "20px" }} />
-          )}
-          content={"Create Account"}
-        />
+        <MenuItem icon={() => <PlusIcon />} content={"Create Account"} />
+
+        <MenuItem icon={() => <DownloadIcon />} content={"Import Account"} />
 
         <MenuItem
-          icon={() => (
-            <DownloadOutlined style={{ color: "white", fontSize: "20px" }} />
-          )}
-          content={"Import Account"}
-        />
-
-        <MenuItem
-          icon={() => (
-            <ApiOutlined style={{ color: "white", fontSize: "20px" }} />
-          )}
+          icon={() => <ApiIcon />}
           content={"Connect Hardware Wallet"}
         />
 
         <HDivider />
 
-        <MenuItem
-          icon={() => (
-            <ExclamationCircleFilled
-              style={{ color: "white", fontSize: "20px" }}
-            />
-          )}
-          content={"Info & Help"}
-        />
+        <MenuItem icon={() => <ExclamationIcon />} content={"Info & Help"} />
 
-        <MenuItem
-          icon={() => (
-            <SettingFilled style={{ color: "white", fontSize: "20px" }} />
-          )}
-          content={"Settings"}
-        />
+        <MenuItem icon={() => <SettingIcon />} content={"Settings"} />
       </Container>
     </>
   );
@@ -130,3 +74,64 @@ const HDivider = styled("div", {
   backgroundColor: "rgba(255,255,255,0.3)",
   height: "1px",
 });
+
+const FlexContainer = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+});
+
+const MyAccountsText = styled("div", ({ $theme }) => ({
+  ...fonts.normal,
+  color: $theme.colors.white,
+  margin: $theme.sizing[2],
+}));
+
+const LockButtonContainer = styled("div", {
+  width: "80px",
+  margin: "10px",
+});
+
+const SearchContainer = styled("div", ({ $theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  marginLeft: $theme.sizing[2],
+  marginTop: $theme.sizing[1],
+  marginRight: $theme.sizing[2],
+  justifyContent: "space-between",
+}));
+
+const SearchIcon = styled(SearchOutlined, ({ $theme }) => ({
+  color: $theme.colors.white,
+  fontSize: $theme.sizing[4],
+}));
+
+const SearchInput = styled(Input, ({ $theme }) => ({
+  ...fonts.normal,
+  color: $theme.colors.white,
+}));
+
+const PlusIcon = styled(PlusOutlined, ({ $theme }) => ({
+  color: $theme.colors.white,
+  fontSize: $theme.sizing[3],
+}));
+
+const DownloadIcon = styled(DownloadOutlined, ({ $theme }) => ({
+  color: $theme.colors.white,
+  fontSize: $theme.sizing[3],
+}));
+
+const ApiIcon = styled(ApiOutlined, ({ $theme }) => ({
+  color: $theme.colors.white,
+  fontSize: $theme.sizing[3],
+}));
+
+const ExclamationIcon = styled(ExclamationCircleFilled, ({ $theme }) => ({
+  color: $theme.colors.white,
+  fontSize: $theme.sizing[3],
+}));
+
+const SettingIcon = styled(SettingFilled, ({ $theme }) => ({
+  color: $theme.colors.white,
+  fontSize: $theme.sizing[3],
+}));
