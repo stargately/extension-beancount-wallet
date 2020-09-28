@@ -1,6 +1,13 @@
 import crypto from "crypto";
 import Antenna from "iotex-antenna";
-import { CoinType, IAccount, IProviderSource } from "./wallet-core";
+import {
+  CoinType,
+  IAccount,
+  IProviderSource,
+  IGetActionsRequest,
+  Action,
+  AccountMeta,
+} from "./wallet-core";
 
 export const iotexNetworks = [
   {
@@ -77,5 +84,22 @@ export class AntennaAccount implements IAccount {
 
   getCoinType(): CoinType {
     return "iotex";
+  }
+
+  getActions(): Promise<{ actionInfo: Action[] }> {
+    const req: IGetActionsRequest = {
+      byAddr: {
+        address: this.antenna.iotx.accounts[0].address,
+        start: 0,
+        count: 10,
+      },
+    };
+    return this.antenna.iotx.getActions(req);
+  }
+
+  getAccountMeta(): Promise<{ accountMeta: AccountMeta | undefined }> {
+    return this.antenna.iotx.getAccount({
+      address: this.antenna.iotx.accounts[0].address,
+    });
   }
 }

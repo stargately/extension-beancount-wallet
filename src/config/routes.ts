@@ -14,12 +14,11 @@ const RouteConfig: RouteConfig[] = [
     component: CreatePassword,
   },
   {
-    path: "/detail",
+    path: "/account",
     component: AccountDetail,
   },
   {
     path: "/",
-    // component: AccountDetail,
     component: Greetings,
   },
 ];
