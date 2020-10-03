@@ -1,12 +1,12 @@
 import React from "react";
 import { styled } from "onefx/lib/styletron-react";
-
+import { withRouter } from "react-router";
 import Button from "antd/lib/button";
 import { Logo } from "../../styles/logo";
 import { CommonMargin } from "../../styles/common-margin";
 import { fonts } from "../../styles/style-font";
 
-export const Welcome: React.FC = () => {
+export const Welcome = withRouter(({ history }) => {
   return (
     <>
       <Logo />
@@ -46,7 +46,7 @@ export const Welcome: React.FC = () => {
           type="primary"
           size="large"
           onClick={() => {
-            // TODO
+            history.push("/createPassword");
           }}
         >
           Create
@@ -54,7 +54,7 @@ export const Welcome: React.FC = () => {
       </div>
     </>
   );
-};
+});
 
 const Title = styled("h1", {
   ...fonts.h1,
