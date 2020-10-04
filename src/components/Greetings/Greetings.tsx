@@ -7,7 +7,7 @@ export const Greetings = withRouter(({ history }) => {
   const { wallet } = useWallet();
 
   // If has logined account, redirect to detail page
-  if (wallet.isUnLocked) {
+  if (wallet.isInitiated) {
     history.push("/account");
   }
 

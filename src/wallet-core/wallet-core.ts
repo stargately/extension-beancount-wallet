@@ -51,6 +51,8 @@ export interface IAccount {
   getActions(): Promise<{ actionInfo: Action[] }>;
 
   getAccountMeta(): Promise<{ accountMeta: AccountMeta | undefined }>;
+
+  privateKey: string;
 }
 
 export class WalletCore {
@@ -60,7 +62,7 @@ export class WalletCore {
 
   constructor() {
     this.accounts = [];
-    this.keyringController = new KeyringController({});
+    this.keyringController;
   }
 
   getAccount(address?: string): IAccount | undefined {
@@ -116,11 +118,17 @@ export class WalletCore {
   }
 
   async createKeyringController(password: string): Promise<void> {
+    this.keyringController = new KeyringController({});
     await this.keyringController.createNewVaultAndKeychain(password);
-    const privateKey =
-      "98ba3472fce96b0135e7ad7923a0c6f9ee8ec98a039529752a3a6e4d43bc802a";
-    await this.keyringController.addNewKeyring("Simple Key Pair", [privateKey]);
-    this.addAccount("Untitled acc name 1", privateKey, "iotex");
+    const addr = this.createAccount("IoTeX account 1");
+    const acc = this.getAccount(addr);
+    await this.keyringController.addNewKeyring("Simple Key Pair", [
+      acc?.privateKey,
+    ]);
+  }
+
+  get isInitiated(): boolean {
+    return Boolean(this.keyringController);
   }
 
   get isLocked(): boolean {
