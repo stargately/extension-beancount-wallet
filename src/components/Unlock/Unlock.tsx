@@ -6,11 +6,12 @@ import { UnlockForm } from "./UnlockForm";
 import { useWallet } from "../../hooks";
 
 export const Unlock = withRouter(() => {
-  const { verifyPwd } = useWallet();
+  const { unlock } = useWallet();
   const onFinish = (values: { password: string }) => {
-    const result: boolean = verifyPwd(values.password);
+    const result = unlock(values.password);
     if (result) {
       // TODO
+      console.log(`unlocked wallet ${result}`);
     }
   };
 

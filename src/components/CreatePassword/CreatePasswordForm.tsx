@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "onefx/lib/styletron-react";
 
 import Form from "antd/lib/form";
@@ -12,16 +12,17 @@ import { fonts } from "../../styles/style-font";
 type FormValues = {
   newPassword: string;
   confirmPassword: string;
-  remember: boolean;
+  agreedTos: boolean;
 };
 
 type CreatePasswordProps = {
-  onFinish?: (values: FormValues) => void;
+  onFinish: (values: FormValues) => void;
 };
 
 export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
   onFinish,
 }) => {
+  const [loading, setLoading] = useState(false);
   return (
     <CreatePasswordWrap>
       <Paragraph>Secure your wallet with a password</Paragraph>
@@ -29,8 +30,12 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
       <Form
         {...layout}
         name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
+        initialValues={{ agreedTos: false }}
+        onFinish={async (values) => {
+          setLoading(true);
+          await onFinish(values);
+          setLoading(false);
+        }}
       >
         <Form.Item
           label="New Password"
@@ -55,12 +60,27 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
           <Input.Password size={"large"} />
         </Form.Item>
 
-        <Form.Item {...layout} name="remember" valuePropName="checked">
-          <Checkbox>Remember me</Checkbox>
+        <Form.Item
+          {...layout}
+          name="agreedTos"
+          valuePropName="checked"
+          rules={[{ required: true }]}
+        >
+          <Checkbox>
+            I have read and agree to the{" "}
+            <a href={"https://beancount.io/page/legal/terms-of-service/"}>
+              terms of service
+            </a>
+          </Checkbox>
         </Form.Item>
 
         <Form.Item {...layout}>
-          <Button type="primary" htmlType="submit" size="large">
+          <Button
+            type="primary"
+            htmlType="submit"
+            size="large"
+            loading={loading}
+          >
             Create
           </Button>
         </Form.Item>

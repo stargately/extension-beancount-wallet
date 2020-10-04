@@ -8,17 +8,17 @@ import { useWallet } from "../../hooks";
 type FormValues = {
   newPassword: string;
   confirmPassword: string;
-  remember: boolean;
+  agreedTos: boolean;
 };
 
 export const CreatePassword = withRouter(({ history }) => {
-  const { setPwd } = useWallet();
-  const onFinish = (values: FormValues) => {
+  const { createWallet } = useWallet();
+  const onFinish = async (values: FormValues) => {
     if (values.newPassword !== values.confirmPassword) {
       message.error("Password and Confirm Password should be the same");
       return;
     }
-    setPwd(values.newPassword);
+    await createWallet(values.newPassword);
     // redirect back to welcome page
     history.replace("/");
   };

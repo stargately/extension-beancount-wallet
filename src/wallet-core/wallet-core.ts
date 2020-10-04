@@ -5,6 +5,8 @@ import {
 } from "iotex-antenna/lib/rpc-method/types";
 import { AntennaAccount } from "./antenna-account";
 
+const KeyringController = require("eth-keyring-controller");
+
 export interface IProviderSource {
   name: string;
   uri: string;
@@ -54,8 +56,11 @@ export interface IAccount {
 export class WalletCore {
   accounts: Array<IAccount>;
 
+  keyringController: any;
+
   constructor() {
     this.accounts = [];
+    this.keyringController = new KeyringController({});
   }
 
   getAccount(address?: string): IAccount | undefined {
@@ -108,6 +113,30 @@ export class WalletCore {
   ): Promise<{ accountMeta: AccountMeta | undefined } | undefined> {
     const acc = this.getAccount(address);
     return Promise.resolve(acc?.getAccountMeta());
+  }
+
+  async createKeyringController(password: string): Promise<void> {
+    await this.keyringController.createNewVaultAndKeychain(password);
+    const privateKey =
+      "98ba3472fce96b0135e7ad7923a0c6f9ee8ec98a039529752a3a6e4d43bc802a";
+    await this.keyringController.addNewKeyring("Simple Key Pair", [privateKey]);
+    this.addAccount("Untitled acc name 1", privateKey, "iotex");
+  }
+
+  get isLocked(): boolean {
+    return !this.keyringController.memStore.getState().isUnlocked;
+  }
+
+  get isUnLocked(): boolean {
+    return this.keyringController.memStore.getState().isUnlocked;
+  }
+
+  async lock(): Promise<void> {
+    await this.keyringController.setLocked();
+  }
+
+  async unlock(password: string): Promise<boolean> {
+    return this.keyringController.submitPassword(password);
   }
 }
 

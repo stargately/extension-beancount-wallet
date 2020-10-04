@@ -1,57 +1,49 @@
 import { useEffect } from "react";
-import { atom, useRecoilState, selector, useRecoilValue } from "recoil";
+import { atom, useRecoilState } from "recoil";
+import { walletSingleton } from "../wallet-core";
+import { WalletCore } from "../wallet-core/wallet-core";
 
-const lockState = atom<boolean>({
-  key: "lockState",
+const isLockedState = atom<boolean>({
+  key: "isLocked",
   default: false,
-});
-
-const pwdState = atom<string | null>({
-  key: "pwdState",
-  default: "",
-});
-
-const hasPwdState = selector({
-  key: "hasPwdState",
-  get: ({ get }) => {
-    const pwd = get(pwdState);
-    return pwd !== "";
-  },
 });
 
 type walletState = {
   lock: boolean;
-  hasPwd: boolean;
-  setPwd: (pwd: string) => void;
-  verifyPwd: (toVerify: string) => boolean;
+  createWallet: (password: string) => Promise<WalletCore>;
+  unlock: (password: string) => Promise<boolean>;
+  wallet: WalletCore;
 };
 
 export const useWallet = (): walletState => {
-  const [pwd, setPwd] = useRecoilState(pwdState);
-  const [lock, setLock] = useRecoilState(lockState);
-  const hasPwd = useRecoilValue(hasPwdState);
+  const [isLocked, setIsLocked] = useRecoilState(isLockedState);
 
-  const verifyPwd = (toVerify: string) => {
-    return toVerify === pwd;
+  const unlock = async (password: string): Promise<boolean> => {
+    return walletSingleton.unlock(password);
+  };
+
+  const createWallet = async (password: string): Promise<WalletCore> => {
+    await walletSingleton.createKeyringController(password);
+    return walletSingleton;
   };
 
   useEffect(() => {
     // TODO: timer should use storage from backscript
     let timerId: NodeJS.Timeout;
-    if (!lock) {
+    if (!isLocked) {
       timerId = setTimeout(() => {
-        setLock(true);
+        setIsLocked(true);
       }, 60 * 1000);
     }
     return () => {
       timerId && clearTimeout(timerId);
     };
-  }, [lock]);
+  }, [isLocked]);
 
   return {
-    lock,
-    hasPwd,
-    setPwd,
-    verifyPwd,
+    lock: isLocked,
+    createWallet,
+    unlock,
+    wallet: walletSingleton,
   };
 };
