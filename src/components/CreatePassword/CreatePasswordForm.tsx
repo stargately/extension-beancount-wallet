@@ -23,12 +23,14 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
   onFinish,
 }) => {
   const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
   return (
     <CreatePasswordWrap>
       <Paragraph>Secure your wallet with a password</Paragraph>
       <CommonMargin />
       <Form
         {...layout}
+        form={form}
         name="basic"
         initialValues={{ agreedTos: false }}
         onFinish={async (values) => {
@@ -50,11 +52,22 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
         <Form.Item
           label="Confirm Password"
           name="confirmPassword"
+          dependencies={["newPassword"]}
           rules={[
             {
               required: true,
               message: "Please input your Confirm Password!",
             },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("newPassword") === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error("The two passwords that you entered do not match!")
+                );
+              },
+            }),
           ]}
         >
           <Input.Password size={"large"} />
@@ -64,7 +77,14 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
           {...layout}
           name="agreedTos"
           valuePropName="checked"
-          rules={[{ required: true }]}
+          rules={[
+            {
+              validator: (_, value) =>
+                value
+                  ? Promise.resolve()
+                  : Promise.reject(new Error("Should accept agreement")),
+            },
+          ]}
         >
           <Checkbox>
             I have read and agree to the{" "}
@@ -74,15 +94,22 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
           </Checkbox>
         </Form.Item>
 
-        <Form.Item {...layout}>
-          <Button
-            type="primary"
-            htmlType="submit"
-            size="large"
-            loading={loading}
-          >
-            Create
-          </Button>
+        <Form.Item {...layout} shouldUpdate={true}>
+          {() => (
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+              disabled={
+                !form.isFieldsTouched(true) ||
+                form.getFieldsError().filter(({ errors }) => errors.length)
+                  .length !== 0
+              }
+              loading={loading}
+            >
+              Create
+            </Button>
+          )}
         </Form.Item>
       </Form>
     </CreatePasswordWrap>
