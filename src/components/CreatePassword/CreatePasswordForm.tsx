@@ -59,12 +59,12 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
               message: "Please input your Confirm Password!",
             },
             ({ getFieldValue }) => ({
-              validator(_, value) {
+              validator: async (_, value) => {
                 if (!value || getFieldValue("newPassword") === value) {
-                  return Promise.resolve();
+                  return;
                 }
-                return Promise.reject(
-                  new Error("The two passwords that you entered do not match!")
+                throw new Error(
+                  "The two passwords that you entered do not match!"
                 );
               },
             }),
@@ -79,10 +79,12 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
           valuePropName="checked"
           rules={[
             {
-              validator: (_, value) =>
-                value
-                  ? Promise.resolve()
-                  : Promise.reject(new Error("Should accept agreement")),
+              validator: async (_, value) => {
+                if (value) {
+                  return;
+                }
+                throw new Error("Should accept agreement");
+              },
             },
           ]}
         >
