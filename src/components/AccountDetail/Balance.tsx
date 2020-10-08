@@ -14,9 +14,15 @@ export const Balance = () => {
       setBalance(meta?.accountMeta?.balance);
     })();
   }, [address]);
-  return <BalanceWrap>{balance} IOTX</BalanceWrap>;
+  return <Container>{balance} IOTX</Container>;
 };
 
-const BalanceWrap = styled("div", {
+const Container = styled("div", {
   ...fonts.h1,
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100px",
+  width: "100%",
 });
