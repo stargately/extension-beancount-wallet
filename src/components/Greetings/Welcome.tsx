@@ -8,7 +8,7 @@ import { fonts } from "../../styles/style-font";
 
 export const Welcome = withRouter(({ history }) => {
   return (
-    <>
+    <Container>
       <Logo />
       <CommonMargin />
       <Title
@@ -52,8 +52,12 @@ export const Welcome = withRouter(({ history }) => {
           Create
         </Button>
       </div>
-    </>
+    </Container>
   );
+});
+
+const Container = styled("div", {
+  padding: "16px",
 });
 
 const Title = styled("h1", {

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { styled } from "onefx/lib/styletron-react";
 
 import Form from "antd/lib/form";
 import Input from "antd/lib/input";
 import Button from "antd/lib/button";
 import Checkbox from "antd/lib/checkbox";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router";
 
 import { CommonMargin } from "../../styles/common-margin";
 import { fonts } from "../../styles/style-font";
@@ -24,8 +26,12 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
+  const history = useHistory();
+  const onClick = useCallback(() => history.goBack(), []);
   return (
-    <CreatePasswordWrap>
+    <Container>
+      <BackArrowButton onClick={onClick}></BackArrowButton>
+      <CommonMargin />
       <Paragraph>Secure your wallet with a password</Paragraph>
       <CommonMargin />
       <Form
@@ -114,12 +120,18 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
           )}
         </Form.Item>
       </Form>
-    </CreatePasswordWrap>
+    </Container>
   );
 };
 
-const CreatePasswordWrap = styled("div", {
+const BackArrowButton = styled(ArrowLeftOutlined, {
+  fontSize: "28px",
+  marginBlock: "28px",
+});
+
+const Container = styled("div", {
   textAlign: "left",
+  padding: "16px",
 });
 
 const Paragraph = styled("div", {
