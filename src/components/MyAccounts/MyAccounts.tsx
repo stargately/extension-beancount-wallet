@@ -16,52 +16,45 @@ import { MenuItem } from "./MenuItem";
 
 export const MyAccounts = () => {
   return (
-    <>
-      <Container>
-        <FlexContainer>
-          <MyAccountsText>My Accounts</MyAccountsText>
+    <Container>
+      <FlexContainer>
+        <MyAccountsText>My Accounts</MyAccountsText>
+        <LockButtonContainer>
+          <Button type={"default"} ghost block size={"small"}>
+            Lock
+          </Button>
+        </LockButtonContainer>
+      </FlexContainer>
 
-          <LockButtonContainer>
-            <Button type={"default"} ghost block size={"small"}>
-              Lock
-            </Button>
-          </LockButtonContainer>
-        </FlexContainer>
+      <HDivider />
 
-        <HDivider />
+      <SearchContainer>
+        <SearchIcon />
+        <div style={{ flexGrow: 1 }}>
+          <SearchInput placeholder={"Search Accounts"} bordered={false} />
+        </div>
+      </SearchContainer>
 
-        <SearchContainer>
-          <SearchIcon />
+      <HDivider />
 
-          <div style={{ flexGrow: 1 }}>
-            <SearchInput placeholder={"Search Accounts"} bordered={false} />
-          </div>
-        </SearchContainer>
+      <AccountItem checked={true} />
 
-        <HDivider />
+      <AccountItem checked={false} />
 
-        <AccountItem checked={true} />
+      <HDivider />
 
-        <AccountItem checked={false} />
+      <MenuItem icon={() => <PlusIcon />} content={"Create Account"} />
 
-        <HDivider />
+      <MenuItem icon={() => <DownloadIcon />} content={"Import Account"} />
 
-        <MenuItem icon={() => <PlusIcon />} content={"Create Account"} />
+      <MenuItem icon={() => <ApiIcon />} content={"Connect Hardware Wallet"} />
 
-        <MenuItem icon={() => <DownloadIcon />} content={"Import Account"} />
+      <HDivider />
 
-        <MenuItem
-          icon={() => <ApiIcon />}
-          content={"Connect Hardware Wallet"}
-        />
+      <MenuItem icon={() => <ExclamationIcon />} content={"Info & Help"} />
 
-        <HDivider />
-
-        <MenuItem icon={() => <ExclamationIcon />} content={"Info & Help"} />
-
-        <MenuItem icon={() => <SettingIcon />} content={"Settings"} />
-      </Container>
-    </>
+      <MenuItem icon={() => <SettingIcon />} content={"Settings"} />
+    </Container>
   );
 };
 
@@ -95,10 +88,11 @@ const LockButtonContainer = styled("div", {
 const SearchContainer = styled("div", ({ $theme }) => ({
   display: "flex",
   alignItems: "center",
-  marginLeft: $theme.sizing[2],
-  marginTop: $theme.sizing[1],
-  marginRight: $theme.sizing[2],
+  paddingLeft: $theme.sizing[2],
+  paddingRight: $theme.sizing[2],
+  height: "45px",
   justifyContent: "space-between",
+  alignContent: "center",
 }));
 
 const SearchIcon = styled(SearchOutlined, ({ $theme }) => ({

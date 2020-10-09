@@ -21,16 +21,17 @@ export const AccountItem = (props: AccountItemProps) => {
 
         <AccountNameText>Account 1</AccountNameText>
       </TopContentContainer>
-
       <BalanceText>$504.40 USD</BalanceText>
     </ItemContainer>
   );
 };
 
-const ItemContainer = styled("div", ({ $theme }) => ({
-  paddingTop: $theme.sizing[2],
-  paddingBottom: $theme.sizing[2],
-}));
+const ItemContainer = styled("div", {
+  height: "45px",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+});
 
 const TopContentContainer = styled("div", {
   display: "flex",
@@ -40,14 +41,16 @@ const TopContentContainer = styled("div", {
 
 const CheckIcon = styled(CheckOutlined, ({ $theme }) => ({
   color: $theme.colors.white,
-  marginLeft: $theme.sizing[4],
+  width: "40px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 }));
 
-const CircleAvatar = styled("img", ({ $theme }) => ({
+const CircleAvatar = styled("img", () => ({
   width: "30px",
   height: "30px",
   borderRadius: "50%",
-  marginLeft: $theme.sizing[1],
 }));
 
 const AccountNameText = styled("div", ({ $theme }) => ({

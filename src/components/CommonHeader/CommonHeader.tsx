@@ -10,7 +10,6 @@ export const CommonHeader: React.FC = () => {
     <Container>
       <Logo size="small" />
       <Networks />
-      {/* account menu */}
       <Avator />
     </Container>
   );
