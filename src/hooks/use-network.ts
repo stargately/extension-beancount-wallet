@@ -24,7 +24,7 @@ export const useNetwork = (): NetworkState => {
   const { account } = useAccount();
   const [networkIndex, setNetworkIndex] = useRecoilState(networkState);
   const availableNetworks =
-    networks[account?.getCoinType() || "iotex"] || networks.default;
+    networks[account?.getCoinType() || "IOTX"] || networks.default;
   return {
     setNetwork: setNetworkIndex,
     availableNetworks,

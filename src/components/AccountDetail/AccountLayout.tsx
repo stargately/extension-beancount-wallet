@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "antd/lib/button";
 import Tabs from "antd/lib/tabs";
 import { styled } from "onefx/lib/styletron-react";
@@ -8,20 +8,10 @@ import { Balance } from "./Balance";
 import { CommonHeader } from "../CommonHeader";
 
 import { useAccount, useNetwork } from "../../hooks";
-import { walletSingleton } from "../../wallet-core";
 
 const { TabPane } = Tabs;
 export const AccountLayout = () => {
-  const { address, account, setAddress, accounts } = useAccount();
-  // TODO(tian): should remove but mock new account for now
-  useEffect(() => {
-    (async () => {
-      await walletSingleton.createAccount("Mock acct 1");
-      const acct = await walletSingleton.getAccount();
-      const addr = await acct!.getAddress();
-      setAddress(addr);
-    })();
-  }, [setAddress]);
+  const { address, account, accounts } = useAccount();
   const [txHash, setTxHash] = useState("");
   const { current } = useNetwork();
   return (

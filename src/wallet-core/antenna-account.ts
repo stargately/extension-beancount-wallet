@@ -35,7 +35,7 @@ export class AntennaAccount implements IAccount {
     providers: Array<IProviderSource> = iotexNetworks
   ) {
     this.name = name;
-    this.type = "iotex";
+    this.type = "IOTX";
     this.antenna = new Antenna(providers[0].uri);
     if (privateKey) {
       this.privateKey = privateKey;
@@ -83,7 +83,7 @@ export class AntennaAccount implements IAccount {
   }
 
   getCoinType(): CoinType {
-    return "iotex";
+    return "IOTX";
   }
 
   getActions(): Promise<{ actionInfo: Action[] }> {

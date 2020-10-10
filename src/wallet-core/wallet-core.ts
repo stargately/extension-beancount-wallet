@@ -23,7 +23,7 @@ export type Action = IActionInfo;
 // TODO(di): later remove, should define for different coin to implement
 export type AccountMeta = IAccountMeta;
 
-export type CoinType = "iotex";
+export type CoinType = "IOTX";
 
 // TODO(di): later remove, should define for different coin to implement
 export type IGetActionsRequest = {
@@ -75,9 +75,9 @@ export class WalletCore {
   addAccount(
     name: string,
     privateKey: string,
-    coinType: CoinType = "iotex"
+    coinType: CoinType = "IOTX"
   ): string {
-    if (coinType !== "iotex") {
+    if (coinType !== "IOTX") {
       throw new Error(`unimplemented coin type ${coinType}`);
     }
     const acc = new AntennaAccount(name, privateKey);
@@ -91,7 +91,7 @@ export class WalletCore {
     this.accounts.splice(idx, 1);
   }
 
-  createAccount(name: string, _ = "iotex"): string {
+  createAccount(name: string, _ = "IOTX"): string {
     const acc = new AntennaAccount(name);
     const addr = acc.getAddress();
     this.accounts.push(acc);
