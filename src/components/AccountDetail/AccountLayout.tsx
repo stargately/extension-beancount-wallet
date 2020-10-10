@@ -49,11 +49,19 @@ export const AccountLayout = () => {
         </Button>
       </ButtonGroups>
       <Paragraph>{txHash}</Paragraph>
-      <Tabs centered={true} size="large">
-        <TabPane tab="Assets" key="1" style={{ textAlign: "center" }}>
+      <Tabs centered={true} size="large" tabBarStyle={{ width: "100%" }}>
+        <TabPane
+          tab="Assets"
+          key="1"
+          style={{ textAlign: "center", width: "50%" }}
+        >
           Assets
         </TabPane>
-        <TabPane tab="Activity" key="2" style={{ textAlign: "center" }}>
+        <TabPane
+          tab="Activity"
+          key="2"
+          style={{ textAlign: "center", width: "50%" }}
+        >
           Activity
         </TabPane>
       </Tabs>

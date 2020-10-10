@@ -13,7 +13,7 @@ export const TransferTokenForm: React.FC = () => {
   const [form] = Form.useForm();
 
   return (
-    <CreatePasswordWrap>
+    <Container>
       <Form
         form={form}
         name="basic"
@@ -47,7 +47,7 @@ export const TransferTokenForm: React.FC = () => {
           </StyledRow>
         </Form.Item>
       </Form>
-    </CreatePasswordWrap>
+    </Container>
   );
 };
 
@@ -60,6 +60,7 @@ const StyledRow = styled(Row, ({ $theme }) => ({
   alignItems: "center",
   padding: `${$theme.sizing[2]} 0`,
 }));
-const CreatePasswordWrap = styled("div", {
+const Container = styled("div", {
   textAlign: "left",
+  padding: "16px",
 });
