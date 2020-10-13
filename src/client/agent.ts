@@ -19,7 +19,7 @@ export interface Response {
 }
 
 export interface ServerHandler {
-  (req: Request, cb: (res: Response) => void): void;
+  (req: Request, cb: (res?: any) => void): void;
 }
 
 export class Client {
@@ -36,12 +36,12 @@ export class Client {
       }
       const callbacks = this.callbackQueen.get(uid);
       if (callbacks) {
-        res.isOk ? callbacks[0](res) : callbacks[1](res);
+        res.isOk ? callbacks[0](res.payload) : callbacks[1](res.payload);
       }
     });
   }
 
-  async sendRequest(type: string, payload: any) {
+  async sendRequest(type: string, payload?: any) {
     return new Promise((resolve, reject) => {
       const req: Request = { uid: uuid(), type, payload };
       this.callbackQueen.set(req.uid, [resolve, reject]);
@@ -63,10 +63,15 @@ export class Server {
 
   dispatch(req: Request) {
     const handler = this.handlers.get(req.type);
-    handler?.call(this, req, this.sendResponse.bind(this));
+    handler?.call(this, req, this.sendResponse.bind(this, req));
   }
 
-  sendResponse(res: Response) {
-    this.port.postMessage(res);
+  sendResponse(req: Request, res: any) {
+    const data: Response = {
+      uid: req.uid,
+      isOk: !(res instanceof Error),
+      payload: res,
+    };
+    this.port.postMessage(data);
   }
 }

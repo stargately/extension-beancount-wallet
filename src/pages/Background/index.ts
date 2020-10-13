@@ -1,13 +1,21 @@
+import "../../assets/img/icon-34.png";
+import "../../assets/img/icon-128.png";
+
+import extension from "extensionizer";
 import { ExtensionStore } from "../../storage/local-store";
+import { StoreServer } from "../../client/store";
 
 console.log("This is the background page.");
 console.log("Put the background scripts here.");
 // eslint-disable-next-line no-undef
-chrome.runtime.onInstalled.addListener(() => {
+extension.runtime.onInstalled.addListener(() => {
   console.log("App installed");
 });
 
-// chrome.runtime.onConnect.addListener((port) => {});
+extension.runtime.onConnect.addListener((port) => {
+  // eslint-disable-next-line
+  new StoreServer(port);
+});
 
 const localStore = new ExtensionStore();
 const isDev = process.env.NODE_CONFIG_ENV === "dev";
