@@ -3,7 +3,7 @@
   "permissions": ["storage"],
   "options_page": "options.html",
   "background": {
-    "scripts": ["./pages/Background/index.js"],
+    "scripts": ["./background.bundle.js"],
     "persistent": true
   },
   "browser_action": {

@@ -37,7 +37,7 @@ var options = {
     newtab: path.join(__dirname, "src", "pages", "Newtab", "index.tsx"),
     options: path.join(__dirname, "src", "pages", "Options", "index.tsx"),
     popup: path.join(__dirname, "src", "pages", "Popup", "index.tsx"),
-    background: path.join(__dirname, "src", "pages", "Background", "index.js"),
+    background: path.join(__dirname, "src", "pages", "Background", "index.ts"),
     contentScript: path.join(__dirname, "src", "pages", "Content", "index.js"),
   },
   chromeExtensionBoilerplate: {

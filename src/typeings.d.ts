@@ -11,9 +11,3 @@ declare module "*.gif";
 declare module "*.bmp";
 declare module "*.tiff";
 declare module "omit.js";
-
-declare let chrome: Chrome;
-interface Chrome {
-  func: () => void;
-  prop: string;
-}

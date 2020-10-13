@@ -1,5 +1,3 @@
-import "../../assets/img/icon-34.png";
-import "../../assets/img/icon-128.png";
 import { ExtensionStore } from "../../storage/local-store";
 
 console.log("This is the background page.");
@@ -9,10 +7,12 @@ chrome.runtime.onInstalled.addListener(() => {
   console.log("App installed");
 });
 
+// chrome.runtime.onConnect.addListener((port) => {});
+
 const localStore = new ExtensionStore();
 const isDev = process.env.NODE_CONFIG_ENV === "dev";
 if (isDev) {
-  global.getState = localStore.get.bind(localStore);
+  (global as any).getState = localStore.get.bind(localStore);
 }
 
 async function initialize() {
