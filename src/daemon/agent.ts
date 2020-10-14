@@ -45,8 +45,8 @@ export class Client {
     });
   }
 
-  async sendRequest(type: string, payload?: any) {
-    return new Promise((resolve, reject) => {
+  async sendRequest<T>(type: string, payload?: any): Promise<T> {
+    return new Promise<T>((resolve, reject) => {
       const req: Request = { uid: uuid(), type, payload };
       this.callbackQueen.set(req.uid, [resolve, reject]);
       this.port.postMessage(req);

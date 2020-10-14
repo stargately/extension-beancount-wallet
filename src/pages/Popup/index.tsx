@@ -1,19 +1,25 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { render } from "react-dom";
 import "./index.css";
-import { Popup } from "./Popup";
-import ClientAgent from "../../daemon/client";
+import { RecoilRoot } from "recoil";
+import { Popup as App } from "./Popup";
+import DaemonClient, { getSingleton } from "../../daemon/client";
+import { StateObserver } from "./state";
 
 const port = chrome.runtime.connect({ name: "Popup" });
-const client = new ClientAgent(port);
+const client = new DaemonClient(port);
 
-client.getAppState().then((state) => {
-  console.log("Inital state is", state);
-  render(
-    <Popup
-      initalState={state || { count: 0 }}
-      syncState={(s) => client.setAppState(s)}
-    />,
-    window.document.querySelector("#app-container")
-  );
-});
+getSingleton(client)
+  .getAppState()
+  .then((state) => {
+    console.log("Inital state is", state);
+    render(
+      <RecoilRoot>
+        <Fragment>
+          <StateObserver></StateObserver>
+          <App />
+        </Fragment>
+      </RecoilRoot>,
+      window.document.querySelector("#app-container")
+    );
+  });
