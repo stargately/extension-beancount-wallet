@@ -2,17 +2,17 @@ import React from "react";
 import { render } from "react-dom";
 import "./index.css";
 import { Popup } from "./Popup";
-import { StoreClient } from "../../client/store";
+import ClientAgent from "../../daemon/client";
 
 const port = chrome.runtime.connect({ name: "Popup" });
-const client = new StoreClient(port);
+const client = new ClientAgent(port);
 
-client.getState().then((state) => {
+client.getAppState().then((state) => {
   console.log("Inital state is", state);
   render(
     <Popup
       initalState={state || { count: 0 }}
-      syncState={(s) => client.setState(s)}
+      syncState={(s) => client.setAppState(s)}
     />,
     window.document.querySelector("#app-container")
   );

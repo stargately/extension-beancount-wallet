@@ -1,5 +1,4 @@
-const extension = require("extensionizer");
-
+import extension from "extensionizer";
 /**
  * Returns an Error if extension.runtime.lastError is present
  * this is a workaround for the non-standard error object that's used
@@ -11,7 +10,7 @@ function checkForError() {
     return undefined;
   }
   // if it quacks like an Error, its an Error
-  if (lastError.stack && lastError.message) {
+  if (lastError && lastError.message) {
     return lastError;
   }
   // repair incomplete error object (eg chromium v77)
@@ -21,7 +20,7 @@ function checkForError() {
 /**
  * A wrapper around the extension's storage local API
  */
-export class ExtensionStore {
+export class LocalStore {
   isSupported: boolean;
 
   /**
@@ -108,3 +107,5 @@ export class ExtensionStore {
 function isEmpty(obj: any) {
   return Object.keys(obj).length === 0;
 }
+
+export default new LocalStore();

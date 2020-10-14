@@ -22,6 +22,10 @@ export interface ServerHandler {
   (req: Request, cb: (res?: any) => void): void;
 }
 
+export interface HandlerGroup {
+  [prop: string]: ServerHandler;
+}
+
 export class Client {
   public callbackQueen: Map<
     number,
@@ -50,28 +54,48 @@ export class Client {
   }
 }
 
-export class Server {
+export class Daemon {
   handlers: Map<string, ServerHandler> = new Map();
 
-  constructor(public port: chrome.runtime.Port) {
-    port.onMessage.addListener((req: Request) => this.dispatch(req));
+  connectedPorts: Set<chrome.runtime.Port> = new Set();
+
+  connect(port: chrome.runtime.Port) {
+    this.connectedPorts.add(port);
+    port.onMessage.addListener((req: Request, p: chrome.runtime.Port) =>
+      this.dispatch(req, p)
+    );
+    port.onDisconnect.addListener(() => {
+      console.info(`Port ${port.name} is disconnected`);
+      this.connectedPorts.delete(port);
+    });
   }
 
   register(type: string, handler: ServerHandler) {
     this.handlers.set(type, handler);
   }
 
-  dispatch(req: Request) {
-    const handler = this.handlers.get(req.type);
-    handler?.call(this, req, this.sendResponse.bind(this, req));
+  registerHandlers(handlers: HandlerGroup) {
+    const keys = Object.keys(handlers);
+    keys.forEach((key) => {
+      this.register(key, handlers[key]);
+    });
   }
 
-  sendResponse(req: Request, res: any) {
-    const data: Response = {
-      uid: req.uid,
-      isOk: !(res instanceof Error),
-      payload: res,
-    };
-    this.port.postMessage(data);
+  dispatch(req: Request, port: chrome.runtime.Port) {
+    if (this.connectedPorts.has(port)) {
+      const handler = this.handlers.get(req.type);
+      handler?.call(this, req, this.sendResponse.bind(this, port, req));
+    }
+  }
+
+  sendResponse(port: chrome.runtime.Port, req: Request, res: any) {
+    if (this.connectedPorts.has(port)) {
+      const data: Response = {
+        uid: req.uid,
+        isOk: !(res instanceof Error),
+        payload: res,
+      };
+      port.postMessage(data);
+    }
   }
 }
