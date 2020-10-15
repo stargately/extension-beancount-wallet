@@ -1,17 +1,19 @@
 import React from "react";
 import { withRouter } from "react-router";
+import { message } from "antd";
 
 import { UnlockForm } from "./UnlockForm";
+import { getSingleton } from "../../daemon/client";
 
-import { useWallet } from "../../hooks";
-
-export const Unlock = withRouter(() => {
-  const { unlock } = useWallet();
-  const onFinish = (values: { password: string }) => {
-    const result = unlock(values.password);
-    if (result) {
-      // TODO
-      console.log(`unlocked wallet ${result}`);
+export const Unlock = withRouter(({ history }) => {
+  const onFinish = async (values: { password: string }) => {
+    console.log("onFinish");
+    const isOk = await getSingleton().walletVarifyPasswd(values.password);
+    if (isOk) {
+      await getSingleton().walletUnlock(values.password);
+      history.push("/account");
+    } else {
+      message.info("password incorrect");
     }
   };
 

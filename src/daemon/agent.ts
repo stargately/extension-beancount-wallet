@@ -1,3 +1,5 @@
+import { EventEmitter } from "events";
+
 let _uid = 0;
 
 function uuid() {
@@ -54,7 +56,7 @@ export class Client {
   }
 }
 
-export class Daemon {
+export class Daemon extends EventEmitter {
   handlers: Map<string, ServerHandler> = new Map();
 
   connectedPorts: Set<chrome.runtime.Port> = new Set();
@@ -67,6 +69,7 @@ export class Daemon {
     port.onDisconnect.addListener(() => {
       console.info(`Port ${port.name} is disconnected`);
       this.connectedPorts.delete(port);
+      this.emit("portDisconnect", port);
     });
   }
 

@@ -4,11 +4,14 @@ import { useRecoilValue } from "recoil";
 
 import { Welcome } from "./Welcome";
 import Loading from "../Loading";
-import { walletInitiated } from "../../pages/Popup/state";
+import { walletInitiated, walletLocked } from "../../pages/Popup/state";
 
 const Container = () => {
   const initiated = useRecoilValue(walletInitiated);
-  // const locked = useRecoilValue(walletLocked)
+  const locked = useRecoilValue(walletLocked);
+  if (initiated && locked) {
+    return <Redirect to="/unlock"></Redirect>;
+  }
   if (initiated) {
     return <Redirect to="/account"></Redirect>;
   }

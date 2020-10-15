@@ -133,11 +133,21 @@ export class WalletCore {
   }
 
   get isLocked(): boolean {
-    return !this.keyringController.memStore.getState().isUnlocked;
+    return !(
+      this.keyringController &&
+      this.keyringController.memStore.getState().isUnlocked
+    );
   }
 
   get isUnLocked(): boolean {
-    return this.keyringController.memStore.getState().isUnlocked;
+    return (
+      this.keyringController &&
+      this.keyringController.memStore.getState().isUnlocked
+    );
+  }
+
+  async verifyPassword(password: string): Promise<boolean> {
+    return this.keyringController.verifyPassword(password);
   }
 
   async lock(): Promise<void> {

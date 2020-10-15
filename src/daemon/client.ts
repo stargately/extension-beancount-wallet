@@ -7,6 +7,7 @@ import {
   WALLET_LOCK,
   WALLET_INITIIATED,
   WALLET_LOCKED,
+  WALLET_VERIFY_PASSWD,
 } from "./wallet";
 
 export default class DaemonClient {
@@ -42,6 +43,10 @@ export default class DaemonClient {
 
   async walletInitiated() {
     return this.agent.sendRequest<boolean>(WALLET_INITIIATED);
+  }
+
+  async walletVarifyPasswd(password: string) {
+    return this.agent.sendRequest<boolean>(WALLET_VERIFY_PASSWD, password);
   }
 }
 
