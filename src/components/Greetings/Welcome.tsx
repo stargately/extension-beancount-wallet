@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "onefx/lib/styletron-react";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 import Button from "antd/lib/button";
 import { Logo } from "../../styles/logo";
 import { CommonMargin } from "../../styles/common-margin";
