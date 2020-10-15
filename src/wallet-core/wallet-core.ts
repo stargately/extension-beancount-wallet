@@ -122,9 +122,10 @@ export class WalletCore {
     await this.keyringController.createNewVaultAndKeychain(password);
     const addr = this.createAccount("IoTeX account 1");
     const acc = this.getAccount(addr);
-    await this.keyringController.addNewKeyring("Simple Key Pair", [
-      acc?.privateKey,
-    ]);
+    await this.keyringController.addNewKeyring(
+      "Simple Key Pair",
+      acc?.privateKey && [acc?.privateKey]
+    );
   }
 
   get isInitiated(): boolean {
