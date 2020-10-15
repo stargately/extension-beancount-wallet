@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router";
+import { withRouter } from "react-router-dom";
 import message from "antd/lib/message";
 import { CreatePasswordForm } from "./CreatePasswordForm";
 import { getSingleton } from "../../daemon/client";

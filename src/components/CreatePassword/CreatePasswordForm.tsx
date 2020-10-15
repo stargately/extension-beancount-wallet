@@ -6,7 +6,7 @@ import Input from "antd/lib/input";
 import Button from "antd/lib/button";
 import Checkbox from "antd/lib/checkbox";
 import { ArrowLeftOutlined } from "@ant-design/icons";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 import { CommonMargin } from "../../styles/common-margin";
 import { fonts } from "../../styles/style-font";
