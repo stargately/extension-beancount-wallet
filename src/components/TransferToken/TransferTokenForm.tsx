@@ -24,7 +24,7 @@ export const TransferTokenForm: React.FC = () => {
       >
         <StyledRow>
           <H3>Send Tokens</H3>
-          <Link to={"/"}>Cancel</Link>
+          <Link to="/">Cancel</Link>
         </StyledRow>
 
         <AddRecipient />

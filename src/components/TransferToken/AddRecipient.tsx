@@ -24,7 +24,7 @@ export const AddRecipient: React.FC = () => {
           },
         ]}
       >
-        <Input size={"large"} placeholder="Address (io...)" />
+        <Input size="large" placeholder="Address (io...)" />
       </Form.Item>
     </div>
   );

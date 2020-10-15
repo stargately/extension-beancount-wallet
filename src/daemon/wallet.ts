@@ -15,13 +15,13 @@ export default {
     await walletSingleton.createKeyringController(payload);
     cb();
   },
-  [WALLET_UNLOCK]: (req, cb) => {
+  [WALLET_UNLOCK]: async (req, cb) => {
     const { payload } = req;
-    const isOK = walletSingleton.unlock(payload);
+    const isOK = await walletSingleton.unlock(payload);
     cb(isOK);
   },
-  [WALLET_LOCK]: (_, cb) => {
-    walletSingleton.lock();
+  [WALLET_LOCK]: async (_, cb) => {
+    await walletSingleton.lock();
     cb();
   },
   [WALLET_LOCKED]: (_, cb) => {
@@ -30,9 +30,9 @@ export default {
   [WALLET_INITIIATED]: (_, cb) => {
     cb(walletSingleton.isInitiated);
   },
-  [WALLET_VERIFY_PASSWD]: (req, cb) => {
+  [WALLET_VERIFY_PASSWD]: async (req, cb) => {
     const { payload } = req;
-    const isOK = walletSingleton.verifyPassword(payload);
+    const isOK = await walletSingleton.verifyPassword(payload);
     cb(isOK);
   },
 } as HandlerGroup;
