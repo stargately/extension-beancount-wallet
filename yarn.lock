@@ -1285,7 +1285,7 @@
     "@emotion/utils" "0.11.3"
     "@emotion/weak-memoize" "0.2.5"
 
-"@emotion/core@^10.0.20":
+"@emotion/core@^10.0.20", "@emotion/core@^10.0.22":
   version "10.0.35"
   resolved "https://registry.npm.taobao.org/@emotion/core/download/@emotion/core-10.0.35.tgz#513fcf2e22cd4dfe9d3894ed138c9d7a859af9b3"
   integrity sha1-UT/PLiLNTf6dOJTtE4ydeoWa+bM=
@@ -6805,7 +6805,7 @@ events@^1.1.1:
   resolved "https://registry.npm.taobao.org/events/download/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
   integrity sha1-nr23Y1rQmccNzEwqH1AEKI6L2SQ=
 
-events@^3.0.0, events@^3.2.0:
+events@^3.0.0:
   version "3.2.0"
   resolved "https://registry.npm.taobao.org/events/download/events-3.2.0.tgz#93b87c18f8efcd4202a461aec4dfc0556b639379"
   integrity sha1-k7h8GPjvzUICpGGuxN/AVWtjk3k=
@@ -12682,6 +12682,13 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npm.taobao.org/react-lifecycles-compat/download/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha1-TxonOv38jzSIqMUWv9p4+HI1I2I=
+
+react-loading-skeleton@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.npm.taobao.org/react-loading-skeleton/download/react-loading-skeleton-2.1.1.tgz#2c075ea9683587c163408c8eec0703047c4203b1"
+  integrity sha1-LAdeqWg1h8FjQIyO7AcDBHxCA7E=
+  dependencies:
+    "@emotion/core" "^10.0.22"
 
 react-popper-tooltip@^2.11.0:
   version "2.11.1"
