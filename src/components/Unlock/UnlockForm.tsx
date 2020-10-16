@@ -26,11 +26,11 @@ export const UnlockForm: React.FC<UnlockFormProps> = ({ onFinish }) => {
       <Form
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{ Password: "" }}
+        initialValues={{ password: "" }}
       >
         <Form.Item
           label="Password"
-          name="Password"
+          name="password"
           rules={[{ required: true, message: "Please input your Password!" }]}
         >
           <Input.Password size="large" placeholder="password" />
