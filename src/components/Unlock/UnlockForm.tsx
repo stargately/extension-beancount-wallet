@@ -23,25 +23,29 @@ export const UnlockForm: React.FC<UnlockFormProps> = ({ onFinish }) => {
       <Logo />
       <CommonMargin />
       <Title>Welcome Back!</Title>
-      <Form layout="vertical" onFinish={onFinish}>
+      <Form
+        layout="vertical"
+        onFinish={onFinish}
+        initialValues={{ password: "" }}
+      >
         <Form.Item
           label="Password"
-          name="Password"
+          name="password"
           rules={[{ required: true, message: "Please input your Password!" }]}
         >
-          <Input.Password size={"large"} placeholder="password" />
+          <Input.Password size="large" placeholder="password" />
+        </Form.Item>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            size="large"
+            style={{ width: "100%" }}
+          >
+            Unlock
+          </Button>
         </Form.Item>
       </Form>
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          size="large"
-          style={{ width: "100%" }}
-        >
-          Unlock
-        </Button>
-      </Form.Item>
     </Container>
   );
 };

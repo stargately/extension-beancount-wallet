@@ -7,7 +7,6 @@ import { getSingleton } from "../../daemon/client";
 
 export const Unlock = withRouter(({ history }) => {
   const onFinish = async (values: { password: string }) => {
-    console.log("onFinish");
     const isOk = await getSingleton().walletVarifyPasswd(values.password);
     if (isOk) {
       await getSingleton().walletUnlock(values.password);

@@ -47,21 +47,21 @@ export const TransactionFee: React.FC<Props> = (props) => {
         {...formItemLayout}
         label="Transaction Fee"
         name="transactionFee"
-        initialValue={"average"}
+        initialValue="average"
         rules={[{ required: true }]}
       >
-        <Radio.Group size={"large"} onChange={onChangeSpeed}>
+        <Radio.Group size="large" onChange={onChangeSpeed}>
           <Radio.Button value="slow">Slow</Radio.Button>
           <Radio.Button value="average">Average</Radio.Button>
           <Radio.Button value="fast">Fast</Radio.Button>
         </Radio.Group>
       </Form.Item>
 
-      <Form.Item hidden={true} name={"gasPrice"} initialValue={baseGasPrice}>
+      <Form.Item hidden={true} name="gasPrice" initialValue={baseGasPrice}>
         <Input></Input>
       </Form.Item>
 
-      <Form.Item hidden={true} name={"gasLimit"} initialValue={baseGasLimit}>
+      <Form.Item hidden={true} name="gasLimit" initialValue={baseGasLimit}>
         <Input></Input>
       </Form.Item>
     </>

@@ -20,7 +20,7 @@ export const MyAccounts = () => {
       <FlexContainer>
         <MyAccountsText>My Accounts</MyAccountsText>
         <LockButtonContainer>
-          <Button type={"default"} ghost block size={"small"}>
+          <Button type="default" ghost block size="small">
             Lock
           </Button>
         </LockButtonContainer>
@@ -31,7 +31,7 @@ export const MyAccounts = () => {
       <SearchContainer>
         <SearchIcon />
         <div style={{ flexGrow: 1 }}>
-          <SearchInput placeholder={"Search Accounts"} bordered={false} />
+          <SearchInput placeholder="Search Accounts" bordered={false} />
         </div>
       </SearchContainer>
 
@@ -43,17 +43,17 @@ export const MyAccounts = () => {
 
       <HDivider />
 
-      <MenuItem icon={() => <PlusIcon />} content={"Create Account"} />
+      <MenuItem icon={() => <PlusIcon />} content="Create Account" />
 
-      <MenuItem icon={() => <DownloadIcon />} content={"Import Account"} />
+      <MenuItem icon={() => <DownloadIcon />} content="Import Account" />
 
-      <MenuItem icon={() => <ApiIcon />} content={"Connect Hardware Wallet"} />
+      <MenuItem icon={() => <ApiIcon />} content="Connect Hardware Wallet" />
 
       <HDivider />
 
-      <MenuItem icon={() => <ExclamationIcon />} content={"Info & Help"} />
+      <MenuItem icon={() => <ExclamationIcon />} content="Info & Help" />
 
-      <MenuItem icon={() => <SettingIcon />} content={"Settings"} />
+      <MenuItem icon={() => <SettingIcon />} content="Settings" />
     </Container>
   );
 };

@@ -14,9 +14,9 @@ export const AssetSelect: React.FC = () => {
       {...formItemLayout}
       label="Asset"
       name="asset"
-      initialValue={"IOTX"}
+      initialValue="IOTX"
     >
-      <Select size={"large"}>
+      <Select size="large">
         <Option value="IOTX">
           <Row gutter={8}>
             <Col>

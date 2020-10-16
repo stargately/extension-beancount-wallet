@@ -52,7 +52,7 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
             { required: true, message: "Please input your New Password!" },
           ]}
         >
-          <Input.Password size={"large"} />
+          <Input.Password size="large" />
         </Form.Item>
 
         <Form.Item
@@ -76,7 +76,7 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
             }),
           ]}
         >
-          <Input.Password size={"large"} />
+          <Input.Password size="large" />
         </Form.Item>
 
         <Form.Item
@@ -96,7 +96,7 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
         >
           <Checkbox>
             I have read and agree to the{" "}
-            <a href={"https://beancount.io/page/legal/terms-of-service/"}>
+            <a href="https://beancount.io/page/legal/terms-of-service/">
               terms of service
             </a>
           </Checkbox>
