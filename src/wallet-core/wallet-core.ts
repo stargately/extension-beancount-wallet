@@ -147,7 +147,14 @@ export class WalletCore {
   }
 
   async verifyPassword(password: string): Promise<boolean> {
-    return this.keyringController.verifyPassword(password);
+    try {
+      // password incorrent will throw Error('Incorrect password')
+      await this.keyringController.verifyPassword(password);
+    } catch (e) {
+      console.warn(e);
+      return false;
+    }
+    return true;
   }
 
   async lock(): Promise<void> {

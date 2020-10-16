@@ -16,7 +16,7 @@ export const Amount: React.FC = () => {
         },
       ]}
     >
-      <Input size={"large"} />
+      <Input size="large" />
     </Form.Item>
   );
 };

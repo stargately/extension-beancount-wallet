@@ -24,7 +24,7 @@ const LogoWithStyle = styled("img", (props: LogoStypeTypeProps) => {
 });
 
 export const Logo: React.FC<LogoStyleProps> = ({ size = "large" }) => (
-  <Row justify={"center"}>
+  <Row justify="center">
     <Col>
       <LogoWithStyle src={logo} $size={size} />
     </Col>
