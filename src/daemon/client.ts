@@ -1,6 +1,6 @@
 // Encapsulation all type request
 import { Client } from "./agent";
-import { GET_STATE, SET_STATE } from "./store";
+import { GET_STATE, SET_STATE, UPDATE_STATE } from "./store";
 import {
   CREATE_PASSWORD,
   WALLET_UNLOCK,
@@ -18,11 +18,15 @@ export default class DaemonClient {
   }
 
   async getAppState() {
-    await this.agent.sendRequest(GET_STATE);
+    return this.agent.sendRequest<Record<string, unknown>>(GET_STATE);
   }
 
   async setAppState(payload: any) {
     await this.agent.sendRequest(SET_STATE, payload);
+  }
+
+  async updateAppState(payload: any) {
+    await this.agent.sendRequest(UPDATE_STATE, payload);
   }
 
   async createPassword(password: string) {
