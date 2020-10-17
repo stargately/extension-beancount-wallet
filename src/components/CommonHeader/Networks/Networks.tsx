@@ -5,26 +5,19 @@ import Menu from "antd/lib/menu";
 import CheckOutlined from "@ant-design/icons/CheckOutlined";
 import { useNetwork } from "../../../hooks";
 
-export const Networks: React.FC = () => {
+type Props = {
+  setNetwork?: (i: number) => void;
+};
+
+export const Networks: React.FC<Props> = (props: Props) => {
   const { current, availableNetworks, networkIndex } = useNetwork();
-  const handleButtonClick = () => {
-    // TODO
-  };
-  const handleMenuClick = () => {
-    // TODO
+  const onClick = (e: any) => {
+    const { key } = e;
+    const index = availableNetworks.findIndex((net) => net.uri === key);
+    props.setNetwork && props.setNetwork(index);
   };
   const menu = (
-    <Menu onClick={handleMenuClick}>
-      <div
-        style={{
-          textAlign: "center",
-          borderBottom: "1px solid #eee",
-          padding: "8px 0 12px",
-          fontWeight: "bold",
-        }}
-      >
-        Networks
-      </div>
+    <Menu onClick={onClick}>
       {availableNetworks?.map((net, index) => (
         <Menu.Item key={net.uri}>
           {index === networkIndex && <CheckOutlined />}
@@ -35,12 +28,10 @@ export const Networks: React.FC = () => {
   );
 
   return (
-    <NetworkWrap>
-      <Dropdown.Button onClick={handleButtonClick} overlay={menu}>
-        {current.name}
-      </Dropdown.Button>
-    </NetworkWrap>
+    <Container>
+      <Dropdown.Button overlay={menu}>{current.name}</Dropdown.Button>
+    </Container>
   );
 };
 
-const NetworkWrap = styled("div", {});
+const Container = styled("div", {});

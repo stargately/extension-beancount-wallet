@@ -12902,10 +12902,10 @@ rechoir@^0.6.2:
   dependencies:
     resolve "^1.1.6"
 
-recoil@^0.0.10:
-  version "0.0.10"
-  resolved "https://registry.npm.taobao.org/recoil/download/recoil-0.0.10.tgz#679ab22306f559f8a63c46fd5ff5241539f9248f"
-  integrity sha1-Z5qyIwb1WfimPEb9X/UkFTn5JI8=
+recoil@^0.0.13:
+  version "0.0.13"
+  resolved "https://registry.npm.taobao.org/recoil/download/recoil-0.0.13.tgz#23e6d63135c07d8defbd91aaa35dca94ec5c15a6"
+  integrity sha1-I+bWMTXAfY3vvZGqo13KlOxcFaY=
 
 recursive-readdir@2.2.2:
   version "2.2.2"

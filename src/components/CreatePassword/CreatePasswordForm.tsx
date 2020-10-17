@@ -115,7 +115,7 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
               }
               loading={loading}
             >
-              Create
+              {loading ? null : "Create"}
             </Button>
           )}
         </Form.Item>

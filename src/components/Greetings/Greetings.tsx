@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 
 import { Welcome } from "./Welcome";
 import Loading from "../Loading";
-import { walletInitiated, walletLocked } from "../../pages/Popup/state";
+import { walletInitiated, walletLocked } from "../../recoil/selector";
 
 const Container = () => {
   const initiated = useRecoilValue(walletInitiated);

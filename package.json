@@ -54,7 +54,7 @@
     "react-loading-skeleton": "^2.1.1",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.2.0",
-    "recoil": "^0.0.10",
+    "recoil": "^0.0.13",
     "styletron-engine-atomic": "1.4.6",
     "styletron-react": "5.2.7"
   },

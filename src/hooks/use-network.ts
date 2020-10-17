@@ -1,12 +1,7 @@
-import { atom, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { iotexNetworks } from "../wallet-core/antenna-account";
 import { useAccount } from "./use-account";
-
-// current account info
-const networkState = atom<number>({
-  key: "networkState",
-  default: 0,
-});
+import { networkState } from "../recoil/atom";
 
 const networks = {
   iotex: iotexNetworks,
