@@ -1,3 +1,4 @@
+// (Di) deprecated
 import recoil from "recoil";
 import { getSingleton } from "../../daemon/client";
 

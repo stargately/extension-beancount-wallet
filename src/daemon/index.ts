@@ -1,7 +1,7 @@
 import { Daemon } from "./agent";
 import storeHandlers from "./store";
 import walletHandlers from "./wallet";
-import { walletSingleton } from "../wallet-core";
+import { getWalletSingleton } from "../wallet-core";
 
 const s = new Daemon();
 s.registerHandlers(storeHandlers);
@@ -12,9 +12,9 @@ s.on("portDisconnect", (port: chrome.runtime.Port) => {
   if (
     port.name === "Popup" &&
     s.connectedPorts.size === 0 &&
-    walletSingleton.isInitiated
+    getWalletSingleton().isInitiated
   ) {
-    walletSingleton.lock();
+    getWalletSingleton().lock();
   }
 });
 

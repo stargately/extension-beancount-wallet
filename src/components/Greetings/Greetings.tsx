@@ -4,12 +4,12 @@ import { useRecoilValue } from "recoil";
 
 import { Welcome } from "./Welcome";
 import Loading from "../Loading";
-import { walletInitiated, walletLocked } from "../../recoil/selector";
+import { walletInitiated, walletKeyring } from "../../recoil/atom";
 
 const Container = () => {
   const initiated = useRecoilValue(walletInitiated);
-  const locked = useRecoilValue(walletLocked);
-  if (initiated && locked) {
+  const keyring = useRecoilValue(walletKeyring);
+  if (initiated && !keyring.isUnlocked) {
     return <Redirect to="/unlock"></Redirect>;
   }
   if (initiated) {

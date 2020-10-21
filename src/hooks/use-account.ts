@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import {
   IAccount,
   LeanAccount,
-  walletSingleton,
+  getWalletSingleton,
 } from "../wallet-core/wallet-core";
 
 // current account info
@@ -26,19 +26,19 @@ const useAccount = (): AccountState => {
   const createAccount = useCallback(
     (name: string) => {
       (async () => {
-        const addr = await walletSingleton.createAccount(name);
+        const addr = await getWalletSingleton().createAccount(name);
         setAddress(addr);
       })();
     },
     [setAddress]
   );
 
-  const accounts = walletSingleton.getAccounts();
+  const accounts = getWalletSingleton().getAccounts();
 
   return {
     address,
     accounts,
-    account: walletSingleton.getAccount(address),
+    account: getWalletSingleton().getAccount(address),
     createAccount,
     setAddress,
   };

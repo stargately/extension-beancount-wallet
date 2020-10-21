@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { atom, useRecoilState } from "recoil";
-import { walletSingleton } from "../wallet-core";
+import { getWalletSingleton } from "../wallet-core";
 import { WalletCore } from "../wallet-core/wallet-core";
 
 const isLockedState = atom<boolean>({
@@ -19,12 +19,12 @@ export const useWallet = (): walletState => {
   const [isLocked, setIsLocked] = useRecoilState(isLockedState);
 
   const unlock = async (password: string): Promise<boolean> => {
-    return walletSingleton.unlock(password);
+    return getWalletSingleton().unlock(password);
   };
 
   const createWallet = async (password: string): Promise<WalletCore> => {
-    await walletSingleton.createKeyringController(password);
-    return walletSingleton;
+    await getWalletSingleton().createNewVaultAndKeychain(password);
+    return getWalletSingleton();
   };
 
   useEffect(() => {
@@ -44,6 +44,6 @@ export const useWallet = (): walletState => {
     lock: isLocked,
     createWallet,
     unlock,
-    wallet: walletSingleton,
+    wallet: getWalletSingleton(),
   };
 };

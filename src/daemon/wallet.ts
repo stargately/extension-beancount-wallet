@@ -1,5 +1,5 @@
 import { HandlerGroup } from "./agent";
-import { walletSingleton } from "../wallet-core";
+import { getWalletSingleton } from "../wallet-core";
 
 export const CREATE_PASSWORD = "APP.CREATE_PASSWORD";
 export const WALLET_UNLOCK = "APP.WALLET_UNLOCK";
@@ -12,27 +12,27 @@ export const WALLET_VERIFY_PASSWD = "WALLET_VERIFY_PASSWD";
 export default {
   [CREATE_PASSWORD]: async (req, cb) => {
     const { payload } = req;
-    await walletSingleton.createKeyringController(payload);
+    await getWalletSingleton().createNewVaultAndKeychain(payload);
     cb();
   },
   [WALLET_UNLOCK]: async (req, cb) => {
     const { payload } = req;
-    const isOK = await walletSingleton.unlock(payload);
+    const isOK = await getWalletSingleton().unlock(payload);
     cb(isOK);
   },
   [WALLET_LOCK]: async (_, cb) => {
-    await walletSingleton.lock();
+    await getWalletSingleton().lock();
     cb();
   },
   [WALLET_LOCKED]: (_, cb) => {
-    cb(walletSingleton.isLocked);
+    cb(getWalletSingleton().isLocked);
   },
   [WALLET_INITIIATED]: (_, cb) => {
-    cb(walletSingleton.isInitiated);
+    cb(getWalletSingleton().isInitiated);
   },
   [WALLET_VERIFY_PASSWD]: async (req, cb) => {
     const { payload } = req;
-    const isOK = await walletSingleton.verifyPassword(payload);
+    const isOK = await getWalletSingleton().verifyPassword(payload);
     cb(isOK);
   },
 } as HandlerGroup;
