@@ -1,5 +1,4 @@
 import recoil from "recoil";
-import { getSingleton } from "../../daemon/client";
 
 export const passwordState = recoil.atom({
   key: "App.Password",
