@@ -42,3 +42,23 @@ test("lock keys", async (t) => {
     privateKey
   );
 });
+
+test("init with initState", async (t) => {
+  const keyringController = new KeyringController({});
+  await keyringController.createNewVaultAndKeychain("password");
+  const privateKey =
+    "98ba3472fce96b0135e7ad7923a0c6f9ee8ec98a039529752a3a6e4d43bc802a";
+  await keyringController.addNewKeyring("Simple Key Pair", [privateKey]);
+  const preState = keyringController.store.getState();
+  // a new keyring init with preState
+  const anotherKeyringController = new KeyringController({
+    initState: preState,
+  });
+  // decrypt to load mem status
+  await anotherKeyringController.submitPassword("password");
+  // should be the same
+  t.deepEqual(
+    anotherKeyringController.memStore.getState(),
+    keyringController.memStore.getState()
+  );
+});
