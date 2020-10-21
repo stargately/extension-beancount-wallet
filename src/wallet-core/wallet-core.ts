@@ -55,14 +55,20 @@ export interface IAccount {
   privateKey: string;
 }
 
+export type IinitState = any;
+
+//
 export class WalletCore {
   accounts: Array<IAccount>;
 
   keyringController: any;
 
-  constructor() {
+  constructor(initState?: IinitState) {
     this.accounts = [];
-    this.keyringController;
+    // should init with state from persist store
+    this.keyringController = new KeyringController({
+      initState,
+    });
   }
 
   getAccount(address?: string): IAccount | undefined {
@@ -117,8 +123,7 @@ export class WalletCore {
     return Promise.resolve(acc?.getAccountMeta());
   }
 
-  async createKeyringController(password: string): Promise<void> {
-    this.keyringController = new KeyringController({});
+  async createNewVaultAndKeychain(password: string): Promise<void> {
     await this.keyringController.createNewVaultAndKeychain(password);
     const addr = this.createAccount("IoTeX account 1");
     const acc = this.getAccount(addr);
@@ -128,8 +133,13 @@ export class WalletCore {
     );
   }
 
+  get encrypedStore(): any {
+    return this.keyringController.store.getState();
+  }
+
   get isInitiated(): boolean {
-    return Boolean(this.keyringController);
+    const { vault } = this.keyringController.store.getState();
+    return Boolean(vault);
   }
 
   get isLocked(): boolean {
@@ -166,4 +176,10 @@ export class WalletCore {
   }
 }
 
-export const walletSingleton = new WalletCore();
+let _walletSingleton: WalletCore;
+export function getWalletSingleton(initState?: IinitState): WalletCore {
+  if (!_walletSingleton) {
+    _walletSingleton = new WalletCore(initState);
+  }
+  return _walletSingleton;
+}
