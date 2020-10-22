@@ -3,15 +3,15 @@ import { render } from "react-dom";
 import "./index.css";
 import { RecoilRoot, MutableSnapshot } from "recoil";
 
-import DaemonClient, { getSingleton } from "../../daemon/client";
+import { clientSingleton } from "../../daemon/client";
 import { StateObserver } from "./state-observer";
 import { Popup as App } from "./Popup";
 import { queryAtomByKey } from "../../recoil/atom";
 
 const port = chrome.runtime.connect({ name: "Popup" });
-const client = new DaemonClient(port);
+clientSingleton.init(port);
 
-getSingleton(client)
+clientSingleton
   .getAppState()
   .then((state) => {
     const initializeState = (snapshot: MutableSnapshot) => {

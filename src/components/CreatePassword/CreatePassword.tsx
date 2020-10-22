@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import message from "antd/lib/message";
 import { CreatePasswordForm } from "./CreatePasswordForm";
-import { getSingleton } from "../../daemon/client";
+import { clientSingleton } from "../../daemon/client";
 
 type FormValues = {
   newPassword: string;
@@ -16,7 +16,7 @@ export const CreatePassword = withRouter(({ history }) => {
       message.error("Password and Confirm Password should be the same");
       return;
     }
-    await getSingleton().createPassword(values.newPassword);
+    await clientSingleton.createPassword(values.newPassword);
     history.replace("/account");
   };
 

@@ -1,5 +1,5 @@
 import recoil from "recoil";
-import { getSingleton } from "../../daemon/client";
+import { clientSingleton } from "../../daemon/client";
 
 export const StateObserver = () => {
   recoil.useRecoilTransactionObserver_UNSTABLE(({ snapshot }) => {
@@ -13,7 +13,7 @@ export const StateObserver = () => {
         data[modifiedAtom.key] = atomLoadable.contents;
       }
     }
-    getSingleton().updateAppState(data);
+    clientSingleton.updateAppState(data);
   });
   return null;
 };
