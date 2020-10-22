@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Input from "antd/lib/input";
 import Form, { FormInstance } from "antd/lib/form";
 import Radio, { RadioChangeEvent } from "antd/lib/radio";
@@ -27,7 +27,7 @@ const gasOpts: Record<string, { gasLimit: number; gasPrice: number }> = {
   },
 };
 
-export const TransactionFee: React.FC<Props> = (props) => {
+export const TransactionFeeInput: React.FC<Props> = (props) => {
   const onChangeSpeed = (e: RadioChangeEvent) => {
     const setup = gasOpts[e.target.value] || gasOpts.average;
     props.form.setFields([
@@ -42,7 +42,7 @@ export const TransactionFee: React.FC<Props> = (props) => {
     ]);
   };
   return (
-    <>
+    <Fragment>
       <Form.Item
         {...formItemLayout}
         label="Transaction Fee"
@@ -64,6 +64,6 @@ export const TransactionFee: React.FC<Props> = (props) => {
       <Form.Item hidden={true} name="gasLimit" initialValue={baseGasLimit}>
         <Input></Input>
       </Form.Item>
-    </>
+    </Fragment>
   );
 };

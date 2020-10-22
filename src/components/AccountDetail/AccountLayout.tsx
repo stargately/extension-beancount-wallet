@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "antd/lib/button";
 import Tabs from "antd/lib/tabs";
 import { styled } from "onefx/lib/styletron-react";
+import { useHistory } from "react-router-dom";
 
 import { AccountTitle } from "./AccountTitle";
 import { Balance } from "./Balance";
 import { CommonHeader } from "../CommonHeader";
 
-import { useAccount, useNetwork } from "../../hooks";
+import { useAccount } from "../../hooks";
 
 const { TabPane } = Tabs;
 export const AccountLayout = () => {
-  const { address, account, accounts } = useAccount();
-  const [txHash, setTxHash] = useState("");
-  const { current } = useNetwork();
+  const { address, accounts } = useAccount();
+  const history = useHistory();
   return (
     <Container>
       <CommonHeader />
@@ -24,21 +24,14 @@ export const AccountLayout = () => {
           type="primary"
           htmlType="submit"
           size="large"
-          onClick={async () => {
-            account?.setProvider(current.uri);
-            const txResult = await account?.transfer({
-              to: String(address),
-              amount: "1",
-              gasPrice: "100000000000000000",
-              gasLimit: "1000000",
-            });
-            setTxHash(txResult?.hash || "");
+          onClick={() => {
+            history.push("/transfer");
           }}
         >
           Transfer
         </Button>
       </ButtonGroups>
-      <Paragraph>{txHash}</Paragraph>
+      <Paragraph></Paragraph>
       <Tabs centered={true} size="large" tabBarStyle={{ width: "100%" }}>
         <TabPane
           tab="Assets"

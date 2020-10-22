@@ -3,7 +3,7 @@ import Input from "antd/lib/input";
 import Form from "antd/lib/form";
 import { formItemLayout } from "./formStyles";
 
-export const Amount: React.FC = () => {
+export const AmountInput: React.FC = () => {
   return (
     <Form.Item
       {...formItemLayout}

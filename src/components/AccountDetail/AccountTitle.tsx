@@ -10,18 +10,18 @@ type AccountTitleProps = {
 
 export const AccountTitle: React.FC<AccountTitleProps> = ({ account }) => {
   return (
-    <div
-      style={{
-        textAlign: "center",
-      }}
-    >
+    <Container>
       <Title>
         <Account>{account?.name}</Account>
         <Address title={account?.address}>{account?.address}</Address>
       </Title>
-    </div>
+    </Container>
   );
 };
+
+const Container = styled("div", {
+  textAlign: "center",
+});
 
 const Title = styled("div", ({ $theme }) => ({
   display: "flex",

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { MemoryRouter as Router } from "react-router-dom";
 
 import { renderRoutes } from "react-router-config";
 import routeConfig from "../config/routes";
@@ -8,11 +8,7 @@ import routeConfig from "../config/routes";
 // TODO(di) add route guard suprot
 
 const RouterConfig = () => {
-  return (
-    <Router>
-      <Switch>{renderRoutes(routeConfig)}</Switch>
-    </Router>
-  );
+  return <Router>{renderRoutes(routeConfig)}</Router>;
 };
 
 export default RouterConfig;
