@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "antd/lib/button";
 import Tabs from "antd/lib/tabs";
 import { styled } from "onefx/lib/styletron-react";
@@ -8,11 +8,11 @@ import { AccountTitle } from "./AccountTitle";
 import { Balance } from "./Balance";
 import { CommonHeader } from "../CommonHeader";
 
-import { useAccount, useNetwork } from "../../hooks";
+import { useAccount } from "../../hooks";
 
 const { TabPane } = Tabs;
 export const AccountLayout = () => {
-  const { address, account, accounts } = useAccount();
+  const { address, accounts } = useAccount();
   const history = useHistory();
   return (
     <Container>
