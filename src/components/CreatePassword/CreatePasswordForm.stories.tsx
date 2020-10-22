@@ -4,7 +4,13 @@ import { themeDecorator } from "../../storybookUtils";
 import { CreatePasswordForm } from "./CreatePasswordForm";
 
 export const Standard: React.FC = () => (
-  <CreatePasswordForm onFinish={() => null} />
+  <CreatePasswordForm
+    onFinish={() => {
+      return new Promise((resolve) => {
+        setTimeout(resolve, 1000);
+      });
+    }}
+  />
 );
 
 export default {

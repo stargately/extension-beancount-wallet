@@ -34,4 +34,7 @@ getSingleton(client)
       </RecoilRoot>,
       window.document.querySelector("#app-container")
     );
+  })
+  .catch((e) => {
+    console.warn(e);
   });
