@@ -41,9 +41,10 @@ export class AntennaAccount implements IAccount {
       this.privateKey = privateKey;
       this.antenna.iotx.accounts.privateKeyToAccount(privateKey);
     } else {
-      this.antenna.iotx.accounts.create(
+      const acc = this.antenna.iotx.accounts.create(
         crypto.randomBytes(128).toString("hex")
       );
+      this.privateKey = acc.privateKey;
     }
   }
 
