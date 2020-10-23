@@ -1,10 +1,5 @@
 import recoil from "recoil";
 
-export const passwordState = recoil.atom({
-  key: "App.Password",
-  default: "",
-});
-
 export const accountState = recoil.atom({
   key: "App.Account",
   default: "",
@@ -16,7 +11,6 @@ export const networkState = recoil.atom<number>({
 });
 
 const AtomMap = {
-  "App.Password": passwordState,
   "App.Account": accountState,
   "Network.State": networkState,
 } as { [propt: string]: recoil.RecoilState<any> };
