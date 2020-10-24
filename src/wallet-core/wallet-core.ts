@@ -4,6 +4,7 @@ import {
   IAccountMeta,
 } from "iotex-antenna/lib/rpc-method/types";
 import { AntennaAccount } from "./antenna-account";
+import { subscribleKeyringController } from "./utils";
 
 const KeyringController = require("eth-keyring-controller");
 
@@ -127,6 +128,7 @@ export class WalletCore {
 
   async createKeyringController(password: string, opt?: any): Promise<void> {
     this.keyringController = new KeyringController(opt || {});
+    subscribleKeyringController(this);
     await this.keyringController.createNewVaultAndKeychain(password);
     const addr = this.createAccount("IoTeX account 1");
     const acc = this.getAccount(addr);
