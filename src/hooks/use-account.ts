@@ -1,44 +1,52 @@
-import { atom, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { useCallback } from "react";
-import {
-  IAccount,
-  LeanAccount,
-  walletSingleton,
-} from "../wallet-core/wallet-core";
 
-// current account info
-const addressState = atom<string | undefined>({
-  key: "accountState",
-  default: "",
-});
+import { clientSingleton } from "../daemon/client";
+import { accountState, allAccountsState } from "../recoil/atom";
+
+import { LeanAccount } from "../wallet-core/wallet-core";
 
 type AccountState = {
-  address?: string;
-  accounts: Array<LeanAccount>;
-  createAccount: (name: string) => void;
+  address: string;
   setAddress: (addr: string) => void;
-  account?: IAccount;
+  accounts: LeanAccount[];
+  createAccount: (name: string) => void;
+  updateAccounts: () => void;
 };
 
 const useAccount = (): AccountState => {
-  const [address, setAddress] = useRecoilState(addressState);
+  const [address, setAddress] = useRecoilState(accountState);
+  const [accounts, setAccounts] = useRecoilState(allAccountsState);
 
   const createAccount = useCallback(
     (name: string) => {
       (async () => {
-        const addr = await walletSingleton.createAccount(name);
+        const addr = await clientSingleton.walletCreateAccount(name);
         setAddress(addr);
       })();
     },
     [setAddress]
   );
 
-  const accounts = walletSingleton.getAccounts();
+  const updateAccounts = useCallback(() => {
+    (async () => {
+      try {
+        const accs = await clientSingleton.walletGetAccounts();
+        setAccounts(accs);
+        // choose first account as current account by default
+        if (!address) {
+          setAddress(accs[0].address);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [setAccounts, setAddress]);
 
   return {
     address,
     accounts,
-    account: walletSingleton.getAccount(address),
+    updateAccounts,
     createAccount,
     setAddress,
   };

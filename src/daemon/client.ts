@@ -8,7 +8,11 @@ import {
   WALLET_INITIIATED,
   WALLET_LOCKED,
   WALLET_VERIFY_PASSWD,
+  WALLET_GET_ACCOUNTS,
+  WALLET_CREATE_ACCOUNT,
+  WALLET_GET_ACCOUNT_META,
 } from "./wallet";
+import { LeanAccount, AccountMeta } from "../wallet-core";
 
 export default class DaemonClient {
   agent?: Client;
@@ -58,6 +62,21 @@ export default class DaemonClient {
 
   async walletVarifyPasswd(password: string) {
     return this.check().sendRequest<boolean>(WALLET_VERIFY_PASSWD, password);
+  }
+
+  async walletGetAccounts() {
+    return this.check().sendRequest<LeanAccount[]>(WALLET_GET_ACCOUNTS);
+  }
+
+  async walletCreateAccount(name: string) {
+    return this.check().sendRequest<string>(WALLET_CREATE_ACCOUNT, name);
+  }
+
+  async walletGetAccountMeta(address: string) {
+    return this.check().sendRequest<AccountMeta>(
+      WALLET_GET_ACCOUNT_META,
+      address
+    );
   }
 }
 

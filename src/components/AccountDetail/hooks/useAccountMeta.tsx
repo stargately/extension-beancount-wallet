@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import { IAccount } from "../../../wallet-core/wallet-core";
+import { useAccount } from "../../../hooks";
+import { clientSingleton } from "../../../daemon/client";
 
-export const useAccountMeta = (
-  account?: IAccount
-): { balance: string; loading: boolean } => {
+export const useAccountMeta = (): { balance: string; loading: boolean } => {
+  const { address } = useAccount();
   const [balance, setBalance] = useState("0");
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     (async () => {
-      const meta = await account?.getAccountMeta();
-      setBalance(meta?.accountMeta?.balance || "0");
+      const meta = await clientSingleton.walletGetAccountMeta(address);
+      setBalance(meta?.balance || "0");
       setLoading(false);
     })();
-  }, [account?.getAddress()]);
+  }, [address]);
   return {
     balance,
     loading,

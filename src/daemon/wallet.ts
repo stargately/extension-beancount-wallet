@@ -8,6 +8,9 @@ export const WALLET_INITIIATED = "APP.WALLET_INITIIATED";
 export const WALLET_LOCKED = "APP.WALLET_LOCKED";
 export const WALLET_UNLOCKED = "APP.WALLET_UNLOCKED";
 export const WALLET_VERIFY_PASSWD = "WALLET_VERIFY_PASSWD";
+export const WALLET_GET_ACCOUNTS = "WALLET_GET_ACCOUNTS";
+export const WALLET_GET_ACCOUNT_META = "WALLET_GET_ACCOUNT_META";
+export const WALLET_CREATE_ACCOUNT = "WALLET_CREATE_ACCOUNT";
 
 export default {
   [CREATE_PASSWORD]: async (req, cb) => {
@@ -34,5 +37,19 @@ export default {
     const { payload } = req;
     const isOK = await walletSingleton.verifyPassword(payload);
     cb(isOK);
+  },
+  [WALLET_GET_ACCOUNTS]: async (_, cb) => {
+    const accounts = await walletSingleton.getAccounts();
+    cb(accounts);
+  },
+  [WALLET_CREATE_ACCOUNT]: async (req, cb) => {
+    const { payload } = req;
+    const addr = await walletSingleton.createAccount(payload);
+    cb(addr);
+  },
+  [WALLET_GET_ACCOUNT_META]: async (req, cb) => {
+    const { payload } = req;
+    const accountMeta = await walletSingleton.getAccountMeta(payload);
+    cb(accountMeta);
   },
 } as HandlerGroup;
