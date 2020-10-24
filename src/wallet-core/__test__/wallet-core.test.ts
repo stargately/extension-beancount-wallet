@@ -38,10 +38,10 @@ test("create and move account", async (t) => {
 
 test("recover keyring controller", async (t) => {
   const password = "password";
-  const old = new WalletCore();
-  await old.createKeyringController(password, {
+  const old = new WalletCore({
     encryptor: new MockEncryptor(),
   });
+  await old.createKeyringController(password);
 
   t.notThrows(async () => {
     await old.verifyPassword(password);
@@ -50,8 +50,10 @@ test("recover keyring controller", async (t) => {
   const { vault } = old.keyringController.store.getState();
   const privateKey = old.getAccount()?.privateKey;
 
-  const lastest = new WalletCore();
-  lastest.recoverKeyringController(vault, { encryptor: new MockEncryptor() });
+  const lastest = new WalletCore({
+    initState: { vault },
+    encryptor: new MockEncryptor(),
+  });
 
   t.notThrows(async () => {
     await lastest.verifyPassword(password);

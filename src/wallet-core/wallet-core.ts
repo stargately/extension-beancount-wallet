@@ -4,7 +4,6 @@ import {
   IAccountMeta,
 } from "iotex-antenna/lib/rpc-method/types";
 import { AntennaAccount } from "./antenna-account";
-import { subscribleKeyringController } from "./utils";
 
 const KeyringController = require("eth-keyring-controller");
 
@@ -61,9 +60,9 @@ export class WalletCore {
 
   keyringController: any;
 
-  constructor() {
+  constructor(opt?: any) {
     this.accounts = [];
-    this.keyringController;
+    this.keyringController = new KeyringController(opt || {});
   }
 
   getAccount(address?: string): IAccount | undefined {
@@ -118,17 +117,7 @@ export class WalletCore {
     return Promise.resolve(acc?.getAccountMeta());
   }
 
-  async recoverKeyringController(vault: string, opt?: any) {
-    const keyringController = new KeyringController({
-      initState: { vault },
-      ...opt,
-    });
-    this.keyringController = keyringController;
-  }
-
-  async createKeyringController(password: string, opt?: any): Promise<void> {
-    this.keyringController = new KeyringController(opt || {});
-    subscribleKeyringController(this);
+  async createKeyringController(password: string): Promise<void> {
     await this.keyringController.createNewVaultAndKeychain(password);
     const addr = this.createAccount("IoTeX account 1");
     const acc = this.getAccount(addr);
@@ -139,7 +128,7 @@ export class WalletCore {
   }
 
   get isInitiated(): boolean {
-    return Boolean(this.keyringController);
+    return this.keyringController.store.getState().vault;
   }
 
   get isLocked(): boolean {
