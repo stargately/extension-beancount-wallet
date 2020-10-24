@@ -1,16 +1,20 @@
 import React from "react";
 import { styled } from "onefx/lib/styletron-react";
+import Dropdown from "antd/lib/dropdown/dropdown";
 import UserOutlined from "@ant-design/icons/UserOutlined";
 
 import { Networks } from "./Networks";
 import { Logo } from "../../styles/logo";
+import { MyAccounts } from "../MyAccounts";
 
 export const CommonHeader: React.FC = () => {
   return (
     <Container>
       <Logo size="small" />
       <Networks />
-      <Avator />
+      <Dropdown overlay={<MyAccounts />} trigger={["click"]}>
+        <Avator />
+      </Dropdown>
     </Container>
   );
 };

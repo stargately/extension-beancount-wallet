@@ -10,23 +10,13 @@ type AccountState = {
   address: string;
   setAddress: (addr: string) => void;
   accounts: LeanAccount[];
-  createAccount: (name: string) => void;
+  createAccount: (name?: string) => void;
   updateAccounts: () => void;
 };
 
 const useAccount = (): AccountState => {
   const [address, setAddress] = useRecoilState(accountState);
   const [accounts, setAccounts] = useRecoilState(allAccountsState);
-
-  const createAccount = useCallback(
-    (name: string) => {
-      (async () => {
-        const addr = await clientSingleton.walletCreateAccount(name);
-        setAddress(addr);
-      })();
-    },
-    [setAddress]
-  );
 
   const updateAccounts = useCallback(() => {
     (async () => {
@@ -42,6 +32,20 @@ const useAccount = (): AccountState => {
       }
     })();
   }, [setAccounts, setAddress]);
+
+  const createAccount = useCallback(
+    (name?: string) => {
+      (async () => {
+        const defaultName = `IoTeX account ${accounts.length + 1}`;
+        const addr = await clientSingleton.walletCreateAccount(
+          name || defaultName
+        );
+        setAddress(addr);
+        updateAccounts();
+      })();
+    },
+    [setAddress, updateAccounts]
+  );
 
   return {
     address,

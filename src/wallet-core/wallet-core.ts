@@ -72,18 +72,18 @@ export class WalletCore {
     return this.accounts.find((acc) => acc.getAddress() === address);
   }
 
+  // recover account from keyring
   addAccount(
     name: string,
-    privateKey: string,
+    privateKey?: string,
     coinType: CoinType = "IOTX"
-  ): string {
+  ): IAccount {
     if (coinType !== "IOTX") {
       throw new Error(`unimplemented coin type ${coinType}`);
     }
     const acc = new AntennaAccount(name, privateKey);
-    const addr = acc.getAddress();
     this.accounts.push(acc);
-    return addr;
+    return acc;
   }
 
   removeAccount(address: string): void {
@@ -91,11 +91,18 @@ export class WalletCore {
     this.accounts.splice(idx, 1);
   }
 
-  createAccount(name: string, _ = "IOTX"): string {
-    const acc = new AntennaAccount(name);
-    const addr = acc.getAddress();
-    this.accounts.push(acc);
-    return addr;
+  // create totally newaccount and add to keyring
+  // expose to proxy
+  async createAccount(
+    name: string,
+    coinType: CoinType = "IOTX"
+  ): Promise<string> {
+    const acc = this.addAccount(name, undefined, coinType);
+    await this.keyringController.addNewKeyring(
+      "Simple Key Pair",
+      acc?.privateKey && [acc?.privateKey]
+    );
+    return acc.getAddress();
   }
 
   getAccounts(): Array<LeanAccount> {
@@ -119,12 +126,7 @@ export class WalletCore {
 
   async createKeyringController(password: string): Promise<void> {
     await this.keyringController.createNewVaultAndKeychain(password);
-    const addr = this.createAccount("IoTeX account 1");
-    const acc = this.getAccount(addr);
-    await this.keyringController.addNewKeyring(
-      "Simple Key Pair",
-      acc?.privateKey && [acc?.privateKey]
-    );
+    await this.createAccount("IoTeX account 1");
   }
 
   get isInitiated(): boolean {
@@ -165,12 +167,14 @@ export class WalletCore {
     const keyrings = this.keyringController.keyrings.filter(
       (kr: any) => kr.type === "Simple Key Pair"
     );
+    console.log(keyrings, this.accounts.length);
     // if the number of Simple Key Pair Account is not equal to the number of iotex account, then all account will be clean and rebuild
     if (keyrings.length !== this.accounts.length) {
       this.accounts = [];
       keyrings.forEach(async (kr: any) => {
         const [privateKey] = await kr.serialize();
         // IoTeX accout name lost (TODO: Qiu)
+        // CoinType in this case also lost
         this.addAccount("IoTeX account 1", privateKey);
       });
     }

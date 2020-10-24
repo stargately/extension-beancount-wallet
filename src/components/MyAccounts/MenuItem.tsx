@@ -5,11 +5,12 @@ import { fonts } from "../../styles/style-font";
 interface MenuItemProps {
   icon: () => JSX.Element;
   content: string;
+  onClick?: () => void;
 }
 
 export const MenuItem = ({ icon: IconComponent, ...rest }: MenuItemProps) => {
   return (
-    <MenuContainer>
+    <MenuContainer onClick={rest.onClick}>
       <IconComponent />
 
       <MenuText>{rest.content}</MenuText>
