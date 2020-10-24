@@ -60,9 +60,9 @@ export class WalletCore {
 
   keyringController: any;
 
-  constructor() {
+  constructor(opt?: any) {
     this.accounts = [];
-    this.keyringController;
+    this.keyringController = new KeyringController(opt || {});
   }
 
   getAccount(address?: string): IAccount | undefined {
@@ -118,7 +118,6 @@ export class WalletCore {
   }
 
   async createKeyringController(password: string): Promise<void> {
-    this.keyringController = new KeyringController({});
     await this.keyringController.createNewVaultAndKeychain(password);
     const addr = this.createAccount("IoTeX account 1");
     const acc = this.getAccount(addr);
@@ -129,7 +128,7 @@ export class WalletCore {
   }
 
   get isInitiated(): boolean {
-    return Boolean(this.keyringController);
+    return this.keyringController.store.getState().vault;
   }
 
   get isLocked(): boolean {
@@ -162,7 +161,20 @@ export class WalletCore {
   }
 
   async unlock(password: string): Promise<boolean> {
-    return this.keyringController.submitPassword(password);
+    const result = await this.keyringController.submitPassword(password);
+    const keyrings = this.keyringController.keyrings.filter(
+      (kr: any) => kr.type === "Simple Key Pair"
+    );
+    // if the number of Simple Key Pair Account is not equal to the number of iotex account, then all account will be clean and rebuild
+    if (keyrings.length !== this.accounts.length) {
+      this.accounts = [];
+      keyrings.forEach(async (kr: any) => {
+        const [privateKey] = await kr.serialize();
+        // IoTeX accout name lost (TODO: Qiu)
+        this.addAccount("IoTeX account 1", privateKey);
+      });
+    }
+    return !!result;
   }
 }
 
