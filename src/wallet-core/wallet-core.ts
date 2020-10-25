@@ -179,6 +179,27 @@ export class WalletCore {
     }
     return !!result;
   }
+
+  // transfer token
+  async transferToken(payload: {
+    from: string;
+    url: string;
+    to: string;
+    amount: string;
+    gasPrice: string;
+    gasLimit: string;
+  }) {
+    const acc = this.getAccount(payload.from);
+    if (payload.url) {
+      acc?.setProvider(payload.url);
+    }
+    await acc?.transfer({
+      to: payload.to,
+      amount: payload.amount,
+      gasLimit: payload.gasLimit,
+      gasPrice: payload.gasPrice,
+    });
+  }
 }
 
 export const walletSingleton = new WalletCore();

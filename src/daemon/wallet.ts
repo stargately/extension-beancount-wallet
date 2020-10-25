@@ -11,6 +11,7 @@ export const WALLET_VERIFY_PASSWD = "WALLET_VERIFY_PASSWD";
 export const WALLET_GET_ACCOUNTS = "WALLET_GET_ACCOUNTS";
 export const WALLET_GET_ACCOUNT_META = "WALLET_GET_ACCOUNT_META";
 export const WALLET_CREATE_ACCOUNT = "WALLET_CREATE_ACCOUNT";
+export const WALLET_TRANSFER_TOKEN = "APP.WALLET_TRANSFER_TOKEN";
 
 export default {
   [CREATE_PASSWORD]: async (req, cb) => {
@@ -51,5 +52,18 @@ export default {
     const { payload } = req;
     const accountMeta = await walletSingleton.getAccountMeta(payload);
     cb(accountMeta);
+  },
+  [WALLET_TRANSFER_TOKEN]: async (req, cb) => {
+    const { payload } = req;
+    console.log(payload);
+    await walletSingleton.transferToken({
+      from: payload.from,
+      url: payload.from,
+      to: payload.from,
+      amount: payload.from,
+      gasPrice: payload.from,
+      gasLimit: payload.from,
+    });
+    cb();
   },
 } as HandlerGroup;

@@ -11,6 +11,7 @@ import {
   WALLET_GET_ACCOUNTS,
   WALLET_CREATE_ACCOUNT,
   WALLET_GET_ACCOUNT_META,
+  WALLET_TRANSFER_TOKEN,
 } from "./wallet";
 import { LeanAccount, AccountMeta } from "../wallet-core";
 
@@ -77,6 +78,17 @@ export default class DaemonClient {
       WALLET_GET_ACCOUNT_META,
       address
     );
+  }
+
+  async walletTransferToken(payload: {
+    from: string;
+    url: string;
+    to: string;
+    amount: string;
+    gasPrice: string;
+    gasLimit: string;
+  }) {
+    return this.check().sendRequest(WALLET_TRANSFER_TOKEN, payload);
   }
 }
 
