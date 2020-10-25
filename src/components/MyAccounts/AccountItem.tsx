@@ -2,26 +2,35 @@ import React from "react";
 import { styled } from "onefx/lib/styletron-react";
 import { CheckOutlined } from "@ant-design/icons";
 import { fonts } from "../../styles/style-font";
+import { LeanAccount } from "../../wallet-core";
 
 interface AccountItemProps {
   checked: boolean;
+  account: LeanAccount;
+  onClick?: () => void;
 }
 
 export const AccountItem = (props: AccountItemProps) => {
+  const { account, checked, onClick } = props;
   return (
     <ItemContainer>
-      <TopContentContainer>
+      <TopContentContainer
+        onClick={() => {
+          !checked && onClick && onClick();
+        }}
+      >
         <CheckIcon
           style={{
-            visibility: props.checked ? "visible" : "hidden",
+            visibility: checked ? "visible" : "hidden",
           }}
         />
 
         <CircleAvatar src={require("../../assets/img/logo.png")} />
 
-        <AccountNameText>Account 1</AccountNameText>
+        <AccountNameText>{account.name}</AccountNameText>
       </TopContentContainer>
-      <BalanceText>$504.40 USD</BalanceText>
+      {/* TODO (Di): later add banlance in account list */}
+      <BalanceText>TODO</BalanceText>
     </ItemContainer>
   );
 };

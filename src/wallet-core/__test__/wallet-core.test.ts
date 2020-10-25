@@ -22,9 +22,9 @@ class MockEncryptor {
 test("create and move account", async (t) => {
   const w = new WalletCore();
   t.deepEqual(w.accounts.length, 0);
-  const addr1 = w.createAccount("test1");
-  const addr2 = w.createAccount("test2");
-  const addr3 = w.createAccount("test3");
+  const addr1 = w.addAccount("test1").getAddress();
+  const addr2 = w.addAccount("test2").getAddress();
+  const addr3 = w.addAccount("test3").getAddress();
   t.deepEqual(
     w.accounts.map((acc) => acc.getAddress()),
     [addr1, addr2, addr3]

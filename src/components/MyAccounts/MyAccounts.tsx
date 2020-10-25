@@ -1,20 +1,26 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { styled } from "onefx/lib/styletron-react";
 import Button from "antd/lib/button";
-import {
-  ApiOutlined,
-  DownloadOutlined,
-  ExclamationCircleFilled,
-  PlusOutlined,
-  SearchOutlined,
-  SettingFilled,
-} from "@ant-design/icons";
+import ApiOutlined from "@ant-design/icons/ApiOutlined";
+import DownloadOutlined from "@ant-design/icons/DownloadOutlined";
+import ExclamationCircleFilled from "@ant-design/icons/ExclamationCircleFilled";
+import SearchOutlined from "@ant-design/icons/SearchOutlined";
+import SettingFilled from "@ant-design/icons/SettingFilled";
+import PlusOutlined from "@ant-design/icons/PlusOutlined";
 import Input from "antd/lib/input";
+
 import { fonts } from "../../styles/style-font";
 import { AccountItem } from "./AccountItem";
 import { MenuItem } from "./MenuItem";
+import { useAccount } from "../../hooks";
 
 export const MyAccounts = () => {
+  const { address, accounts, setAddress, createAccount } = useAccount();
+
+  const handleCreateAccount = useCallback(() => {
+    createAccount();
+  }, [createAccount]);
+
   return (
     <Container>
       <FlexContainer>
@@ -36,14 +42,25 @@ export const MyAccounts = () => {
       </SearchContainer>
 
       <HDivider />
-
-      <AccountItem checked={true} />
-
-      <AccountItem checked={false} />
-
+      {/* Account List */}
+      {accounts?.map((account) => (
+        <AccountItem
+          key={account.address}
+          checked={address === account.address}
+          account={account}
+          onClick={() => {
+            setAddress(account.address);
+          }}
+        />
+      ))}
+      {/* END Account List */}
       <HDivider />
 
-      <MenuItem icon={() => <PlusIcon />} content="Create Account" />
+      <MenuItem
+        icon={() => <PlusIcon />}
+        content="Create Account"
+        onClick={handleCreateAccount}
+      />
 
       <MenuItem icon={() => <DownloadIcon />} content="Import Account" />
 
@@ -59,8 +76,9 @@ export const MyAccounts = () => {
 };
 
 const Container = styled("div", {
-  backgroundColor: "rgba(0,0,0,0.5)",
+  backgroundColor: "rgba(0,0,0,0.8)",
   borderRadius: "4px",
+  padding: "10px",
 });
 
 const HDivider = styled("div", {

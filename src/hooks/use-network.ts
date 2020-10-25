@@ -1,6 +1,5 @@
 import { useRecoilState } from "recoil";
 import { iotexNetworks } from "../wallet-core/antenna-account";
-import { useAccount } from "./use-account";
 import { networkState } from "../recoil/atom";
 
 const networks = {
@@ -16,10 +15,10 @@ type NetworkState = {
 };
 
 export const useNetwork = (): NetworkState => {
-  const { account } = useAccount();
   const [networkIndex, setNetworkIndex] = useRecoilState(networkState);
   const availableNetworks =
-    networks[account?.getCoinType() || "IOTX"] || networks.default;
+    // TODO(Di) later add cointype
+    networks.IOTX || networks.default;
   return {
     setNetwork: setNetworkIndex,
     availableNetworks,
