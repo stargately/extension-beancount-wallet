@@ -25,7 +25,7 @@ export const AccountItem = (props: AccountItemProps) => {
           }}
         />
 
-        <CircleAvatar src={require("../../assets/img/logo.png")} />
+        <CircleAvatar src={require("../../assets/img/logo.png").default} />
 
         <AccountNameText>{account.name}</AccountNameText>
       </TopContentContainer>

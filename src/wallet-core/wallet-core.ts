@@ -167,7 +167,6 @@ export class WalletCore {
     const keyrings = this.keyringController.keyrings.filter(
       (kr: any) => kr.type === "Simple Key Pair"
     );
-    console.log(keyrings, this.accounts.length);
     // if the number of Simple Key Pair Account is not equal to the number of iotex account, then all account will be clean and rebuild
     if (keyrings.length !== this.accounts.length) {
       this.accounts = [];
