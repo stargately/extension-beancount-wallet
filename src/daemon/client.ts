@@ -73,10 +73,13 @@ export default class DaemonClient {
     return this.check().sendRequest<string>(WALLET_CREATE_ACCOUNT, name);
   }
 
-  async walletGetAccountMeta(address: string) {
+  async walletGetAccountMeta(payload: {
+    address: string;
+    providerUrl: string;
+  }) {
     const { accountMeta } = await this.check().sendRequest<{
       accountMeta: AccountMeta;
-    }>(WALLET_GET_ACCOUNT_META, address);
+    }>(WALLET_GET_ACCOUNT_META, payload);
     return accountMeta;
   }
 

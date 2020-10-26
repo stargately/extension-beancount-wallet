@@ -1,20 +1,22 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { styled } from "onefx/lib/styletron-react";
 import Skeleton from "react-loading-skeleton";
+import { useRecoilValue } from "recoil";
+
 import { fonts } from "../../styles/style-font";
-import { useAccountMeta } from "./hooks/useAccountMeta";
+import { accountCurrentMeta } from "../../recoil";
+
+export const MyBalance = () => {
+  const meta = useRecoilValue(accountCurrentMeta);
+  return <span>{`${+meta.balance / 10 ** 18} ${"IOTX"}`}</span>;
+};
 
 export const Balance = () => {
-  const { loading, balance } = useAccountMeta();
   return (
     <Container>
-      {loading ? (
-        <Skeleton width={80} />
-      ) : (
-        // TODO(Di): later add coinType
-        // `${balance} ${account?.getCoinType() || "IOTX"}`
-        `${+balance / 10 ** 18} ${"IOTX"}`
-      )}
+      <Suspense fallback={<Skeleton width={80} />}>
+        <MyBalance></MyBalance>
+      </Suspense>
     </Container>
   );
 };

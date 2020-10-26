@@ -7,11 +7,6 @@ import { AntennaAccount } from "./antenna-account";
 
 const KeyringController = require("eth-keyring-controller");
 
-export interface IProviderSource {
-  name: string;
-  uri: string;
-}
-
 export type LeanAccount = {
   name: string;
   address: string;
@@ -131,7 +126,7 @@ export class WalletCore {
   }
 
   get isInitiated(): boolean {
-    return this.keyringController.store.getState().vault;
+    return !!this.keyringController.store.getState().vault;
   }
 
   get isLocked(): boolean {

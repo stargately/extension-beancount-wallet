@@ -50,7 +50,10 @@ export default {
   },
   [WALLET_GET_ACCOUNT_META]: async (req, cb) => {
     const { payload } = req;
-    const accountMeta = await walletSingleton.getAccountMeta(payload);
+    const { address, providerUrl } = payload;
+    const acc = await walletSingleton.getAccount(address);
+    providerUrl && acc?.setProvider(providerUrl);
+    const accountMeta = await walletSingleton.getAccountMeta(address);
     cb(accountMeta);
   },
   [WALLET_TRANSFER_TOKEN]: async (req, cb) => {

@@ -1,5 +1,18 @@
 import recoil from "recoil";
 import { clientSingleton } from "../../daemon/client";
+import {
+  networkIndex,
+  networkType,
+  accountAddress,
+  accountsList,
+} from "../../recoil";
+
+export const interestedAtoms = {
+  [networkIndex.key]: networkIndex,
+  [networkType.key]: networkType,
+  [accountAddress.key]: accountAddress,
+  [accountsList.key]: accountsList,
+};
 
 export const StateObserver = () => {
   recoil.useRecoilTransactionObserver_UNSTABLE(({ snapshot }) => {
@@ -9,7 +22,10 @@ export const StateObserver = () => {
       isModified: true,
     })) {
       const atomLoadable = snapshot.getLoadable(modifiedAtom);
-      if (atomLoadable.state === "hasValue") {
+      if (
+        atomLoadable.state === "hasValue" &&
+        interestedAtoms[modifiedAtom.key]
+      ) {
         data[modifiedAtom.key] = atomLoadable.contents;
       }
     }

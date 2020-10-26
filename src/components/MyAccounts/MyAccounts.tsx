@@ -8,18 +8,25 @@ import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import SettingFilled from "@ant-design/icons/SettingFilled";
 import PlusOutlined from "@ant-design/icons/PlusOutlined";
 import Input from "antd/lib/input";
+import { useRecoilState } from "recoil";
 
 import { fonts } from "../../styles/style-font";
 import { AccountItem } from "./AccountItem";
 import { MenuItem } from "./MenuItem";
-import { useAccount } from "../../hooks";
+import { accountsList, accountAddress } from "../../recoil";
+import { clientSingleton } from "../../daemon/client";
 
 export const MyAccounts = () => {
-  const { address, accounts, setAddress, createAccount } = useAccount();
+  const [accounts, setAccount] = useRecoilState(accountsList);
+  const [address, setAddress] = useRecoilState(accountAddress);
 
-  const handleCreateAccount = useCallback(() => {
-    createAccount();
-  }, [createAccount]);
+  const handleCreateAccount = useCallback(async () => {
+    await clientSingleton.walletCreateAccount(
+      `IoTeX account ${accounts.length + 1}`
+    );
+    const _accounts = await clientSingleton.walletGetAccounts();
+    setAccount(_accounts);
+  }, []);
 
   return (
     <Container>
