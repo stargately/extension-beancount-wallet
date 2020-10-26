@@ -74,10 +74,10 @@ export default class DaemonClient {
   }
 
   async walletGetAccountMeta(address: string) {
-    return this.check().sendRequest<AccountMeta>(
-      WALLET_GET_ACCOUNT_META,
-      address
-    );
+    const { accountMeta } = await this.check().sendRequest<{
+      accountMeta: AccountMeta;
+    }>(WALLET_GET_ACCOUNT_META, address);
+    return accountMeta;
   }
 
   async walletTransferToken(payload: {
