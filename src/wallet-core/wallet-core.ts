@@ -34,6 +34,7 @@ export interface IAccount {
   setProvider(uri: string): void;
 
   transfer(opts: {
+    from: string;
     to: string;
     amount: string;
     gasPrice: string;
@@ -178,6 +179,28 @@ export class WalletCore {
       });
     }
     return !!result;
+  }
+
+  // transfer token
+  async transferToken(payload: {
+    from: string;
+    url: string;
+    to: string;
+    amount: string;
+    gasPrice: string;
+    gasLimit: string;
+  }) {
+    const acc = this.getAccount(payload.from);
+    if (payload.url && /^http/.test(payload.url)) {
+      acc?.setProvider(payload.url);
+    }
+    await acc?.transfer({
+      from: payload.from,
+      to: payload.to,
+      amount: payload.amount,
+      gasLimit: payload.gasLimit,
+      gasPrice: payload.gasPrice,
+    });
   }
 }
 

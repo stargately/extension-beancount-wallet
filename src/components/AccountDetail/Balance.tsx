@@ -13,7 +13,7 @@ export const Balance = () => {
       ) : (
         // TODO(Di): later add coinType
         // `${balance} ${account?.getCoinType() || "IOTX"}`
-        `${balance} ${"IOTX"}`
+        `${+balance / 10 ** 18} ${"IOTX"}`
       )}
     </Container>
   );

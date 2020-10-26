@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import Antenna from "iotex-antenna";
+import { toRau } from "iotex-antenna/lib/account/utils";
 import {
   CoinType,
   IAccount,
@@ -53,17 +54,18 @@ export class AntennaAccount implements IAccount {
   }
 
   async transfer(opts: {
+    from: string;
     to: string;
     amount: string;
     gasPrice: string;
     gasLimit: string;
   }): Promise<{ hash: string }> {
     const hash = await this.antenna.iotx.sendTransfer({
-      from: this.antenna.iotx.accounts[0].address,
+      from: opts.from,
       to: opts.to,
-      value: opts.amount,
-      gasLimit: opts.gasLimit,
-      gasPrice: opts.gasPrice,
+      value: toRau(opts.amount, "iotex"),
+      gasLimit: `${opts.gasLimit}`,
+      gasPrice: `${opts.gasPrice}`,
     });
     return { hash };
   }
