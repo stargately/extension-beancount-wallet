@@ -55,14 +55,13 @@ export default {
   },
   [WALLET_TRANSFER_TOKEN]: async (req, cb) => {
     const { payload } = req;
-    console.log(payload);
     await walletSingleton.transferToken({
       from: payload.from,
-      url: payload.from,
-      to: payload.from,
-      amount: payload.from,
-      gasPrice: payload.from,
-      gasLimit: payload.from,
+      url: payload.url,
+      to: payload.to,
+      amount: payload.amount,
+      gasPrice: payload.gasPrice,
+      gasLimit: payload.gasLimit,
     });
     cb();
   },

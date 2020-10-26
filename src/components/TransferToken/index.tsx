@@ -1,5 +1,6 @@
 import React from "react";
 import { message } from "antd";
+import { useHistory } from "react-router-dom";
 import { TransferTokenForm } from "./TransferTokenForm";
 import { useAccount, useNetwork } from "../../hooks";
 import { clientSingleton } from "../../daemon/client";
@@ -7,9 +8,9 @@ import { clientSingleton } from "../../daemon/client";
 export const TransferToken = () => {
   const { address } = useAccount();
   const { current } = useNetwork();
+  const history = useHistory();
 
   const onFinish = async (values: any) => {
-    console.log(values);
     try {
       await clientSingleton.walletTransferToken({
         from: address,
@@ -20,6 +21,7 @@ export const TransferToken = () => {
         gasPrice: values.gasPrice,
       });
       message.success("Transfer Success");
+      history.goBack();
     } catch (e) {
       message.error("Transfer Failure");
     }
