@@ -1,13 +1,14 @@
 import React from "react";
 import { message } from "antd";
 import { useHistory } from "react-router-dom";
+import recoil from "recoil";
 import { TransferTokenForm } from "./TransferTokenForm";
-import { useAccount, useNetwork } from "../../hooks";
+import { accountAddress, networkCurrent } from "../../recoil";
 import { clientSingleton } from "../../daemon/client";
 
 export const TransferToken = () => {
-  const { address } = useAccount();
-  const { current } = useNetwork();
+  const [address, setAddress] = recoil.useRecoilState(accountAddress);
+  const current = recoil.useRecoilValue(networkCurrent);
   const history = useHistory();
 
   const onFinish = async (values: any) => {
@@ -21,6 +22,7 @@ export const TransferToken = () => {
         gasPrice: values.gasPrice,
       });
       message.success("Transfer Success");
+      setAddress((cur) => cur);
       history.goBack();
     } catch (e) {
       message.error("Transfer Failure");

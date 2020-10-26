@@ -1,12 +1,11 @@
 import React, { Fragment } from "react";
 import { render } from "react-dom";
-import "./index.css";
-import { RecoilRoot, MutableSnapshot } from "recoil";
 
+import { RecoilRoot, MutableSnapshot } from "recoil";
 import { clientSingleton } from "../../daemon/client";
-import { StateObserver } from "./state-observer";
+import { StateObserver, interestedAtoms } from "./utils";
 import { Popup as App } from "./Popup";
-import { queryAtomByKey } from "../../recoil/atom";
+import "./index.css";
 
 const port = chrome.runtime.connect({ name: "Popup" });
 clientSingleton.init(port);
@@ -16,12 +15,11 @@ clientSingleton
   .then((state) => {
     const initializeState = (snapshot: MutableSnapshot) => {
       const appState = (state || {}) as { [prop: string]: any };
-      const keys = Object.keys(appState);
-      keys.forEach((key) => {
-        const val = appState[key];
-        const atom = queryAtomByKey(key);
+      Object.keys(appState).forEach((key) => {
+        const value = appState[key];
+        const atom = interestedAtoms[key];
         if (atom) {
-          snapshot.set(atom, val);
+          snapshot.set(atom, value);
         }
       });
     };

@@ -1,5 +1,5 @@
 import recoil from "recoil";
-import { clientSingleton } from "../../daemon/client";
+import { clientSingleton } from "../daemon/client";
 
 export const walletInitiated = recoil.selector<boolean>({
   key: "Wallet.Initiated",

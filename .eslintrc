@@ -2,5 +2,8 @@
   "extends": [
     "@puncsky/eslint-config-onefx-react",
     "@puncsky/eslint-config-onefx"
-  ]
+  ],
+  "rules": {
+    "no-shadow": "off"
+  }
 }

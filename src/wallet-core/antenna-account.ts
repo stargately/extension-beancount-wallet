@@ -1,25 +1,14 @@
 import crypto from "crypto";
 import Antenna from "iotex-antenna";
 import { toRau } from "iotex-antenna/lib/account/utils";
+import { iotexNetworks, INetworkItem } from "../config/networks";
 import {
   CoinType,
   IAccount,
-  IProviderSource,
   IGetActionsRequest,
   Action,
   AccountMeta,
 } from "./wallet-core";
-
-export const iotexNetworks = [
-  {
-    name: "Main net",
-    uri: "https://api.iotex.one",
-  },
-  {
-    name: "Test net",
-    uri: "https://api.testnet.iotex.one",
-  },
-];
 
 export class AntennaAccount implements IAccount {
   type: string;
@@ -33,7 +22,7 @@ export class AntennaAccount implements IAccount {
   constructor(
     name: string,
     privateKey?: string,
-    providers: Array<IProviderSource> = iotexNetworks
+    providers: Array<INetworkItem> = iotexNetworks
   ) {
     this.name = name;
     this.type = "IOTX";

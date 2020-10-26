@@ -3,21 +3,21 @@ import Button from "antd/lib/button";
 import Tabs from "antd/lib/tabs";
 import { styled } from "onefx/lib/styletron-react";
 import { useHistory } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
 import { AccountTitle } from "./AccountTitle";
 import { Balance } from "./Balance";
 import { CommonHeader } from "../CommonHeader";
-
-import { useAccount } from "../../hooks";
+import { accountCurrent } from "../../recoil";
 
 const { TabPane } = Tabs;
 export const AccountLayout = () => {
-  const { address, accounts } = useAccount();
   const history = useHistory();
+  const curAccount = useRecoilValue(accountCurrent);
   return (
     <Container>
       <CommonHeader />
-      <AccountTitle account={accounts.find((acc) => acc.address === address)} />
+      <AccountTitle account={curAccount} />
       <Balance />
       <ButtonGroups>
         <Button
