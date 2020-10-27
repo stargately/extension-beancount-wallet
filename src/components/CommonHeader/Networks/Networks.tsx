@@ -1,31 +1,29 @@
 import React from "react";
-import recoi from "recoil";
+
 import { styled } from "onefx/lib/styletron-react";
 import Dropdown from "antd/lib/dropdown";
 import Menu from "antd/lib/menu";
 import CheckOutlined from "@ant-design/icons/CheckOutlined";
-
-import { networksAvailable, networkCurrent } from "../../../recoil";
+import { INetworkItem } from "../../../config/networks";
 
 type Props = {
   setNetwork?: (i: number) => void;
+  networks: INetworkItem[];
+  current: INetworkItem;
 };
 
 export const Networks: React.FC<Props> = (props: Props) => {
-  const networks = recoi.useRecoilValue(networksAvailable);
-  const current = recoi.useRecoilValue(networkCurrent);
-
   const onClick = (e: any) => {
     const { key } = e;
-    const index = networks.findIndex((net) => net.uri === key);
+    const index = props.networks.findIndex((net) => net.uri === key);
     props.setNetwork && props.setNetwork(index);
   };
 
   const menu = (
     <Menu onClick={onClick}>
-      {networks.map((net) => (
+      {props.networks.map((net) => (
         <Menu.Item key={net.uri}>
-          {net.uri === current.uri && <CheckOutlined />}
+          {net.uri === props.current.uri && <CheckOutlined />}
           {net.name}
         </Menu.Item>
       ))}
@@ -34,7 +32,7 @@ export const Networks: React.FC<Props> = (props: Props) => {
 
   return (
     <Container>
-      <Dropdown.Button overlay={menu}>{current.name}</Dropdown.Button>
+      <Dropdown.Button overlay={menu}>{props.current.name}</Dropdown.Button>
     </Container>
   );
 };

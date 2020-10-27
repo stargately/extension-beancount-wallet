@@ -23,11 +23,17 @@ export const accountCurrent = recoil.selector<LeanAccount>({
   },
 });
 
+export const accountVersion = recoil.atom<number>({
+  key: "App.Account.Version",
+  default: 0,
+});
+
 export const accountCurrentMeta = recoil.selector<AccountMeta>({
   key: "App.Account.Meta",
   get: async ({ get }) => {
     const current = get(accountCurrent);
     const network = get(networkCurrent);
+    get(accountVersion);
     const accountMeta = await clientSingleton.walletGetAccountMeta({
       address: current.address,
       providerUrl: network.uri,
