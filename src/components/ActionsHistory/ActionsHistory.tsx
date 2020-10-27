@@ -8,6 +8,9 @@ type Props = {
 };
 
 export const ActionsHistory: React.FC<Props> = ({ actions }) => {
+  if (actions.length === 0) {
+    return <Container>No Activity</Container>;
+  }
   return (
     <Container>
       {actions.map((e, id) => {
