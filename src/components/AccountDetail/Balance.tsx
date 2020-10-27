@@ -29,4 +29,5 @@ const Container = styled("div", {
   alignItems: "center",
   height: "100px",
   width: "100%",
+  flexShrink: 0,
 });

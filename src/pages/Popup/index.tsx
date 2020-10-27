@@ -5,6 +5,7 @@ import { RecoilRoot, MutableSnapshot } from "recoil";
 import { clientSingleton } from "../../daemon/client";
 import { StateObserver, interestedAtoms } from "./utils";
 import { Popup as App } from "./Popup";
+import "react-perfect-scrollbar/dist/css/styles.css";
 import "./index.css";
 
 const port = chrome.runtime.connect({ name: "Popup" });
