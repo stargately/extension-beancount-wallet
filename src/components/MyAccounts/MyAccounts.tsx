@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { styled } from "onefx/lib/styletron-react";
 import Button from "antd/lib/button";
 import ApiOutlined from "@ant-design/icons/ApiOutlined";
@@ -8,26 +8,25 @@ import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import SettingFilled from "@ant-design/icons/SettingFilled";
 import PlusOutlined from "@ant-design/icons/PlusOutlined";
 import Input from "antd/lib/input";
-import { useRecoilState } from "recoil";
 
 import { fonts } from "../../styles/style-font";
 import { AccountItem } from "./AccountItem";
 import { MenuItem } from "./MenuItem";
-import { accountsList, accountAddress } from "../../recoil";
-import { clientSingleton } from "../../daemon/client";
+import { LeanAccount } from "../../wallet-core";
 
-export const MyAccounts = () => {
-  const [accounts, setAccount] = useRecoilState(accountsList);
-  const [address, setAddress] = useRecoilState(accountAddress);
+type Props = {
+  accounts: LeanAccount[];
+  address: string;
+  onAddAccount: () => void;
+  onClickAccount: (address: string) => void;
+};
 
-  const handleCreateAccount = useCallback(async () => {
-    await clientSingleton.walletCreateAccount(
-      `IoTeX account ${accounts.length + 1}`
-    );
-    const _accounts = await clientSingleton.walletGetAccounts();
-    setAccount(_accounts);
-  }, []);
-
+export const MyAccounts: React.FC<Props> = ({
+  accounts,
+  address,
+  onAddAccount,
+  onClickAccount,
+}) => {
   return (
     <Container>
       <FlexContainer>
@@ -56,7 +55,7 @@ export const MyAccounts = () => {
           checked={address === account.address}
           account={account}
           onClick={() => {
-            setAddress(account.address);
+            onClickAccount(account.address);
           }}
         />
       ))}
@@ -66,7 +65,7 @@ export const MyAccounts = () => {
       <MenuItem
         icon={() => <PlusIcon />}
         content="Create Account"
-        onClick={handleCreateAccount}
+        onClick={onAddAccount}
       />
 
       <MenuItem icon={() => <DownloadIcon />} content="Import Account" />

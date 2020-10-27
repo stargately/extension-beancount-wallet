@@ -5,7 +5,7 @@ export type INetworkItem = {
   uri: string;
 };
 
-export const enum NetworkType {
+export enum NetworkType {
   iotex = "iotex",
   default = "default",
 }
