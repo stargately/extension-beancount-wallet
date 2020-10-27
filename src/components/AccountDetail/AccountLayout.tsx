@@ -9,11 +9,13 @@ import { AccountTitle } from "./AccountTitle";
 import { Balance } from "./Balance";
 import { CommonHeader } from "../CommonHeader";
 import { accountCurrent } from "../../recoil";
+import { ActionsHistory } from "../ActionsHistory";
 
 const { TabPane } = Tabs;
 export const AccountLayout = () => {
   const history = useHistory();
   const curAccount = useRecoilValue(accountCurrent);
+
   return (
     <Container>
       <CommonHeader />
@@ -31,21 +33,20 @@ export const AccountLayout = () => {
           Transfer
         </Button>
       </ButtonGroups>
-      <Paragraph></Paragraph>
       <Tabs centered={true} size="large" tabBarStyle={{ width: "100%" }}>
         <TabPane
           tab="Assets"
           key="1"
-          style={{ textAlign: "center", width: "50%" }}
+          style={{ textAlign: "center", width: "100%" }}
         >
           Assets
         </TabPane>
         <TabPane
           tab="Activity"
           key="2"
-          style={{ textAlign: "center", width: "50%" }}
+          style={{ textAlign: "center", width: "100%" }}
         >
-          Activity
+          <ActionsHistory></ActionsHistory>
         </TabPane>
       </Tabs>
     </Container>
@@ -66,12 +67,4 @@ const ButtonGroups = styled("div", {
   alignItems: "center",
   height: "100px",
   width: "100%",
-});
-
-const Paragraph = styled("div", {
-  height: "40px",
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
 });

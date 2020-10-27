@@ -1,6 +1,6 @@
 import recoil from "recoil";
 
-import { LeanAccount, AccountMeta } from "../wallet-core/wallet-core";
+import { LeanAccount, AccountMeta, Action } from "../wallet-core/wallet-core";
 import { clientSingleton } from "../daemon/client";
 import { networkCurrent } from "./network";
 
@@ -39,5 +39,19 @@ export const accountCurrentMeta = recoil.selector<AccountMeta>({
       providerUrl: network.uri,
     });
     return accountMeta;
+  },
+});
+
+export const accountActions = recoil.selector<Action[]>({
+  key: "App.Account.Actions",
+  get: async ({ get }) => {
+    const current = get(accountCurrent);
+    const network = get(networkCurrent);
+    get(accountVersion);
+    const actions = await clientSingleton.walletAccountActions({
+      address: current.address,
+      providerUrl: network.uri,
+    });
+    return actions;
   },
 });

@@ -12,8 +12,9 @@ import {
   WALLET_CREATE_ACCOUNT,
   WALLET_GET_ACCOUNT_META,
   WALLET_TRANSFER_TOKEN,
+  WALLET_ACTIONS,
 } from "./wallet";
-import { LeanAccount, AccountMeta } from "../wallet-core";
+import { LeanAccount, AccountMeta, Action } from "../wallet-core";
 
 export default class DaemonClient {
   agent?: Client;
@@ -92,6 +93,16 @@ export default class DaemonClient {
     gasLimit: string;
   }) {
     return this.check().sendRequest(WALLET_TRANSFER_TOKEN, payload);
+  }
+
+  async walletAccountActions(payload: {
+    address: string;
+    providerUrl: string;
+  }) {
+    const { actionInfo } = await this.check().sendRequest<{
+      actionInfo: Action[];
+    }>(WALLET_ACTIONS, payload);
+    return actionInfo;
   }
 }
 
