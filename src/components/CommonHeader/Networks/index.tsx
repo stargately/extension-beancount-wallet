@@ -1,9 +1,22 @@
 import React from "react";
 import recoil from "recoil";
-import { Networks as Net } from "./Networks";
-import { networkIndex } from "../../../recoil";
+
+import { Networks as MyNetworks } from "./Networks";
+import {
+  networkIndex,
+  networksAvailable,
+  networkCurrent,
+} from "../../../recoil";
 
 export const Networks: React.FC = () => {
   const setNetworkIndex = recoil.useSetRecoilState(networkIndex);
-  return <Net setNetwork={setNetworkIndex}></Net>;
+  const networks = recoil.useRecoilValue(networksAvailable);
+  const current = recoil.useRecoilValue(networkCurrent);
+  return (
+    <MyNetworks
+      networks={networks}
+      current={current}
+      setNetwork={setNetworkIndex}
+    ></MyNetworks>
+  );
 };
