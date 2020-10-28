@@ -59,17 +59,18 @@ export class Client {
 export class Daemon extends EventEmitter {
   handlers: Map<string, ServerHandler> = new Map();
 
-  connectedPorts: Set<chrome.runtime.Port> = new Set();
+  ports: Set<chrome.runtime.Port> = new Set();
 
   connect(port: chrome.runtime.Port) {
-    this.connectedPorts.add(port);
+    this.ports.add(port);
+    this.emit("connect", port);
     port.onMessage.addListener((req: Request, p: chrome.runtime.Port) =>
       this.dispatch(req, p)
     );
     port.onDisconnect.addListener(() => {
       console.info(`Port ${port.name} is disconnected`);
-      this.connectedPorts.delete(port);
-      this.emit("portDisconnect", port);
+      this.ports.delete(port);
+      this.emit("disconnect", port);
     });
   }
 
@@ -85,14 +86,14 @@ export class Daemon extends EventEmitter {
   }
 
   dispatch(req: Request, port: chrome.runtime.Port) {
-    if (this.connectedPorts.has(port)) {
+    if (this.ports.has(port)) {
       const handler = this.handlers.get(req.type);
       handler?.call(this, req, this.sendResponse.bind(this, port, req));
     }
   }
 
   sendResponse(port: chrome.runtime.Port, req: Request, res: any) {
-    if (this.connectedPorts.has(port)) {
+    if (this.ports.has(port)) {
       const data: Response = {
         uid: req.uid,
         isOk: !(res instanceof Error),

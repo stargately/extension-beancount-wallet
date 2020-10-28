@@ -19,6 +19,7 @@ type Props = {
   address: string;
   onAddAccount: () => void;
   onClickAccount: (address: string) => void;
+  onLock?: () => void;
 };
 
 export const MyAccounts: React.FC<Props> = ({
@@ -26,13 +27,14 @@ export const MyAccounts: React.FC<Props> = ({
   address,
   onAddAccount,
   onClickAccount,
+  onLock,
 }) => {
   return (
     <Container>
       <FlexContainer>
         <MyAccountsText>My Accounts</MyAccountsText>
         <LockButtonContainer>
-          <Button type="default" ghost block size="small">
+          <Button type="default" ghost block size="small" onClick={onLock}>
             Lock
           </Button>
         </LockButtonContainer>
