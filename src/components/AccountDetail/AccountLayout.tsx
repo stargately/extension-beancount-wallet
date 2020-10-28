@@ -4,16 +4,19 @@ import Tabs from "antd/lib/tabs";
 import { styled } from "onefx/lib/styletron-react";
 import { useHistory } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import ScrollBar from "react-perfect-scrollbar";
 
 import { AccountTitle } from "./AccountTitle";
 import { Balance } from "./Balance";
 import { CommonHeader } from "../CommonHeader";
 import { accountCurrent } from "../../recoil";
+import { ActionsHistory } from "../ActionsHistory";
 
 const { TabPane } = Tabs;
 export const AccountLayout = () => {
   const history = useHistory();
   const curAccount = useRecoilValue(accountCurrent);
+
   return (
     <Container>
       <CommonHeader />
@@ -31,21 +34,28 @@ export const AccountLayout = () => {
           Transfer
         </Button>
       </ButtonGroups>
-      <Paragraph></Paragraph>
-      <Tabs centered={true} size="large" tabBarStyle={{ width: "100%" }}>
+      <Tabs
+        centered={true}
+        size="large"
+        tabBarStyle={{ width: "100%", flex: 1 }}
+      >
         <TabPane
           tab="Assets"
           key="1"
-          style={{ textAlign: "center", width: "50%" }}
+          style={{ textAlign: "center", width: "100%" }}
         >
           Assets
         </TabPane>
         <TabPane
           tab="Activity"
           key="2"
-          style={{ textAlign: "center", width: "50%" }}
+          style={{ textAlign: "center", width: "100%", height: "100%" }}
         >
-          Activity
+          <div style={{ height: "190px" }}>
+            <ScrollBar>
+              <ActionsHistory></ActionsHistory>
+            </ScrollBar>
+          </div>
         </TabPane>
       </Tabs>
     </Container>
@@ -66,12 +76,5 @@ const ButtonGroups = styled("div", {
   alignItems: "center",
   height: "100px",
   width: "100%",
-});
-
-const Paragraph = styled("div", {
-  height: "40px",
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
+  flexShrink: 0,
 });

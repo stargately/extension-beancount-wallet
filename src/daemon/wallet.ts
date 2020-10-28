@@ -12,6 +12,7 @@ export const WALLET_GET_ACCOUNTS = "WALLET_GET_ACCOUNTS";
 export const WALLET_GET_ACCOUNT_META = "WALLET_GET_ACCOUNT_META";
 export const WALLET_CREATE_ACCOUNT = "WALLET_CREATE_ACCOUNT";
 export const WALLET_TRANSFER_TOKEN = "APP.WALLET_TRANSFER_TOKEN";
+export const WALLET_ACTIONS = "APP.WALLET_ACTIONS";
 
 export default {
   [CREATE_PASSWORD]: async (req, cb) => {
@@ -67,5 +68,13 @@ export default {
       gasLimit: payload.gasLimit,
     });
     cb();
+  },
+  [WALLET_ACTIONS]: async (req, cb) => {
+    const { payload } = req;
+    const { address, providerUrl } = payload;
+    const acc = await walletSingleton.getAccount(address);
+    providerUrl && acc?.setProvider(providerUrl);
+    const actions = await walletSingleton.getActions(address);
+    cb(actions);
   },
 } as HandlerGroup;
