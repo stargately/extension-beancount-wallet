@@ -78,12 +78,12 @@ export class AntennaAccount implements IAccount {
     return "IOTX";
   }
 
-  getActions(): Promise<{ actionInfo: Action[] }> {
+  getActions(start = 0, count = 10): Promise<{ actionInfo: Action[] }> {
     const req: IGetActionsRequest = {
       byAddr: {
         address: this.antenna.iotx.accounts[0].address,
-        start: 0,
-        count: 10,
+        start,
+        count,
       },
     };
     return this.antenna.iotx.getActions(req);

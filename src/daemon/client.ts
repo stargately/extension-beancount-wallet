@@ -98,6 +98,8 @@ export default class DaemonClient {
   async walletAccountActions(payload: {
     address: string;
     providerUrl: string;
+    start: number;
+    count: number;
   }) {
     const { actionInfo } = await this.check().sendRequest<{
       actionInfo: Action[];

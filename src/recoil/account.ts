@@ -47,10 +47,14 @@ export const accountActions = recoil.selector<Action[]>({
   get: async ({ get }) => {
     const current = get(accountCurrent);
     const network = get(networkCurrent);
+    const accountMeta = get(accountCurrentMeta);
+    const start = Math.max(0, +accountMeta.numActions - 10);
     get(accountVersion);
     const actions = await clientSingleton.walletAccountActions({
       address: current.address,
       providerUrl: network.uri,
+      start,
+      count: 10,
     });
     return actions;
   },
