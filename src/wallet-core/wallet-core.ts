@@ -44,7 +44,7 @@ export interface IAccount {
 
   getCoinType(): CoinType;
 
-  getActions(): Promise<{ actionInfo: Action[] }>;
+  getActions(start: number, count: number): Promise<{ actionInfo: Action[] }>;
 
   getAccountMeta(): Promise<{ accountMeta: AccountMeta | undefined }>;
 
@@ -108,9 +108,13 @@ export class WalletCore {
     }));
   }
 
-  getActions(address?: string): Promise<{ actionInfo: Action[] } | undefined> {
+  getActions(
+    address?: string,
+    start = 0,
+    count = 10
+  ): Promise<{ actionInfo: Action[] } | undefined> {
     const acc = this.getAccount(address);
-    return Promise.resolve(acc?.getActions());
+    return Promise.resolve(acc?.getActions(start, count));
   }
 
   getAccountMeta(
@@ -163,7 +167,7 @@ export class WalletCore {
     const keyrings = this.keyringController.keyrings.filter(
       (kr: any) => kr.type === "Simple Key Pair"
     );
-    // if the number of Simple Key Pair Account is not equal to the number of iotex account, then all account will be clean and rebuild
+    // if the number of Simple Key Pair Account is not equal to the number of iotex account, then all accounts will be destoryed and rebuild
     if (keyrings.length !== this.accounts.length) {
       this.accounts = [];
       keyrings.forEach(async (kr: any) => {

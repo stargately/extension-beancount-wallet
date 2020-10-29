@@ -71,10 +71,10 @@ export default {
   },
   [WALLET_ACTIONS]: async (req, cb) => {
     const { payload } = req;
-    const { address, providerUrl } = payload;
+    const { address, providerUrl, start, count } = payload;
     const acc = await walletSingleton.getAccount(address);
     providerUrl && acc?.setProvider(providerUrl);
-    const actions = await walletSingleton.getActions(address);
+    const actions = await walletSingleton.getActions(address, start, count);
     cb(actions);
   },
 } as HandlerGroup;

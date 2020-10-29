@@ -9,6 +9,8 @@ export const InnerActionsHistory = () => {
   const actions = recoil.useRecoilValue(accountActions);
   const address = recoil.useRecoilValue(accountAddress);
   const items = actions
+    .slice(0)
+    .reverse()
     .map((e) => e.action.core)
     .map((i) => ({
       address,
