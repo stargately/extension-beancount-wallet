@@ -70,8 +70,11 @@ export default class DaemonClient {
     return this.check().sendRequest<LeanAccount[]>(WALLET_GET_ACCOUNTS);
   }
 
-  async walletCreateAccount(name: string) {
-    return this.check().sendRequest<string>(WALLET_CREATE_ACCOUNT, name);
+  async walletCreateAccount(name: string, privateKey?: string) {
+    return this.check().sendRequest<string>(WALLET_CREATE_ACCOUNT, {
+      name,
+      privateKey,
+    });
   }
 
   async walletGetAccountMeta(payload: {

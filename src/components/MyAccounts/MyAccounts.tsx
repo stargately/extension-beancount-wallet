@@ -19,6 +19,7 @@ type Props = {
   address: string;
   onAddAccount: () => void;
   onClickAccount: (address: string) => void;
+  onImportAccount?: () => void;
   onLock?: () => void;
 };
 
@@ -27,6 +28,7 @@ export const MyAccounts: React.FC<Props> = ({
   address,
   onAddAccount,
   onClickAccount,
+  onImportAccount,
   onLock,
 }) => {
   return (
@@ -70,7 +72,11 @@ export const MyAccounts: React.FC<Props> = ({
         onClick={onAddAccount}
       />
 
-      <MenuItem icon={() => <DownloadIcon />} content="Import Account" />
+      <MenuItem
+        icon={() => <DownloadIcon />}
+        onClick={onImportAccount}
+        content="Import Account"
+      />
 
       <MenuItem icon={() => <ApiIcon />} content="Connect Hardware Wallet" />
 

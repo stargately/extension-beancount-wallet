@@ -22,6 +22,7 @@ const MenuContainer = styled("div", ({ $theme }) => ({
   display: "flex",
   alignItems: "center",
   padding: $theme.sizing[3],
+  cursor: "pointer",
 }));
 
 const MenuText = styled("div", ({ $theme }) => ({
