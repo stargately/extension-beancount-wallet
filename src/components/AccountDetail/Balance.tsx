@@ -8,7 +8,8 @@ import { accountCurrentMeta } from "../../recoil";
 
 export const MyBalance = () => {
   const meta = useRecoilValue(accountCurrentMeta);
-  return <span>{`${+meta.balance / 10 ** 18} ${"IOTX"}`}</span>;
+  const nums = +meta.balance / 10 ** 18;
+  return <span>{`${nums.toFixed(2)} ${"IOTX"}`}</span>;
 };
 
 export const Balance = () => {

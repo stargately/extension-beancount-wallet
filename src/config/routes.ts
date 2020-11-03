@@ -4,6 +4,7 @@ import { CreatePassword } from "../components/CreatePassword";
 import { Unlock } from "../components/Unlock";
 import { AccountDetail } from "../components/AccountDetail";
 import { TransferToken } from "../components/TransferToken";
+import { ImportKey } from "../components/ImportKey";
 
 const RouteConfig: RouteConfig[] = [
   {
@@ -29,6 +30,11 @@ const RouteConfig: RouteConfig[] = [
   {
     path: "/transfer",
     component: TransferToken,
+    exact: true,
+  },
+  {
+    path: "/importKey",
+    component: ImportKey,
     exact: true,
   },
 ];

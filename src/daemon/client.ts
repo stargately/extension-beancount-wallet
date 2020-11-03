@@ -42,8 +42,8 @@ export default class DaemonClient {
     await this.check().sendRequest(UPDATE_STATE, payload);
   }
 
-  async createPassword(password: string) {
-    await this.check().sendRequest<void>(CREATE_PASSWORD, password);
+  async createPassword(password: string, key?: string) {
+    await this.check().sendRequest<void>(CREATE_PASSWORD, { password, key });
   }
 
   async walletUnlock(password: string) {
