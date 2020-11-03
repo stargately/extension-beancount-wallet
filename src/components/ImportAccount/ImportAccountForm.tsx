@@ -4,6 +4,9 @@ import { styled } from "onefx/lib/styletron-react";
 import Form from "antd/lib/form";
 import Input from "antd/lib/input";
 import Button from "antd/lib/button";
+import Row from "antd/lib/row";
+import Col from "antd/lib/col";
+import { useHistory } from "react-router-dom";
 
 import { Logo } from "../../styles/logo";
 import { CommonMargin } from "../../styles/common-margin";
@@ -20,6 +23,7 @@ type ImportAccountFormProps = {
 export const ImportAccountForm: React.FC<ImportAccountFormProps> = ({
   onFinish,
 }) => {
+  const history = useHistory();
   return (
     <Container>
       <Logo />
@@ -36,9 +40,18 @@ export const ImportAccountForm: React.FC<ImportAccountFormProps> = ({
           <Input.Password size="large" />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" size="large">
-            Import
-          </Button>
+          <Row justify="space-between">
+            <Col>
+              <Button type="primary" htmlType="submit" size="large">
+                Import
+              </Button>
+            </Col>
+            <Col>
+              <Button size="large" onClick={() => history.goBack()}>
+                Cancel
+              </Button>
+            </Col>
+          </Row>
         </Form.Item>
       </Form>
     </Container>
@@ -47,6 +60,7 @@ export const ImportAccountForm: React.FC<ImportAccountFormProps> = ({
 
 const Container = styled("div", {
   padding: "16px",
+  width: "100%",
 });
 
 const Title = styled("h1", {

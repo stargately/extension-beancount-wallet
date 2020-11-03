@@ -1,6 +1,7 @@
 import React from "react";
 import { useRecoilState } from "recoil";
 import { useHistory } from "react-router-dom";
+import { styled } from "onefx/lib/styletron-react";
 
 import { ImportAccountForm } from "./ImportAccountForm";
 import { clientSingleton } from "../../daemon/client";
@@ -22,5 +23,16 @@ export const ImportAccount: React.FC = () => {
     setAccount(_accounts);
     history.push("/account");
   };
-  return <ImportAccountForm onFinish={onFinish}></ImportAccountForm>;
+  return (
+    <Container>
+      <ImportAccountForm onFinish={onFinish}></ImportAccountForm>
+    </Container>
+  );
 };
+
+const Container = styled("div", {
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+});

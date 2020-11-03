@@ -1,5 +1,6 @@
 import {
   IGetActionsByAddressRequest,
+  IGetActionsByHashRequest,
   IActionInfo,
   IAccountMeta,
 } from "iotex-antenna/lib/rpc-method/types";
@@ -23,6 +24,7 @@ export type CoinType = "IOTX";
 // TODO(di): later remove, should define for different coin to implement
 export type IGetActionsRequest = {
   byAddr?: IGetActionsByAddressRequest;
+  byHash?: IGetActionsByHashRequest;
 };
 
 export interface IAccount {
@@ -45,6 +47,8 @@ export interface IAccount {
   getCoinType(): CoinType;
 
   getActions(start: number, count: number): Promise<{ actionInfo: Action[] }>;
+
+  getActionByHash(actionHash: string): Promise<{ actionInfo: Action[] }>;
 
   getAccountMeta(): Promise<{ accountMeta: AccountMeta | undefined }>;
 
@@ -119,6 +123,14 @@ export class WalletCore {
   ): Promise<{ actionInfo: Action[] } | undefined> {
     const acc = this.getAccount(address);
     return Promise.resolve(acc?.getActions(start, count));
+  }
+
+  getActionsByHash(
+    address: string,
+    actionHash: string
+  ): Promise<{ actionInfo: Action[] } | undefined> {
+    const acc = this.getAccount(address);
+    return Promise.resolve(acc?.getActionByHash(actionHash));
   }
 
   getAccountMeta(
