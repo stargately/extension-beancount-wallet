@@ -11,11 +11,11 @@ export const InnerActionsHistory = () => {
   const items = actions
     .slice(0)
     .reverse()
-    .map((e) => e.action.core)
-    .map((i) => ({
+    .map((e) => ({
       address,
-      recipient: i?.transfer?.recipient,
-      amount: i?.transfer?.amount,
+      actionHash: e.actHash,
+      recipient: e.action.core?.transfer?.recipient,
+      amount: e.action.core?.transfer?.amount,
     }));
   return <MyActionsHistory actions={items}></MyActionsHistory>;
 };

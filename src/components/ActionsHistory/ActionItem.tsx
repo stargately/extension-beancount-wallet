@@ -5,6 +5,7 @@ import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
 
 export type IAction = {
   address: string;
+  actionHash?: string;
   recipient?: string;
   amount?: string;
 };
@@ -17,7 +18,12 @@ export const ActionItem: React.FC<IAction> = (props) => {
   let address = props.address === props.recipient ? "From:  " : "To:  ";
   address += ellipsis(`${props.recipient || ""}`);
   return (
-    <Container>
+    <Container
+      onClick={() =>
+        props.actionHash &&
+        window.open(`https://iotexscan.io/action/${props.actionHash}`, "_blank")
+      }
+    >
       <LeftIcon>
         {props.address === props.recipient ? (
           <LoginOutlined />
@@ -51,6 +57,7 @@ const Container = styled("div", () => ({
   justifyContent: "space-between",
   alignItems: "center",
   backgroundColor: "white",
+  cursor: "pointer",
 }));
 
 const LeftIcon = styled("div", {

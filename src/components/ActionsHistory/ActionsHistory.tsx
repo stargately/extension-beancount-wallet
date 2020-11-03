@@ -17,6 +17,7 @@ export const ActionsHistory: React.FC<Props> = ({ actions }) => {
         return (
           <ActionItem
             key={id}
+            actionHash={e.actionHash}
             address={e.address}
             recipient={e.recipient}
             amount={e.amount}

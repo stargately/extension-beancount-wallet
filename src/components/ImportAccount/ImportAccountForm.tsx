@@ -47,6 +47,7 @@ export const ImportAccountForm: React.FC<ImportAccountFormProps> = ({
 
 const Container = styled("div", {
   padding: "16px",
+  width: "100%",
 });
 
 const Title = styled("h1", {
