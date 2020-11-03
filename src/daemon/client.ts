@@ -13,6 +13,7 @@ import {
   WALLET_GET_ACCOUNT_META,
   WALLET_TRANSFER_TOKEN,
   WALLET_ACTIONS,
+  WALLET_ACTION_DETAIL,
 } from "./wallet";
 import { LeanAccount, AccountMeta, Action } from "../wallet-core";
 
@@ -107,6 +108,17 @@ export default class DaemonClient {
     const { actionInfo } = await this.check().sendRequest<{
       actionInfo: Action[];
     }>(WALLET_ACTIONS, payload);
+    return actionInfo;
+  }
+
+  async walletAccountActionByHash(payload: {
+    address: string;
+    providerUrl: string;
+    actionHash: string;
+  }) {
+    const { actionInfo } = await this.check().sendRequest<{
+      actionInfo: Action[];
+    }>(WALLET_ACTION_DETAIL, payload);
     return actionInfo;
   }
 }

@@ -89,6 +89,16 @@ export class AntennaAccount implements IAccount {
     return this.antenna.iotx.getActions(req);
   }
 
+  getActionByHash(actionHash: string) {
+    const req: IGetActionsRequest = {
+      byHash: {
+        actionHash,
+        checkingPending: true,
+      },
+    };
+    return this.antenna.iotx.getActions(req);
+  }
+
   getAccountMeta(): Promise<{ accountMeta: AccountMeta | undefined }> {
     return this.antenna.iotx.getAccount({
       address: this.antenna.iotx.accounts[0].address,

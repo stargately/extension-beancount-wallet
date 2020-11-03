@@ -3,14 +3,21 @@ import { styled } from "onefx/lib/styletron-react";
 import { fromRau } from "iotex-antenna/lib/account/utils";
 import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
 
+import { Action } from "../../wallet-core/wallet-core";
+
 export type IAction = {
   address: string;
-  actionHash?: string;
+  actionHash: string;
   recipient?: string;
   amount?: string;
+  raw?: Action;
 };
 
-export const ActionItem: React.FC<IAction> = (props) => {
+type Props = IAction & {
+  onClick?: (e: IAction) => void;
+};
+
+export const ActionItem: React.FC<Props> = (props) => {
   const title =
     props.address === props.recipient ? "Receive IOTX" : "Send IOTX";
   const account = fromRau(`${props.amount || 0} `, "iotx");
@@ -18,12 +25,7 @@ export const ActionItem: React.FC<IAction> = (props) => {
   let address = props.address === props.recipient ? "From:  " : "To:  ";
   address += ellipsis(`${props.recipient || ""}`);
   return (
-    <Container
-      onClick={() =>
-        props.actionHash &&
-        window.open(`https://iotexscan.io/action/${props.actionHash}`, "_blank")
-      }
-    >
+    <Container onClick={() => props.onClick && props.onClick(props)}>
       <LeftIcon>
         {props.address === props.recipient ? (
           <LoginOutlined />

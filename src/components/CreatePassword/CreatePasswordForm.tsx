@@ -124,15 +124,15 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
   );
 };
 
-const BackArrowButton = styled(ArrowLeftOutlined, {
-  fontSize: "28px",
-  marginBlock: "28px",
-});
+const BackArrowButton = styled(ArrowLeftOutlined, ({ $theme }) => ({
+  fontSize: $theme.sizing[4],
+  marginBlock: $theme.sizing[4],
+}));
 
-const Container = styled("div", {
+const Container = styled("div", ({ $theme }) => ({
   textAlign: "left",
-  padding: "16px",
-});
+  padding: $theme.sizing[3],
+}));
 
 const Paragraph = styled("div", {
   ...fonts.normal,

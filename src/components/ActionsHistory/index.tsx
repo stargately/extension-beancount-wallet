@@ -7,6 +7,7 @@ import { accountActions, accountAddress } from "../../recoil";
 
 export const InnerActionsHistory = () => {
   const actions = recoil.useRecoilValue(accountActions);
+  console.log(actions);
   const address = recoil.useRecoilValue(accountAddress);
   const items = actions
     .slice(0)
@@ -16,6 +17,7 @@ export const InnerActionsHistory = () => {
       actionHash: e.actHash,
       recipient: e.action.core?.transfer?.recipient,
       amount: e.action.core?.transfer?.amount,
+      raw: e,
     }));
   return <MyActionsHistory actions={items}></MyActionsHistory>;
 };
