@@ -17,7 +17,8 @@ export const WALLET_ACTIONS = "APP.WALLET_ACTIONS";
 export default {
   [CREATE_PASSWORD]: async (req, cb) => {
     const { payload } = req;
-    await walletSingleton.createKeyringController(payload);
+    const { password, key } = payload;
+    await walletSingleton.createKeyringController(password, key);
     cb();
   },
   [WALLET_UNLOCK]: async (req, cb) => {
