@@ -12,7 +12,7 @@ export const MyAccounts = () => {
   const [address, setAddress] = useRecoilState(accountAddress);
   const onCreateAccount = useCallback(async () => {
     await clientSingleton.walletCreateAccount(
-      `IoTeX account ${accounts.length + 1}`
+      `IoTeX account ${accounts.length}`
     );
     const _accounts = await clientSingleton.walletGetAccounts();
     setAccount(_accounts);
@@ -21,6 +21,9 @@ export const MyAccounts = () => {
     await clientSingleton.walletLock();
     history.push("/");
   };
+  const onImportAccount = useCallback(() => {
+    history.push("/importAccount");
+  }, []);
 
   return (
     <Account
@@ -29,6 +32,7 @@ export const MyAccounts = () => {
       onAddAccount={onCreateAccount}
       onClickAccount={setAddress}
       onLock={onLock}
+      onImportAccount={onImportAccount}
     ></Account>
   );
 };

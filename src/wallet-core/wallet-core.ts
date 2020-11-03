@@ -91,12 +91,16 @@ export class WalletCore {
   // expose to proxy
   async createAccount(
     name: string,
+    privateKey?: string,
     coinType: CoinType = "IOTX"
   ): Promise<string> {
-    const acc = this.addAccount(name, undefined, coinType);
+    const acc = this.addAccount(name, privateKey, coinType);
+    if (!acc.privateKey) {
+      throw new Error("private key lost");
+    }
     await this.keyringController.addNewKeyring(
       "Simple Key Pair",
-      acc?.privateKey && [acc?.privateKey]
+      acc.privateKey && [acc.privateKey]
     );
     return acc.getAddress();
   }
@@ -124,13 +128,12 @@ export class WalletCore {
     return Promise.resolve(acc?.getAccountMeta());
   }
 
-  async createKeyringController(password: string, key?: string): Promise<void> {
+  async createKeyringController(
+    password: string,
+    privateKey?: string
+  ): Promise<void> {
     await this.keyringController.createNewVaultAndKeychain(password);
-    if (key) {
-      this.addAccount("IoTeX account 1", key);
-    } else {
-      await this.createAccount("IoTeX account 1");
-    }
+    await this.createAccount("IoTeX account 1", privateKey);
   }
 
   get isInitiated(): boolean {

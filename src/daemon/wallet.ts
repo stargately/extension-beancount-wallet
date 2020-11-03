@@ -47,7 +47,13 @@ export default {
   },
   [WALLET_CREATE_ACCOUNT]: async (req, cb) => {
     const { payload } = req;
-    const addr = await walletSingleton.createAccount(payload);
+    const { name, privateKey } = payload;
+    let addr;
+    try {
+      addr = await walletSingleton.createAccount(name, privateKey);
+    } catch (e) {
+      cb(e);
+    }
     cb(addr);
   },
   [WALLET_GET_ACCOUNT_META]: async (req, cb) => {
@@ -60,14 +66,18 @@ export default {
   },
   [WALLET_TRANSFER_TOKEN]: async (req, cb) => {
     const { payload } = req;
-    await walletSingleton.transferToken({
-      from: payload.from,
-      url: payload.url,
-      to: payload.to,
-      amount: payload.amount,
-      gasPrice: payload.gasPrice,
-      gasLimit: payload.gasLimit,
-    });
+    try {
+      await walletSingleton.transferToken({
+        from: payload.from,
+        url: payload.url,
+        to: payload.to,
+        amount: payload.amount,
+        gasPrice: payload.gasPrice,
+        gasLimit: payload.gasLimit,
+      });
+    } catch (e) {
+      cb(e);
+    }
     cb();
   },
   [WALLET_ACTIONS]: async (req, cb) => {
