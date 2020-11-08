@@ -6,14 +6,15 @@ var webpack = require("webpack"),
   CopyWebpackPlugin = require("copy-webpack-plugin"),
   HtmlWebpackPlugin = require("html-webpack-plugin"),
   WriteFilePlugin = require("write-file-webpack-plugin");
+const InjectPlugin = require("./utils/injectPlugin");
+
+var alias = {};
+if (env.NODE_ENV == "development") {
+  alias["react-dom"] = "@hot-loader/react-dom";
+}
 
 // load the secrets
-var alias = {
-  "react-dom": "@hot-loader/react-dom",
-};
-
 var secretsPath = path.join(__dirname, "secrets." + env.NODE_ENV + ".js");
-
 var fileExtensions = [
   "jpg",
   "jpeg",
@@ -38,7 +39,7 @@ var options = {
     options: path.join(__dirname, "src", "pages", "Options", "index.tsx"),
     popup: path.join(__dirname, "src", "pages", "Popup", "index.tsx"),
     background: path.join(__dirname, "src", "pages", "Background", "index.ts"),
-    contentScript: path.join(__dirname, "src", "pages", "Content", "index.js"),
+    contentScript: path.join(__dirname, "src", "pages", "Content", "index.ts"),
   },
   chromeExtensionBoilerplate: {
     notHotReload: ["contentScript"],
@@ -177,6 +178,7 @@ var options = {
       filename: "background.html",
       chunks: ["background"],
     }),
+    new InjectPlugin(),
     new WriteFilePlugin(),
   ],
 };
