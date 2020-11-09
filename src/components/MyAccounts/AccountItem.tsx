@@ -35,12 +35,16 @@ export const AccountItem = (props: AccountItemProps) => {
   );
 };
 
-const ItemContainer = styled("div", {
+const ItemContainer = styled("div", ({ $theme }) => ({
   height: "45px",
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
-});
+  cursor: "pointer",
+  ":hover": {
+    backgroundColor: $theme.colors.black95,
+  },
+}));
 
 const TopContentContainer = styled("div", {
   display: "flex",
