@@ -5,11 +5,13 @@ import { useHistory } from "react-router-dom";
 import { MyAccounts as Account } from "./MyAccounts";
 import { accountsList, accountAddress } from "../../recoil";
 import { clientSingleton } from "../../daemon/client";
+import { useRefreshWallet } from "../../hooks";
 
 export const MyAccounts = () => {
   const history = useHistory();
   const [accounts, setAccount] = useRecoilState(accountsList);
   const [address, setAddress] = useRecoilState(accountAddress);
+  const refreshWallet = useRefreshWallet();
   const onCreateAccount = useCallback(async () => {
     await clientSingleton.walletCreateAccount(
       `IoTeX account ${accounts.length}`
@@ -19,6 +21,7 @@ export const MyAccounts = () => {
   }, [accounts]);
   const onLock = async () => {
     await clientSingleton.walletLock();
+    refreshWallet();
     history.push("/");
   };
   const onImportAccount = useCallback(() => {

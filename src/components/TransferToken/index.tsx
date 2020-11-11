@@ -6,13 +6,13 @@ import recoil from "recoil";
 import { TransferTokenForm } from "./TransferTokenForm";
 import { accountAddress, networkCurrent } from "../../recoil";
 import { clientSingleton } from "../../daemon/client";
-import { useRefreshAccountMeta } from "../../hooks";
+import { useRefreshAccount } from "../../hooks";
 
 export const TransferToken = () => {
   const address = recoil.useRecoilValue(accountAddress);
   const current = recoil.useRecoilValue(networkCurrent);
   const history = useHistory();
-  const refreshAccountMeta = useRefreshAccountMeta();
+  const refreshAccountMeta = useRefreshAccount();
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values: any) => {
