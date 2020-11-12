@@ -24,7 +24,7 @@ export const InnerActionsHistory = () => {
 
 export const ActionsHistory = () => {
   return (
-    <React.Suspense fallback={<Skeleton height={150} width={"80%"} />}>
+    <React.Suspense fallback={<Skeleton height={150} width="80%" />}>
       <InnerActionsHistory></InnerActionsHistory>
     </React.Suspense>
   );

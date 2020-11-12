@@ -12,7 +12,7 @@ export const Standard: React.FC = () => (
       { name: "test 1", address: "test 1" },
       { name: "test 2", address: "test 2" },
     ]}
-    address={"test 1"}
+    address="test 1"
     onClickAccount={noop}
     onAddAccount={noop}
   />
