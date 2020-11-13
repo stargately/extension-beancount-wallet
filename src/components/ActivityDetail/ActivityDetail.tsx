@@ -7,7 +7,7 @@ import { ActivityDetailView } from "./ActivityDetailView";
 import { Action } from "../../wallet-core/wallet-core";
 import { accountAddress } from "../../recoil";
 
-const ActivityDetailSus = () => {
+const ActivityDetailContainer = () => {
   const location = useLocation<Action>();
   const { state } = location;
   const address = useRecoilValue(accountAddress);
@@ -28,7 +28,7 @@ const ActivityDetailSus = () => {
 export const ActivityDetail = () => {
   return (
     <React.Suspense fallback={<Loading />}>
-      <ActivityDetailSus></ActivityDetailSus>
+      <ActivityDetailContainer></ActivityDetailContainer>
     </React.Suspense>
   );
 };
