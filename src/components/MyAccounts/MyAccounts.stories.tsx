@@ -11,6 +11,9 @@ export const Standard: React.FC = () => (
     accounts={[
       { name: "test 1", address: "test 1" },
       { name: "test 2", address: "test 2" },
+      { name: "test 3", address: "test 3" },
+      { name: "test 4", address: "test 4" },
+      { name: "test 5", address: "test 5" },
     ]}
     address="test 1"
     onClickAccount={noop}

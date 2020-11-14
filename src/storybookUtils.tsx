@@ -1,6 +1,7 @@
 import { styled } from "onefx/lib/styletron-react";
 import React from "react";
 import "./styles/antd.less";
+import "react-perfect-scrollbar/dist/css/styles.css";
 import { Story } from "@storybook/react/types-6-0";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";

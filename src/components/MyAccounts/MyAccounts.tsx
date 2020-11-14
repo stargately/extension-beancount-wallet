@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "onefx/lib/styletron-react";
 import Button from "antd/lib/button";
 import ApiOutlined from "@ant-design/icons/ApiOutlined";
@@ -8,6 +8,7 @@ import SearchOutlined from "@ant-design/icons/SearchOutlined";
 import SettingFilled from "@ant-design/icons/SettingFilled";
 import PlusOutlined from "@ant-design/icons/PlusOutlined";
 import Input from "antd/lib/input";
+import PerfectScrollbar from "react-perfect-scrollbar";
 
 import { fonts } from "../../styles/style-font";
 import { AccountItem } from "./AccountItem";
@@ -31,6 +32,10 @@ export const MyAccounts: React.FC<Props> = ({
   onImportAccount,
   onLock,
 }) => {
+  const [text, setText] = useState("");
+  const reg = new RegExp(text);
+  const items = accounts.filter((acc) => reg.test(acc.name));
+
   return (
     <Container>
       <FlexContainer>
@@ -47,22 +52,31 @@ export const MyAccounts: React.FC<Props> = ({
       <SearchContainer>
         <SearchIcon />
         <div style={{ flexGrow: 1 }}>
-          <SearchInput placeholder="Search Accounts" bordered={false} />
+          <SearchInput
+            placeholder="Search Accounts"
+            bordered={false}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+          />
         </div>
       </SearchContainer>
 
       <HDivider />
       {/* Account List */}
-      {accounts?.map((account) => (
-        <AccountItem
-          key={account.address}
-          checked={address === account.address}
-          account={account}
-          onClick={() => {
-            onClickAccount(account.address);
-          }}
-        />
-      ))}
+      <AccountContainer>
+        <PerfectScrollbar style={{ height: "150px" }}>
+          {items?.map((account) => (
+            <AccountItem
+              key={account.address}
+              checked={address === account.address}
+              account={account}
+              onClick={() => {
+                onClickAccount(account.address);
+              }}
+            />
+          ))}
+        </PerfectScrollbar>
+      </AccountContainer>
       {/* END Account List */}
       <HDivider />
 
@@ -161,3 +175,8 @@ const SettingIcon = styled(SettingFilled, ({ $theme }) => ({
   color: $theme.colors.white,
   fontSize: $theme.sizing[3],
 }));
+
+const AccountContainer = styled("div", {
+  maxHeight: "150px",
+  position: "relative",
+});
