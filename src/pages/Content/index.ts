@@ -1,3 +1,9 @@
-import { printLine } from "./modules/print";
+// @ts-nocheck
+import { content } from "../../../utils/inpage";
+import { injectScript } from "./utils";
 
-(window as any).ethereum = { printLine };
+window.addEventListener("message", function (e: any) {
+  console.log("receive message in content script", e);
+});
+
+injectScript(content);
