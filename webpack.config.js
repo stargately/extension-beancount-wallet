@@ -6,9 +6,9 @@ var webpack = require("webpack"),
   CopyWebpackPlugin = require("copy-webpack-plugin"),
   HtmlWebpackPlugin = require("html-webpack-plugin"),
   WriteFilePlugin = require("write-file-webpack-plugin");
-const InjectPlugin = require("./utils/injectPlugin");
 
 var alias = {};
+
 if (env.NODE_ENV == "development") {
   alias["react-dom"] = "@hot-loader/react-dom";
 }
@@ -83,6 +83,11 @@ var options = {
         exclude: /node_modules/,
       },
       {
+        test: path.resolve(__dirname, "utils", "inpage.js"),
+        loader: "val-loader",
+        exclude: /node_modules/,
+      },
+      {
         test: /\.(js|jsx)$/,
         loader: "babel-loader",
         exclude: /node_modules/,
@@ -139,19 +144,6 @@ var options = {
         copyUnmodified: true,
       }
     ),
-    new CopyWebpackPlugin(
-      [
-        {
-          from: "src/pages/Content/content.styles.css",
-          to: path.join(__dirname, "build"),
-          force: true,
-        },
-      ],
-      {
-        logLevel: "info",
-        copyUnmodified: true,
-      }
-    ),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "src", "pages", "Newtab", "index.html"),
       filename: "newtab.html",
@@ -167,18 +159,6 @@ var options = {
       filename: "popup.html",
       chunks: ["popup"],
     }),
-    new HtmlWebpackPlugin({
-      template: path.join(
-        __dirname,
-        "src",
-        "pages",
-        "Background",
-        "index.html"
-      ),
-      filename: "background.html",
-      chunks: ["background"],
-    }),
-    new InjectPlugin(),
     new WriteFilePlugin(),
   ],
 };
