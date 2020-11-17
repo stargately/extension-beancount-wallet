@@ -22,6 +22,7 @@ type Props = {
   onClickAccount: (address: string) => void;
   onImportAccount?: () => void;
   onLock?: () => void;
+  onInfoHelp?: () => void;
 };
 
 export const MyAccounts: React.FC<Props> = ({
@@ -31,6 +32,7 @@ export const MyAccounts: React.FC<Props> = ({
   onClickAccount,
   onImportAccount,
   onLock,
+  onInfoHelp,
 }) => {
   const [text, setText] = useState("");
   const reg = new RegExp(text);
@@ -64,7 +66,7 @@ export const MyAccounts: React.FC<Props> = ({
       <HDivider />
       {/* Account List */}
       <AccountContainer>
-        <PerfectScrollbar style={{ height: "150px" }}>
+        <PerfectScrollbar style={{ maxHeight: "150px" }}>
           {items?.map((account) => (
             <AccountItem
               key={account.address}
@@ -96,7 +98,11 @@ export const MyAccounts: React.FC<Props> = ({
 
       <HDivider />
 
-      <MenuItem icon={() => <ExclamationIcon />} content="Info & Help" />
+      <MenuItem
+        onClick={onInfoHelp}
+        icon={() => <ExclamationIcon />}
+        content="Info & Help"
+      />
 
       <MenuItem icon={() => <SettingIcon />} content="Settings" />
     </Container>

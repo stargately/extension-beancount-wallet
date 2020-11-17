@@ -27,6 +27,9 @@ export const MyAccounts = () => {
   const onImportAccount = useCallback(() => {
     history.push("/importAccount");
   }, []);
+  const onInfoHelp = useCallback(() => {
+    history.push("/about");
+  }, []);
 
   return (
     <Account
@@ -36,6 +39,7 @@ export const MyAccounts = () => {
       onClickAccount={setAddress}
       onLock={onLock}
       onImportAccount={onImportAccount}
+      onInfoHelp={onInfoHelp}
     ></Account>
   );
 };

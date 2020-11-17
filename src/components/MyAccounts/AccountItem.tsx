@@ -13,20 +13,18 @@ interface AccountItemProps {
 export const AccountItem = (props: AccountItemProps) => {
   const { account, checked, onClick } = props;
   return (
-    <ItemContainer>
-      <TopContentContainer
-        onClick={() => {
-          !checked && onClick && onClick();
-        }}
-      >
+    <ItemContainer
+      onClick={() => {
+        !checked && onClick && onClick();
+      }}
+    >
+      <TopContentContainer>
         <CheckIcon
           style={{
             visibility: checked ? "visible" : "hidden",
           }}
         />
-
         <CircleAvatar src={require("../../assets/img/logo.png").default} />
-
         <AccountNameText>{account.name}</AccountNameText>
       </TopContentContainer>
       {/* TODO (Di): later add banlance in account list */}
