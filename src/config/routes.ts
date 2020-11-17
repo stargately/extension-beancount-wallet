@@ -7,6 +7,7 @@ import { TransferToken } from "../components/TransferToken";
 import { ImportKey } from "../components/ImportKey";
 import { ImportAccount } from "../components/ImportAccount";
 import { ActivityDetail } from "../components/ActivityDetail";
+import { About } from "../components/About";
 
 const RouteConfig: RouteConfig[] = [
   {
@@ -47,6 +48,11 @@ const RouteConfig: RouteConfig[] = [
   {
     path: "/activity/:id",
     component: ActivityDetail,
+    exact: true,
+  },
+  {
+    path: "/about",
+    component: About,
     exact: true,
   },
 ];
