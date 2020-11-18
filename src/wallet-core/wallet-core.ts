@@ -60,6 +60,8 @@ export class WalletCore {
 
   keyringController: any;
 
+  password: string;
+
   constructor(opt?: any) {
     this.accounts = [];
     this.keyringController = new KeyringController(opt || {});
@@ -89,6 +91,17 @@ export class WalletCore {
   removeAccount(address: string): void {
     const idx = this.accounts.findIndex((acc) => acc.getAddress() === address);
     this.accounts.splice(idx, 1);
+  }
+
+  async deleteAccount(address: string): Promise<void> {
+    const accounts = this.getAccounts();
+    const i = accounts.findIndex((acc) => acc.address === address);
+    if (i === -1) {
+      return;
+    }
+    this.keyringController.keyrings.splice(i + 1, 1);
+    this.removeAccount(address);
+    await this.keyringController.persistAllKeyrings(this.password);
   }
 
   // create totally newaccount and add to keyring
@@ -146,6 +159,7 @@ export class WalletCore {
   ): Promise<void> {
     await this.keyringController.createNewVaultAndKeychain(password);
     await this.createAccount("IoTeX account 1", privateKey);
+    this.password = password;
   }
 
   get isInitiated(): boolean {
@@ -203,6 +217,7 @@ export class WalletCore {
       // CoinType in this case also lost
       this.addAccount(`IoTeX account ${i}`, privateKey);
     });
+    this.password = password;
     return !!result;
   }
 

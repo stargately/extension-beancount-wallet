@@ -14,6 +14,7 @@ import {
   WALLET_TRANSFER_TOKEN,
   WALLET_ACTIONS,
   WALLET_ACTION_DETAIL,
+  WALLET_REMOVE_ACCOUNT,
 } from "./wallet";
 import { LeanAccount, AccountMeta, Action } from "../wallet-core";
 
@@ -79,6 +80,10 @@ export default class DaemonClient {
       name,
       privateKey,
     });
+  }
+
+  async walletRemoveAccount(address: string) {
+    return this.check().sendRequest(WALLET_REMOVE_ACCOUNT, { address });
   }
 
   async walletGetAccountMeta(payload: {
