@@ -23,6 +23,9 @@ const MenuContainer = styled("div", ({ $theme }) => ({
   alignItems: "center",
   padding: $theme.sizing[3],
   cursor: "pointer",
+  ":hover": {
+    backgroundColor: $theme.colors.black95,
+  },
 }));
 
 const MenuText = styled("div", ({ $theme }) => ({

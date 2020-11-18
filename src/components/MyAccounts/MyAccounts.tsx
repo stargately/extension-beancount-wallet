@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { styled } from "onefx/lib/styletron-react";
 import Button from "antd/lib/button";
-import ApiOutlined from "@ant-design/icons/ApiOutlined";
+// import ApiOutlined from "@ant-design/icons/ApiOutlined";
 import DownloadOutlined from "@ant-design/icons/DownloadOutlined";
 import ExclamationCircleFilled from "@ant-design/icons/ExclamationCircleFilled";
 import SearchOutlined from "@ant-design/icons/SearchOutlined";
-import SettingFilled from "@ant-design/icons/SettingFilled";
+// import SettingFilled from "@ant-design/icons/SettingFilled";
 import PlusOutlined from "@ant-design/icons/PlusOutlined";
 import Input from "antd/lib/input";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -94,7 +94,7 @@ export const MyAccounts: React.FC<Props> = ({
         content="Import Account"
       />
 
-      <MenuItem icon={() => <ApiIcon />} content="Connect Hardware Wallet" />
+      {/* <MenuItem icon={() => <ApiIcon />} content="Connect Hardware Wallet" /> */}
 
       <HDivider />
 
@@ -104,7 +104,7 @@ export const MyAccounts: React.FC<Props> = ({
         content="Info & Help"
       />
 
-      <MenuItem icon={() => <SettingIcon />} content="Settings" />
+      {/* <MenuItem icon={() => <SettingIcon />} content="Settings" /> */}
     </Container>
   );
 };
@@ -167,20 +167,20 @@ const DownloadIcon = styled(DownloadOutlined, ({ $theme }) => ({
   fontSize: $theme.sizing[3],
 }));
 
-const ApiIcon = styled(ApiOutlined, ({ $theme }) => ({
-  color: $theme.colors.white,
-  fontSize: $theme.sizing[3],
-}));
+// const ApiIcon = styled(ApiOutlined, ({ $theme }) => ({
+//   color: $theme.colors.white,
+//   fontSize: $theme.sizing[3],
+// }));
 
 const ExclamationIcon = styled(ExclamationCircleFilled, ({ $theme }) => ({
   color: $theme.colors.white,
   fontSize: $theme.sizing[3],
 }));
 
-const SettingIcon = styled(SettingFilled, ({ $theme }) => ({
-  color: $theme.colors.white,
-  fontSize: $theme.sizing[3],
-}));
+// const SettingIcon = styled(SettingFilled, ({ $theme }) => ({
+//   color: $theme.colors.white,
+//   fontSize: $theme.sizing[3],
+// }));
 
 const AccountContainer = styled("div", {
   maxHeight: "150px",

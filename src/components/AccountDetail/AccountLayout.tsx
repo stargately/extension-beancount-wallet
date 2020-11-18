@@ -72,12 +72,12 @@ const Container = styled("div", {
   flexDirection: "column",
 });
 
-const ButtonGroups = styled("div", {
+const ButtonGroups = styled("div", ({ $theme }) => ({
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  height: "100px",
   width: "100%",
   flexShrink: 0,
-});
+  marginBottom: $theme.sizing[3],
+}));

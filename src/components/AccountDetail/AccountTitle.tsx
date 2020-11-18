@@ -55,7 +55,6 @@ const Title = styled("div", ({ $theme }) => ({
   alignItems: "center",
   padding: "12px",
   borderBottom: `1px solid ${$theme.colors.black40}`,
-  cursor: "pointer",
 }));
 
 const Account = styled("div", {
@@ -76,4 +75,5 @@ const AddressView = styled("div", () => ({
 const CopyButton = styled(CopyOutlined, ({ $theme }) => ({
   color: $theme.colors.black80,
   marginLeft: $theme.sizing[0],
+  cursor: "pointer",
 }));
