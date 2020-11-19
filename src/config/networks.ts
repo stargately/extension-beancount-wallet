@@ -3,6 +3,7 @@
 export type INetworkItem = {
   name: string;
   uri: string;
+  iotexscan: string;
 };
 
 export enum NetworkType {
@@ -11,8 +12,16 @@ export enum NetworkType {
 }
 
 export const iotexNetworks: INetworkItem[] = [
-  { name: "Main net", uri: "https://api.iotex.one" },
-  { name: "Test net", uri: "https://api.testnet.iotex.one" },
+  {
+    name: "Main net",
+    uri: "https://api.iotex.one",
+    iotexscan: "https://iotexscan.io",
+  },
+  {
+    name: "Test net",
+    uri: "https://api.testnet.iotex.one",
+    iotexscan: "https://testnet.iotexscan.io",
+  },
 ];
 
 export const networks = {
