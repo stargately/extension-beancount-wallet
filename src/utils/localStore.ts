@@ -84,7 +84,7 @@ export class LocalStore {
    * @returns {Promise<void>}
    * @private
    */
-  _set(obj: any) {
+  _set(obj: any): Promise<void> {
     const { local } = extension.storage;
     return new Promise((resolve, reject) => {
       local.set(obj, () => {
