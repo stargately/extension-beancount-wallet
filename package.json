@@ -57,7 +57,7 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-router-config": "^5.1.1",
     "react-router-dom": "^5.2.0",
-    "recoil": "^0.0.13",
+    "recoil": "^0.1.2",
     "styletron-engine-atomic": "1.4.6",
     "styletron-react": "5.2.7"
   },
