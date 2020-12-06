@@ -1,4 +1,4 @@
-import recoil from "recoil";
+import recoil, { MutableSnapshot } from "recoil";
 import { clientSingleton } from "../../daemon/client";
 import {
   networkIndex,
@@ -12,6 +12,20 @@ export const interestedAtoms = {
   [networkType.key]: networkType,
   [accountAddress.key]: accountAddress,
   [accountsList.key]: accountsList,
+};
+
+export const initializeSnapshot = function (
+  initialState: Record<string, any> = {}
+) {
+  return function initializeState(snapshot: MutableSnapshot) {
+    Object.keys(initialState).forEach((key) => {
+      const value = initialState[key];
+      const atom = interestedAtoms[key];
+      if (atom) {
+        snapshot.set(atom, value);
+      }
+    });
+  };
 };
 
 export const StateObserver = () => {
