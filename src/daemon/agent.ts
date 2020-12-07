@@ -15,6 +15,7 @@ export interface Request {
 
 export interface Response {
   uid: number;
+  name?: string;
   payload?: any;
   type?: string;
   isOk: boolean;
@@ -64,9 +65,12 @@ export class Daemon extends EventEmitter {
   connect(port: chrome.runtime.Port) {
     this.ports.add(port);
     this.emit("connect", port);
-    port.onMessage.addListener((req: Request, p: chrome.runtime.Port) =>
-      this.dispatch(req, p)
-    );
+    port.onMessage.addListener((req: Request, p: chrome.runtime.Port) => {
+      if ((req as any).name) {
+        return;
+      }
+      this.dispatch(req, p);
+    });
     port.onDisconnect.addListener(() => {
       console.info(`Port ${port.name} is disconnected`);
       this.ports.delete(port);
@@ -98,6 +102,7 @@ export class Daemon extends EventEmitter {
         uid: req.uid,
         isOk: !(res instanceof Error),
         payload: res,
+        name: "ignore",
       };
       port.postMessage(data);
     }
