@@ -1,10 +1,9 @@
-// import { SignerPlugin } from "iotex-antenna/lib/action/method"
-// import { IAccount } from "iotex-antenna/lib/account/account"
+import { SignerPlugin } from "iotex-antenna/lib/action/method";
+import { IAccount } from "iotex-antenna/lib/account/account";
 import { JsonRpcEngine } from "json-rpc-engine";
 import getUniqueId from "../../../utils/getUniqueId";
-import { IAccount } from "../../../wallet-core";
 
-export class ExtensionSignerPlugin {
+export class ExtensionSignerPlugin implements SignerPlugin {
   private rpcClient: JsonRpcEngine;
 
   constructor(rpcClient: JsonRpcEngine) {
