@@ -3,8 +3,10 @@ import pump from "pump";
 // @ts-ignore
 import createEngineStream from "json-rpc-middleware-stream/engineStream";
 import { IAccount } from "iotex-antenna/lib/account/account";
+import { Envelop } from "iotex-antenna/lib/action/envelop";
 import { setupMultiplex } from "../../utils/stream-utils";
 import { walletSingleton } from "../../wallet-core";
+import { MyMethod } from "./method";
 
 export class MainController {
   createControllerEngine(): JsonRpcEngine {
@@ -32,6 +34,40 @@ export class MainController {
       }
       next();
     });
+
+    engine.push(function (req, res, next, end) {
+      if (req.method === "Iotex_signAndSend") {
+        const method = new MyMethod(
+          walletSingleton.accounts[0].antenna.iotx,
+          walletSingleton.accounts[0].antenna.iotx.accounts[0]
+        );
+        const params = req.params as string;
+        const buf = Uint8Array.from(Buffer.from(params, "hex"));
+        const en = Envelop.deserialize(buf);
+        method
+          .sendAction(en)
+          .then((result) => {
+            res.result = result;
+            end();
+          })
+          .catch((e) => {
+            res.error = e;
+            end();
+          });
+      } else {
+        next();
+      }
+    });
+
+    engine.push(function (req, res, next, end) {
+      if (req.method === "Iotex_signMessage") {
+        res.result = "Hello world";
+        end();
+      } else {
+        next();
+      }
+    });
+
     engine.push<string, IAccount>(function (req, res, next, end) {
       if (req.method === "IoTex_getAccount") {
         const antennaAccount = walletSingleton.getAccount(req.params);
