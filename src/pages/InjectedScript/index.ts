@@ -1,6 +1,6 @@
 import pump from "pump";
 import { JsonRpcEngine } from "json-rpc-engine";
-import Antenna from "iotex-antenna/lib";
+
 // @ts-ignore
 import createJsonRpcStream from "json-rpc-middleware-stream";
 // @ts-ignore
@@ -34,8 +34,6 @@ pump(
 const rpcEngine = new JsonRpcEngine();
 rpcEngine.push(jsonRpcConnection.middleware);
 
-const signer = new ExtensionSignerPlugin(rpcEngine) as any;
+const signer = new ExtensionSignerPlugin(rpcEngine);
 
-(window as any).signer = signer;
-
-(window as any).antenna = new Antenna("https://api.iotex.one", { signer });
+(window as any).antennaSigner = signer;
