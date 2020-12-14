@@ -7,6 +7,7 @@ import { Envelop } from "iotex-antenna/lib/action/envelop";
 import { setupMultiplex } from "../../utils/stream-utils";
 import { walletSingleton } from "../../wallet-core";
 import { MyMethod } from "./method";
+import { AntennaAccount } from "../../wallet-core/antenna-account";
 
 export class MainController {
   createControllerEngine(): JsonRpcEngine {
@@ -26,9 +27,8 @@ export class MainController {
     const engine = new JsonRpcEngine();
     engine.push<string, IAccount[]>(function (req, res, next, end) {
       if (req.method === "IoTex_getAccounts") {
-        res.result = walletSingleton.accounts.map(
-          (acc) => acc.antenna.iotx.accounts[0]
-        );
+        const accounts = walletSingleton.accounts as AntennaAccount[];
+        res.result = accounts.map((acc) => acc.antenna.iotx.accounts[0]);
         end();
         return;
       }
@@ -37,9 +37,10 @@ export class MainController {
 
     engine.push(function (req, res, next, end) {
       if (req.method === "Iotex_signAndSend") {
+        const accounts = walletSingleton.accounts as AntennaAccount[];
         const method = new MyMethod(
-          walletSingleton.accounts[0].antenna.iotx,
-          walletSingleton.accounts[0].antenna.iotx.accounts[0]
+          accounts[0].antenna.iotx,
+          accounts[0].antenna.iotx.accounts[0]
         );
         const params = req.params as string;
         const buf = Uint8Array.from(Buffer.from(params, "hex"));
@@ -61,7 +62,7 @@ export class MainController {
 
     engine.push(function (req, res, next, end) {
       if (req.method === "Iotex_signMessage") {
-        res.result = "Hello world";
+        res.result = "Not implement";
         end();
       } else {
         next();
@@ -70,7 +71,9 @@ export class MainController {
 
     engine.push<string, IAccount>(function (req, res, next, end) {
       if (req.method === "IoTex_getAccount") {
-        const antennaAccount = walletSingleton.getAccount(req.params);
+        const antennaAccount = walletSingleton.getAccount(
+          req.params
+        ) as AntennaAccount;
         if (antennaAccount) {
           const [account] = antennaAccount.antenna.iotx.accounts;
           res.result = account;

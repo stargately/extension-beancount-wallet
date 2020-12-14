@@ -56,7 +56,7 @@ export interface IAccount {
 }
 
 export class WalletCore {
-  accounts: Array<AntennaAccount>;
+  accounts: Array<IAccount>;
 
   keyringController: any;
 
@@ -67,7 +67,7 @@ export class WalletCore {
     this.keyringController = new KeyringController(opt || {});
   }
 
-  getAccount(address?: string): AntennaAccount | undefined {
+  getAccount(address?: string): IAccount | undefined {
     if (!address) {
       return this.accounts[0];
     }
