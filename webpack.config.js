@@ -7,7 +7,9 @@ var webpack = require("webpack"),
   HtmlWebpackPlugin = require("html-webpack-plugin"),
   WriteFilePlugin = require("write-file-webpack-plugin");
 
-var alias = {};
+var alias = {
+  "@": path.resolve("src"),
+};
 
 if (env.NODE_ENV == "development") {
   alias["react-dom"] = "@hot-loader/react-dom";

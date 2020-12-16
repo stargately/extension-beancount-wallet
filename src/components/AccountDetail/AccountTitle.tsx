@@ -1,8 +1,6 @@
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useCallback } from "react";
 import { styled } from "onefx/lib/styletron-react";
-import { Tooltip, Dropdown, Button, message } from "antd";
-import { CopyOutlined } from "@ant-design/icons";
-import ClipboardJS from "clipboard";
+import { Dropdown, Button, message, Typography } from "antd";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 
 import { clientSingleton } from "../../daemon/client";
@@ -15,23 +13,14 @@ type AccountTitleProps = {
   };
 };
 
+function FormatAddress({ title }: { title: string }) {
+  return <>{`${title.slice(0, 6)}...${title.slice(-6)}`}</>;
+}
+
 export const AccountTitle: React.FC<AccountTitleProps> = ({ account }) => {
-  const buttonRef = useRef<HTMLSpanElement>(null);
   const network = useRecoilValue(networkCurrent);
   const [accountItems, setAccountItems] = useRecoilState(accountsList);
   const setAddress = useSetRecoilState(accountAddress);
-
-  useEffect(() => {
-    let clipboard: ClipboardJS;
-    if (buttonRef.current) {
-      clipboard = new ClipboardJS(buttonRef.current);
-    }
-    return () => {
-      if (clipboard) {
-        clipboard.destroy();
-      }
-    };
-  }, []);
 
   const onIotexscan = useCallback(() => {
     window.open(`${network.iotexscan}/address/${account.address}`);
@@ -54,13 +43,12 @@ export const AccountTitle: React.FC<AccountTitleProps> = ({ account }) => {
         <Account>{account?.name}</Account>
         <AddressView>
           <Address title={account?.address}>
-            <span>{account?.address} </span>
+            <Typography.Text copyable={{ text: account?.address }}>
+              <span>
+                <FormatAddress title={account.address}></FormatAddress>
+              </span>
+            </Typography.Text>
           </Address>
-          <Tooltip title="Copied" trigger="click">
-            <span ref={buttonRef} data-clipboard-text={account?.address}>
-              <CopyButton />
-            </span>
-          </Tooltip>
         </AddressView>
       </Content>
       <ButtonContainer>
@@ -111,12 +99,6 @@ const Address = styled("div", ({ $theme }) => ({
 
 const AddressView = styled("div", () => ({
   display: "flex",
-}));
-
-const CopyButton = styled(CopyOutlined, ({ $theme }) => ({
-  color: $theme.colors.black80,
-  marginLeft: $theme.sizing[0],
-  cursor: "pointer",
 }));
 
 const ButtonContainer = styled("div", {
