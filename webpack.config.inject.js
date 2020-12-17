@@ -1,5 +1,9 @@
 const path = require("path");
 
+var alias = {
+  "@": path.resolve("src"),
+};
+
 // load the secrets
 const options = {
   mode: process.env.NODE_ENV || "development",
@@ -38,6 +42,7 @@ const options = {
     ],
   },
   resolve: {
+    alias,
     extensions: [".tsx", ".ts", ".jsx", ".js"],
   },
 };
