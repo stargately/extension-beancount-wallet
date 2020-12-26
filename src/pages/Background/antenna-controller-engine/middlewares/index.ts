@@ -4,6 +4,7 @@ import { createAccountMiddleware } from "./account";
 import { createWalletMiddleware } from "./wallet";
 import { createRecoilStateMiddleware } from "./recoilState";
 import { createTxMiddleware } from "./tx";
+import { createSignerMiddleware } from "./signer";
 
 export function createAntennaControllerMiddleware() {
   return mergeMiddleware([
@@ -11,5 +12,6 @@ export function createAntennaControllerMiddleware() {
     createWalletMiddleware(),
     createRecoilStateMiddleware(),
     createTxMiddleware(),
+    createSignerMiddleware(),
   ]);
 }

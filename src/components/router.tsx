@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MemoryRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 
 import { renderRoutes } from "react-router-config";
 import routeConfig from "../config/routes";

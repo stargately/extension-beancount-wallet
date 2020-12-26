@@ -3,6 +3,10 @@ import { styled } from "onefx/lib/styletron-react";
 import { Space, Button, Row, Col } from "antd";
 
 type Props = {
+  amount: string;
+  toContract: string;
+  gasPrice: string;
+  gasLimit: string;
   onConfirm?: () => void;
   onCancel?: () => void;
 };
@@ -13,32 +17,20 @@ export const ConfirmTransactionComponent = function (props: Props) {
       <Title>Action Signing</Title>
       <Content>
         <Row>
-          <Col>Amount</Col>
-          <Col>1 IOTX</Col>
+          <Col span={8}>Amount</Col>
+          <Col>{props.amount}</Col>
         </Row>
         <Row>
-          <Col>From Address</Col>
-          <Col>1 IOTX</Col>
+          <Col span={8}>To Contract</Col>
+          <Col>{props.toContract}</Col>
         </Row>
         <Row>
-          <Col>To Contract</Col>
-          <Col>1 IOTX</Col>
+          <Col span={8}>Gas Limit</Col>
+          <Col>{props.gasLimit}</Col>
         </Row>
         <Row>
-          <Col>Method</Col>
-          <Col>1 IOTX</Col>
-        </Row>
-        <Row>
-          <Col>Gas Limit</Col>
-          <Col>1 IOTX</Col>
-        </Row>
-        <Row>
-          <Col>Gas Price</Col>
-          <Col>1 IOTX</Col>
-        </Row>
-        <Row>
-          <Col>Data</Col>
-          <Col>1 IOTX</Col>
+          <Col span={8}>Gas Price</Col>
+          <Col>{props.gasPrice}</Col>
         </Row>
       </Content>
       <Space>

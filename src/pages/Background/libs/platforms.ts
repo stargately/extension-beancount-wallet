@@ -35,15 +35,11 @@ export function openWindow(options: extension.windows.CreateData) {
   });
 }
 
-export function openExtensionInBrowser(route = null, queryString = null) {
+export function openExtensionInBrowser(route = "/") {
   let extensionURL = extension.runtime.getURL("popup.html");
-
-  if (queryString) {
-    extensionURL += `?${queryString}`;
-  }
 
   if (route) {
     extensionURL += `#${route}`;
   }
-  openTab({ url: extensionURL });
+  openWindow({ url: extensionURL, type: "popup", width: 360, height: 600 });
 }

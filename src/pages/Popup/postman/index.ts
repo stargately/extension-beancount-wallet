@@ -17,6 +17,9 @@ import {
   IOTEX_CONTROLLER_TRANSFER_TOKEN,
   IOTEX_CONTROLLER_GET_ACTIONS,
   IOTEX_CONTROLLER_QUERY_ACTION,
+  IOTEX_CONTROLLER_CONFIRM_ACTION,
+  IOTEX_CONTROLLER_CANCEL_ACTION,
+  IOTEX_CONTROLLER_LASTEST_ACTION,
 } from "@/constant/iotex";
 
 class Postman extends MessageClient {
@@ -105,9 +108,24 @@ class Postman extends MessageClient {
   }
 
   async queryActionDetail(actionHash: string) {
-    this.send<{ actionHash: string }, Action>(IOTEX_CONTROLLER_QUERY_ACTION, {
-      actionHash,
-    });
+    return this.send<{ actionHash: string }, Action>(
+      IOTEX_CONTROLLER_QUERY_ACTION,
+      {
+        actionHash,
+      }
+    );
+  }
+
+  async confirmLastestAction() {
+    return this.send(IOTEX_CONTROLLER_CONFIRM_ACTION);
+  }
+
+  async cancelLastestAction() {
+    return this.send(IOTEX_CONTROLLER_CANCEL_ACTION);
+  }
+
+  async getLastestUnapprovedAction() {
+    return this.send<void, any>(IOTEX_CONTROLLER_LASTEST_ACTION);
   }
 }
 

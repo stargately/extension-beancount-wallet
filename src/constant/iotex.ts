@@ -4,6 +4,10 @@ export const IOTEX_SIGNER_SIGN_AND_SEND = "iotex.signer.signAndSend";
 export const IOTEX_SIGNER_SIGN_MESSAGE = "iotex.signer.signMessage";
 export const IOTEX_SIGNER_UNAPPROVED_ACTIONS = "iotex.signer.unapprovedActions";
 
+export const IOTEX_CONTROLLER_LASTEST_ACTION = "iotex.signer.lastest.action";
+export const IOTEX_CONTROLLER_CONFIRM_ACTION = "iotex.signer.confirm.action";
+export const IOTEX_CONTROLLER_CANCEL_ACTION = "iotex.signer.cancel.action";
+
 export const IOTEX_CONTROLLER_GET_ACCOUNTS = "iotex.controller.getAccounts";
 export const IOTEX_CONTROLLER_CREATE_ACCOUNT = "iotex.controller.createAccount";
 export const IOTEX_CONTROLLER_DELETE_ACCOUNT = "iotex.controller.deleteAccount";
