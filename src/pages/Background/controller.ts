@@ -4,19 +4,11 @@ import pump from "pump";
 import createEngineStream from "json-rpc-middleware-stream/engineStream";
 import { setupMultiplex } from "../../utils/stream-utils";
 import { createSignerEngine } from "./antenna-signer-engine";
+import { createControllerEngine } from "./antenna-controller-engine";
 
 export class MainController {
   createControllerEngine(): JsonRpcEngine {
-    const engine = new JsonRpcEngine();
-    engine.push(function (req, _, next, __) {
-      console.log("background message logger ==> ", req);
-      next();
-    });
-    engine.push(function (_, res, __, end) {
-      res.result = "OK";
-      end();
-    });
-    return engine;
+    return createControllerEngine();
   }
 
   createSignerEngine(): JsonRpcEngine {

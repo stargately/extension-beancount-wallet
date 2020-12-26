@@ -30,11 +30,6 @@ function initializeController(port: chrome.runtime.Port) {
   pump(clientSideStream, controllerStream, clientSideStream, () => {
     console.warn("connection Disconnect");
   });
-  // setTimeout(() => {
-  //   engine.handle({ id: 1, method: "IoTex_method", jsonrpc: "2.0" }, (err, res) => {
-  //     console.log(err, res)
-  //   })
-  // }, 5000)
 }
 
 async function initialize() {
