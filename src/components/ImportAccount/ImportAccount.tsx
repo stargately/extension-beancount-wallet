@@ -3,8 +3,9 @@ import { useRecoilState } from "recoil";
 import { useHistory } from "react-router-dom";
 import { styled } from "onefx/lib/styletron-react";
 
+import { defaultPostman } from "@/pages/Popup/postman";
 import { ImportAccountForm } from "./ImportAccountForm";
-import { clientSingleton } from "../../daemon/client";
+
 import { accountsList } from "../../recoil";
 
 type FormValues = {
@@ -15,11 +16,11 @@ export const ImportAccount: React.FC = () => {
   const history = useHistory();
   const [accounts, setAccount] = useRecoilState(accountsList);
   const onFinish = async (values: FormValues) => {
-    await clientSingleton.walletCreateAccount(
+    await defaultPostman.createAccount(
       `IoTeX account ${accounts.length}`,
       values.key
     );
-    const _accounts = await clientSingleton.walletGetAccounts();
+    const _accounts = await defaultPostman.getAccounts();
     setAccount(_accounts);
     history.push("/account");
   };

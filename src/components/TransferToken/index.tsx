@@ -1,34 +1,30 @@
 import React, { useState } from "react";
 import { message, Spin } from "antd";
 import { useHistory } from "react-router-dom";
-import recoil from "recoil";
+
+import { defaultPostman } from "@/pages/Popup/postman";
 
 import { TransferTokenForm } from "./TransferTokenForm";
-import { accountAddress, networkCurrent } from "../../recoil";
-import { clientSingleton } from "../../daemon/client";
 import { useRefreshAccount } from "../../hooks";
 
 export const TransferToken = () => {
-  const address = recoil.useRecoilValue(accountAddress);
-  const current = recoil.useRecoilValue(networkCurrent);
   const history = useHistory();
   const refreshAccountMeta = useRefreshAccount();
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values: any) => {
+    console.log(values);
     try {
       setLoading(true);
-      await clientSingleton.walletTransferToken({
-        from: address,
-        url: current.uri,
-        to: values.recipient,
-        amount: values.amount,
-        gasLimit: values.gasLimit,
-        gasPrice: values.gasPrice,
-      });
-      // force wait 10 seconds for transaction completed
+      await defaultPostman.transferToken(
+        values.recipient,
+        values.amount,
+        values.gasPrice,
+        values.gasLimit
+      );
+      // force wait 5.5 seconds for transaction completed
       await new Promise((resolve) => {
-        setTimeout(resolve, 10000);
+        setTimeout(resolve, 5500);
       });
       message.success("Transfer Success");
       refreshAccountMeta();

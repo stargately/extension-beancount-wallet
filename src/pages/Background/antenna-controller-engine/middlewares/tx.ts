@@ -11,20 +11,31 @@ import {
 } from "@/constant/iotex";
 import { getCurrentAccountAddress, getCurrentNetworkUri } from "./recoilState";
 
-async function getCurrentAccountMeta(_: any, res: any) {
+async function getAccountMeta(_: any, res: any) {
   const acc = walletSingleton.getAccount(getCurrentAccountAddress());
   if (!acc) {
     throw new Error("Can find current account");
   }
   acc.setProvider(getCurrentNetworkUri());
-  res.result = acc?.getAccountMeta();
+  res.result = await acc.getAccountMeta();
 }
 
-async function transferTokenFromCurrentAccount(req: any, res: any) {
+async function transferToken(req: any, res: any) {
   const { params } = req;
-  await walletSingleton.transferToken({
+  const acc = walletSingleton.getAccount(getCurrentAccountAddress());
+  if (!acc) {
+    throw new Error("Can find current account");
+  }
+  acc.setProvider(getCurrentNetworkUri());
+  console.log({
     from: getCurrentAccountAddress(),
-    url: getCurrentNetworkUri(),
+    to: params.to,
+    amount: params.amount,
+    gasPrice: params.gasPrice,
+    gasLimit: params.gasLimit,
+  });
+  await acc.transfer({
+    from: getCurrentAccountAddress(),
     to: params.to,
     amount: params.amount,
     gasPrice: params.gasPrice,
@@ -53,14 +64,10 @@ async function queryAction(req: any, res: any) {
   res.result = await acc.getActionByHash(actionHash);
 }
 
-export function createWalletMiddleware() {
+export function createTxMiddleware() {
   return createScaffoldMiddleware({
-    [IOTEX_CONTROLLER_TRANSFER_TOKEN]: createAsyncMiddleware(
-      getCurrentAccountMeta
-    ),
-    [IOTEX_CONTROLLER_ACCOUNT_META]: createAsyncMiddleware(
-      transferTokenFromCurrentAccount
-    ),
+    [IOTEX_CONTROLLER_ACCOUNT_META]: createAsyncMiddleware(getAccountMeta),
+    [IOTEX_CONTROLLER_TRANSFER_TOKEN]: createAsyncMiddleware(transferToken),
     [IOTEX_CONTROLLER_GET_ACTIONS]: createAsyncMiddleware(getActions),
     [IOTEX_CONTROLLER_QUERY_ACTION]: createAsyncMiddleware(queryAction),
   });

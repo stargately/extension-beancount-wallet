@@ -2,15 +2,22 @@ import { JsonRpcEngine } from "json-rpc-engine";
 import getUniqueId from "@/utils/getUniqueId";
 
 export class MessageClient {
-  private rpcClient: JsonRpcEngine;
+  private rpcClient?: JsonRpcEngine;
 
-  constructor(rpcClient: JsonRpcEngine) {
+  constructor(rpcClient?: JsonRpcEngine) {
+    this.rpcClient = rpcClient;
+  }
+
+  init(rpcClient: JsonRpcEngine) {
     this.rpcClient = rpcClient;
   }
 
   send<T, U>(method: string, params?: T): Promise<U> {
+    if (!this.rpcClient) {
+      throw new Error("No JsonRpcClient Prepared");
+    }
     return new Promise((resolve, reject) => {
-      this.rpcClient.handle(
+      this.rpcClient!.handle(
         {
           id: getUniqueId(),
           method,

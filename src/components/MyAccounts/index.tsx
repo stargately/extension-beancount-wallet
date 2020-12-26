@@ -2,9 +2,10 @@ import React, { useCallback } from "react";
 import { useRecoilState } from "recoil";
 import { useHistory } from "react-router-dom";
 
+import { defaultPostman } from "@/pages/Popup/postman";
+
 import { MyAccounts as Account } from "./MyAccounts";
 import { accountsList, accountAddress } from "../../recoil";
-import { clientSingleton } from "../../daemon/client";
 import { useRefreshWallet } from "../../hooks";
 
 export const MyAccounts = () => {
@@ -13,14 +14,12 @@ export const MyAccounts = () => {
   const [address, setAddress] = useRecoilState(accountAddress);
   const refreshWallet = useRefreshWallet();
   const onCreateAccount = useCallback(async () => {
-    await clientSingleton.walletCreateAccount(
-      `IoTeX account ${accounts.length}`
-    );
-    const _accounts = await clientSingleton.walletGetAccounts();
+    await defaultPostman.createAccount(`IoTeX account ${accounts.length}`);
+    const _accounts = await defaultPostman.getAccounts();
     setAccount(_accounts);
   }, [accounts]);
   const onLock = async () => {
-    await clientSingleton.walletLock();
+    await defaultPostman.walletLock();
     refreshWallet();
     history.push("/");
   };

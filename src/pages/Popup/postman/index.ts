@@ -19,7 +19,7 @@ import {
   IOTEX_CONTROLLER_QUERY_ACTION,
 } from "@/constant/iotex";
 
-export class XActions extends MessageClient {
+class Postman extends MessageClient {
   async getAccounts(): Promise<LeanAccount[]> {
     return this.send<string, LeanAccount[]>(IOTEX_CONTROLLER_GET_ACCOUNTS);
   }
@@ -36,15 +36,20 @@ export class XActions extends MessageClient {
   }
 
   async getAccountMeta() {
-    return this.send<void, AccountMeta>(IOTEX_CONTROLLER_ACCOUNT_META);
+    const { accountMeta } = await this.send<void, { accountMeta: AccountMeta }>(
+      IOTEX_CONTROLLER_ACCOUNT_META
+    );
+    return accountMeta;
   }
 
-  async storeRecoilState(data: Record<string, any>) {
+  async setRecoilState(data: Record<string, any>) {
     return this.send(IOTEX_CONTROLLER_STORAGE_RECOIL_STATE, { ...data });
   }
 
   async getRecoilState() {
-    return this.send(IOTEX_CONTROLLER_GET_RECOIL_STATE);
+    return this.send<void, Record<string, unknown>>(
+      IOTEX_CONTROLLER_GET_RECOIL_STATE
+    );
   }
 
   async createPassword(password: string, privateKey?: string) {
@@ -70,7 +75,7 @@ export class XActions extends MessageClient {
     return this.send<void, boolean>(IOTEX_CONTROLLER_INITED);
   }
 
-  async varifyPasswd(password: string) {
+  async verifyPasswd(password: string) {
     return this.send<{ password: string }, boolean>(
       IOTEX_CONTROLLER_VERIFY_PASSWORD,
       { password }
@@ -92,10 +97,11 @@ export class XActions extends MessageClient {
   }
 
   async getActions(start: number, count: number) {
-    this.send<{ start: number; count: number }, Action[]>(
-      IOTEX_CONTROLLER_GET_ACTIONS,
-      { start, count }
-    );
+    const { actionInfo } = await this.send<
+      { start: number; count: number },
+      { actionInfo: Action[] }
+    >(IOTEX_CONTROLLER_GET_ACTIONS, { start, count });
+    return actionInfo;
   }
 
   async queryActionDetail(actionHash: string) {
@@ -104,3 +110,5 @@ export class XActions extends MessageClient {
     });
   }
 }
+
+export const defaultPostman: Postman = new Postman();

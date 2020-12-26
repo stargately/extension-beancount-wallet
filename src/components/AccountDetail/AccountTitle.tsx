@@ -3,7 +3,7 @@ import { styled } from "onefx/lib/styletron-react";
 import { Dropdown, Button, message, Typography } from "antd";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 
-import { clientSingleton } from "../../daemon/client";
+import { defaultPostman } from "@/pages/Popup/postman";
 import { networkCurrent, accountsList, accountAddress } from "../../recoil";
 
 type AccountTitleProps = {
@@ -31,8 +31,8 @@ export const AccountTitle: React.FC<AccountTitleProps> = ({ account }) => {
       message.info("You only have one account now");
       return;
     }
-    clientSingleton.walletRemoveAccount(account.address);
-    const accounts = await clientSingleton.walletGetAccounts();
+    defaultPostman.removeAccount(account.address);
+    const accounts = await defaultPostman.getAccounts();
     setAccountItems(accounts);
     setAddress(accounts[0].address);
   }, [accountItems.length, account.address]);

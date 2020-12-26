@@ -1,5 +1,5 @@
 import recoil, { MutableSnapshot } from "recoil";
-import { clientSingleton } from "../../daemon/client";
+import { defaultPostman } from "./postman";
 import {
   networkIndex,
   networkType,
@@ -43,7 +43,7 @@ export const StateObserver = () => {
         data[modifiedAtom.key] = atomLoadable.contents;
       }
     }
-    clientSingleton.updateAppState(data);
+    defaultPostman.setRecoilState(data);
   });
   return null;
 };

@@ -1,7 +1,7 @@
 import recoil from "recoil";
 
+import { defaultPostman } from "@/pages/Popup/postman";
 import { LeanAccount, AccountMeta, Action } from "../wallet-core/wallet-core";
-import { clientSingleton } from "../daemon/client";
 import { networkCurrent } from "./network";
 
 export const accountsList = recoil.atom<LeanAccount[]>({
@@ -31,13 +31,10 @@ export const accountVersion = recoil.atom<number>({
 export const accountCurrentMeta = recoil.selector<AccountMeta>({
   key: "App.Account.Meta",
   get: async ({ get }) => {
-    const current = get(accountCurrent);
-    const network = get(networkCurrent);
+    get(accountCurrent);
+    get(networkCurrent);
     get(accountVersion);
-    const accountMeta = await clientSingleton.walletGetAccountMeta({
-      address: current.address,
-      providerUrl: network.uri,
-    });
+    const accountMeta = await defaultPostman.getAccountMeta();
     return accountMeta;
   },
 });
@@ -45,17 +42,12 @@ export const accountCurrentMeta = recoil.selector<AccountMeta>({
 export const accountActions = recoil.selector<Action[]>({
   key: "App.Account.Actions",
   get: async ({ get }) => {
-    const current = get(accountCurrent);
-    const network = get(networkCurrent);
+    get(accountCurrent);
+    get(networkCurrent);
     const accountMeta = get(accountCurrentMeta);
     const start = Math.max(0, +accountMeta.numActions - 10);
     get(accountVersion);
-    const actions = await clientSingleton.walletAccountActions({
-      address: current.address,
-      providerUrl: network.uri,
-      start,
-      count: 10,
-    });
+    const actions = await defaultPostman.getActions(start, 10);
     return actions;
   },
 });

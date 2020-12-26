@@ -18,7 +18,7 @@ localStore.get().then((res: any) => {
 });
 
 export function getCurrentAccountAddress() {
-  const address = memoryObj["App.Account.Current"] as string;
+  const address = memoryObj["App.Account.Address"] as string;
   // TODO: need fix
   return address;
 }

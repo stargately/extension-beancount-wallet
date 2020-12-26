@@ -4,7 +4,6 @@ import "../../assets/img/icon-128.png";
 import extension from "extensionizer";
 import PortStream from "extension-port-stream";
 import localStore from "../../utils/localStore";
-import daemon from "../../daemon";
 import { walletSingleton } from "../../wallet-core";
 import { MainController } from "./controller";
 
@@ -12,7 +11,7 @@ const SUBSCRIBE_STORE_KEY = "Background.KeyringController.StoreState";
 const mainController = new MainController();
 
 extension.runtime.onInstalled.addListener(() => {
-  console.log("App installed");
+  console.log("Beancount Wallet installed");
 });
 
 async function start() {
@@ -32,7 +31,6 @@ async function start() {
   });
 
   extension.runtime.onConnect.addListener((port) => {
-    daemon.connect(port);
     const stream = new PortStream(port);
     mainController.setupCommunication(stream);
   });
