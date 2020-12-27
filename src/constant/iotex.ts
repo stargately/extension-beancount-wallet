@@ -23,8 +23,8 @@ export const IOTEX_CONTROLLER_INITED = "iotex.controller.inited";
 
 export const IOTEX_CONTROLLER_ACCOUNT_META = "iotex.controller.accountMeta";
 export const IOTEX_CONTROLLER_TRANSFER_TOKEN = "iotex.controller.transferToken";
-export const IOTEX_CONTROLLER_GET_ACTIONS = "iotex.controller.getAction";
-export const IOTEX_CONTROLLER_QUERY_ACTION = "iotex.controller.queryActions";
+export const IOTEX_CONTROLLER_GET_ACTIONS = "iotex.controller.getActions";
+export const IOTEX_CONTROLLER_QUERY_ACTION = "iotex.controller.queryAction";
 
 export const IOTEX_CONTROLLER_STORAGE_RECOIL_STATE =
   "iotex.controller.storage.recoilState";

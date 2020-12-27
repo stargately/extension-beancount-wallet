@@ -1,7 +1,7 @@
 import React from "react";
+import { Tag } from "antd";
 import { styled } from "onefx/lib/styletron-react";
 import { fromRau } from "iotex-antenna/lib/account/utils";
-import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
 
 import { Action } from "@/wallet-core/wallet-core";
 
@@ -17,36 +17,35 @@ type Props = IAction & {
   onClick?: (e: IAction) => void;
 };
 
+// TODO: need cataory items
 export const ActionItem: React.FC<Props> = (props) => {
-  const title =
-    props.address === props.recipient ? "Receive IOTX" : "Send IOTX";
-  const account = fromRau(`${props.amount || 0} `, "iotx");
+  let type;
+  if (!props.recipient || !props.address) {
+    type = "Execution";
+  } else {
+    type = props.address === props.recipient ? "Receive" : "Send";
+  }
+  const account = props.amount ? fromRau(`${props.amount} `, "IOTX") : "";
   const ellipsis = (e: string) => `${e.slice(0, 6)}...${e.slice(-8)}`;
   let address = props.address === props.recipient ? "From:  " : "To:  ";
   address += ellipsis(`${props.recipient || ""}`);
   return (
     <Container onClick={() => props.onClick && props.onClick(props)}>
-      <LeftIcon>
-        {props.address === props.recipient ? (
-          <LoginOutlined />
-        ) : (
-          <LogoutOutlined />
-        )}
-      </LeftIcon>
-      <RightContent>
+      <ItemContent>
         <OverView>
-          <Title>{title}</Title>
+          <Tag color="blue">{type}</Tag>
           <ActStatus>Success</ActStatus>
         </OverView>
         <DetailView>
-          <Account>
-            <span>{props.address === props.recipient ? " + " : " - "}</span>
-            <span>{account}</span>
-            <span> IOTX</span>
-          </Account>
+          {account && (
+            <Account>
+              <span>{account}</span>
+              <span> IOTX</span>
+            </Account>
+          )}
           <Address>{address}</Address>
         </DetailView>
-      </RightContent>
+      </ItemContent>
     </Container>
   );
 };
@@ -62,16 +61,7 @@ const Container = styled("div", () => ({
   cursor: "pointer",
 }));
 
-const LeftIcon = styled("div", {
-  width: "50px",
-  height: "55px",
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
-});
-
-const RightContent = styled("div", ({ $theme }) => ({
+const ItemContent = styled("div", ({ $theme }) => ({
   flex: 1,
   height: "100%",
   display: "flex",
@@ -91,10 +81,6 @@ const OverView = styled("div", {
   alignItems: "flex-start",
 });
 
-const Title = styled("div", {
-  fontSize: 16,
-});
-
 const ActStatus = styled("div", ({ $theme }) => ({
   color: $theme.colors.primary,
   fontSize: "12px",
@@ -108,7 +94,6 @@ const DetailView = styled("div", {
 });
 
 const Account = styled("div", () => ({}));
-
 const Address = styled("div", {
   fontSize: "12px",
 });

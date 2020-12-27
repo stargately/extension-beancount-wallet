@@ -55,13 +55,14 @@ async function getActions(req: any, res: any) {
 }
 
 async function queryAction(req: any, res: any) {
-  const { actionHash } = req.payload;
+  const { actionHash } = req.params;
   const acc = walletSingleton.getAccount(getCurrentAccountAddress());
   if (!acc) {
     throw new Error("Can find current account");
   }
   acc?.setProvider(getCurrentNetworkUri());
-  res.result = await acc.getActionByHash(actionHash);
+  const { actionInfo } = await acc.getActionByHash(actionHash);
+  res.result = actionInfo;
 }
 
 export function createTxMiddleware() {
