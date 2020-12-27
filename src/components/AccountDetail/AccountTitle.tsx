@@ -31,7 +31,7 @@ export const AccountTitle: React.FC<AccountTitleProps> = ({ account }) => {
       message.info("You only have one account now");
       return;
     }
-    defaultPostman.removeAccount(account.address);
+    await defaultPostman.removeAccount(account.address);
     const accounts = await defaultPostman.getAccounts();
     setAccountItems(accounts);
     setAddress(accounts[0].address);

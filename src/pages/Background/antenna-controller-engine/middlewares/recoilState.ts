@@ -19,7 +19,6 @@ localStore.get().then((res: any) => {
 
 export function getCurrentAccountAddress() {
   const address = memoryObj["App.Account.Address"] as string;
-  // TODO: need fix
   return address;
 }
 export function getCurrentNetworkUri() {
@@ -28,8 +27,7 @@ export function getCurrentNetworkUri() {
 
 async function update(req: any, res: any) {
   const { params } = req;
-  const originData = (await localStore.get()) as any;
-  memoryObj = { ...originData, ...params };
+  memoryObj = { ...memoryObj, ...params };
   localStore.set(memoryObj);
   res.result = "OK";
 }
@@ -40,7 +38,7 @@ async function get(_: any, res: any) {
 
 export function createRecoilStateMiddleware() {
   return createScaffoldMiddleware({
-    [IOTEX_CONTROLLER_STORAGE_RECOIL_STATE]: createAsyncMiddleware(update),
+    [IOTEX_CONTROLLER_STORAGE_RECOIL_STATE]: update,
     [IOTEX_CONTROLLER_GET_RECOIL_STATE]: createAsyncMiddleware(get),
   });
 }

@@ -34,6 +34,7 @@ export const accountCurrentMeta = recoil.selector<AccountMeta>({
     get(accountCurrent);
     get(networkCurrent);
     get(accountVersion);
+
     const accountMeta = await defaultPostman.getAccountMeta();
     return accountMeta;
   },
