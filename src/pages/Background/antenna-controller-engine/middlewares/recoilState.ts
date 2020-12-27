@@ -33,7 +33,8 @@ async function update(req: any, res: any) {
 }
 
 async function get(_: any, res: any) {
-  res.result = await localStore.get();
+  const state = await localStore.get();
+  res.result = state || {};
 }
 
 export function createRecoilStateMiddleware() {

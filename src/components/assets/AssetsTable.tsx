@@ -17,7 +17,6 @@ export const AssetsTable = () => {
   }, []);
 
   const fetchAssets = () => {
-    console.log("fetch assets");
     setAssets([
       {
         id: 1,

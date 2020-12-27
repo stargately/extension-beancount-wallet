@@ -13,7 +13,6 @@ export const TransferToken = () => {
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values: any) => {
-    console.log(values);
     try {
       setLoading(true);
       await defaultPostman.transferToken(
