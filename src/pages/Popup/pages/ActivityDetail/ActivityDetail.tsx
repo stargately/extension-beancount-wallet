@@ -1,16 +1,28 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
 import Loading from "@/pages/Popup/components/Loading";
 import { Action } from "@/wallet-core/wallet-core";
 import { accountAddress } from "@/recoil";
+import { defaultPostman } from "@/pages/Popup/postman";
+
 import { ActivityDetailView } from "./ActivityDetailView";
 
 const ActivityDetailContainer = () => {
-  const location = useLocation<Action>();
-  const { state } = location;
+  const [state, setState] = useState<Action>();
+  const { id } = useParams<{ id: string }>();
   const address = useRecoilValue(accountAddress);
+
+  useEffect(() => {
+    defaultPostman.queryActionDetail(id).then((res: any) => {
+      setState(res[0]);
+    });
+  }, []);
+
+  if (!state) {
+    return <Loading></Loading>;
+  }
 
   return (
     <ActivityDetailView

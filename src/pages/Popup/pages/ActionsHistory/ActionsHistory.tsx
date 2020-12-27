@@ -14,7 +14,7 @@ export const ActionsHistory: React.FC<Props> = ({ actions }) => {
   }
   const history = useHistory();
   const onClick = React.useCallback((e: IAction) => {
-    history.push(`/activity/${e.actionHash}`, e.raw);
+    history.push(`/activity/${e.actionHash}`);
   }, []);
   return (
     <Container>
