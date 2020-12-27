@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { styled } from "onefx/lib/styletron-react";
-import { Dropdown, Button, message, Typography } from "antd";
+import { Dropdown, message, Typography, Menu } from "antd";
 import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
 
 import { defaultPostman } from "@/pages/Popup/postman";
@@ -37,6 +37,19 @@ export const AccountTitle: React.FC<AccountTitleProps> = ({ account }) => {
     setAddress(accounts[0].address);
   }, [accountItems.length, account.address]);
 
+  const onClick = (e: any) => {
+    switch (e.key) {
+      default: {
+        onIotexscan();
+        break;
+      }
+      case "remove": {
+        onRemoveAccount();
+        break;
+      }
+    }
+  };
+
   return (
     <Container>
       <Content>
@@ -56,10 +69,10 @@ export const AccountTitle: React.FC<AccountTitleProps> = ({ account }) => {
           placement="bottomRight"
           trigger={["click"]}
           overlay={
-            <ExpandView>
-              <Button onClick={onIotexscan}>View on Iotexscan</Button>
-              <Button onClick={onRemoveAccount}>Remove Account</Button>
-            </ExpandView>
+            <Menu onClick={onClick}>
+              <Menu.Item key="view">View on IoTeXScan</Menu.Item>
+              <Menu.Item key="remove">Remove Account</Menu.Item>
+            </Menu>
           }
         >
           <DotButton>
@@ -122,9 +135,4 @@ const Dot = styled("div", ({ $theme }) => ({
   height: "3px",
   background: $theme.colors.black60,
   marginBottom: "3px",
-}));
-
-const ExpandView = styled("div", () => ({
-  display: "flex",
-  flexDirection: "column",
 }));
