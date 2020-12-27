@@ -5,14 +5,14 @@ import {
 import { Envelop } from "iotex-antenna/lib/action/envelop";
 
 import { walletSingleton } from "@/wallet-core/wallet-core";
-import { AntennaAccount } from "@/wallet-core/antenna-account";
 import {
   IOTEX_SIGNER_GET_ACCOUNT,
   IOTEX_SIGNER_GET_ACCOUNTS,
   IOTEX_SIGNER_SIGN_AND_SEND,
   IOTEX_SIGNER_SIGN_MESSAGE,
 } from "@/constant/iotex";
-import { AntennaMethod } from "./method";
+
+import { actionsSigner } from "../libs/antenna-action-signer";
 
 export function createAntennaSignerMiddleware() {
   return createScaffoldMiddleware({
@@ -37,16 +37,12 @@ async function getAccounts(_: any, res: any) {
 }
 
 async function signAndSend(req: any, res: any) {
-  const accounts = walletSingleton.accounts as AntennaAccount[];
-  // TODO: link current account
-  const method = new AntennaMethod(
-    accounts[0].antenna.iotx,
-    accounts[0].antenna.iotx.accounts[0]
-  );
   const params = req.params as string;
   const buf = Uint8Array.from(Buffer.from(params, "hex"));
   const envelop = Envelop.deserialize(buf);
-  res.result = await method.sendAction(envelop);
+
+  await actionsSigner.waitingConfirm(req.id, envelop);
+  res.result = await actionsSigner.signAndSend(envelop);
 }
 
 async function signMessage() {

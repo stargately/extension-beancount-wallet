@@ -9,7 +9,7 @@ import pump from "pump";
 import PortStream from "extension-port-stream";
 
 import { setupMultiplex } from "../../utils/stream-utils";
-import { clientSingleton } from "../../daemon/client";
+import { defaultPostman } from "./postman";
 import { StateObserver, initializeSnapshot } from "./utils";
 import App from "../../components/App";
 
@@ -22,6 +22,7 @@ function initializeController(port: chrome.runtime.Port) {
   mux.ignoreStream("ignore");
   const controllerStream = mux.createStream("controller");
   const engine = new JsonRpcEngine();
+  defaultPostman.init(engine);
 
   const jsonRpcConnection = createJsonRpcStream();
   engine.push(jsonRpcConnection.middleware);
@@ -30,18 +31,12 @@ function initializeController(port: chrome.runtime.Port) {
   pump(clientSideStream, controllerStream, clientSideStream, () => {
     console.warn("connection Disconnect");
   });
-  // setTimeout(() => {
-  //   engine.handle({ id: 1, method: "IoTex_method", jsonrpc: "2.0" }, (err, res) => {
-  //     console.log(err, res)
-  //   })
-  // }, 5000)
 }
 
 async function initialize() {
   const port = chrome.runtime.connect({ name: "Popup" });
   initializeController(port);
-  clientSingleton.init(port);
-  const state = await clientSingleton.getAppState();
+  const state = await defaultPostman.getRecoilState();
 
   render(
     <RecoilRoot initializeState={initializeSnapshot(state)}>

@@ -8,6 +8,7 @@ import { ImportKey } from "../components/ImportKey";
 import { ImportAccount } from "../components/ImportAccount";
 import { ActivityDetail } from "../components/ActivityDetail";
 import { About } from "../components/About";
+import { ConfirmTransaction } from "../components/ConfirmTransaction";
 
 const RouteConfig: RouteConfig[] = [
   {
@@ -53,6 +54,11 @@ const RouteConfig: RouteConfig[] = [
   {
     path: "/about",
     component: About,
+    exact: true,
+  },
+  {
+    path: "/confirm-transaction",
+    component: ConfirmTransaction,
     exact: true,
   },
 ];

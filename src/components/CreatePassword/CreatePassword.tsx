@@ -3,8 +3,10 @@ import { withRouter } from "react-router-dom";
 import message from "antd/lib/message";
 import { useSetRecoilState } from "recoil";
 
+import { defaultPostman } from "@/pages/Popup/postman";
+
 import { CreatePasswordForm } from "./CreatePasswordForm";
-import { clientSingleton } from "../../daemon/client";
+
 import { accountAddress, accountsList } from "../../recoil";
 
 type FormValues = {
@@ -21,8 +23,8 @@ export const CreatePassword = withRouter(({ history }) => {
       message.error("Password and Confirm Password should be the same");
       return;
     }
-    await clientSingleton.createPassword(values.newPassword);
-    const accounts = await clientSingleton.walletGetAccounts();
+    await defaultPostman.createPassword(values.newPassword);
+    const accounts = await defaultPostman.getAccounts();
     setAccounts(accounts);
     setAddress(accounts[0].address);
     history.replace("/account");

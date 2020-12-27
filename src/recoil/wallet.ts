@@ -1,5 +1,5 @@
 import recoil from "recoil";
-import { clientSingleton } from "../daemon/client";
+import { defaultPostman } from "@/pages/Popup/postman";
 
 export const walletVersion = recoil.atom<number>({
   key: "Wallet.Version",
@@ -11,7 +11,7 @@ export const walletInitiated = recoil.selector<boolean>({
   get: async ({ get }) => {
     get(walletVersion);
     //  only calculate once?? how to fix (Qiu)
-    return clientSingleton.walletInitiated();
+    return defaultPostman.walletInited();
   },
 });
 
@@ -20,6 +20,6 @@ export const walletLocked = recoil.selector<boolean>({
   get: async ({ get }) => {
     get(walletVersion);
     //  only calculate once?? how to fix (Qiu)
-    return clientSingleton.walletLocked();
+    return defaultPostman.walletLocked();
   },
 });
