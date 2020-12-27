@@ -1,5 +1,5 @@
 {
-  "name": "Chrome Extension with React & Webpack",
+  "name": "Beancount Wallet",
   "permissions": ["storage"],
   "background": {
     "scripts": ["./background.bundle.js"],

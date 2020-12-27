@@ -8,12 +8,14 @@ import createJsonRpcStream from "json-rpc-middleware-stream";
 import pump from "pump";
 import PortStream from "extension-port-stream";
 
-import { setupMultiplex } from "../../utils/stream-utils";
+import { setupMultiplex } from "@/utils/stream-utils";
+
 import { defaultPostman } from "./postman";
 import { StateObserver, initializeSnapshot } from "./utils";
-import App from "../../components/App";
+import App from "./pages/Routes";
 
 import "react-perfect-scrollbar/dist/css/styles.css";
+import "@/styles/antd.less";
 import "./index.css";
 
 function initializeController(port: chrome.runtime.Port) {
