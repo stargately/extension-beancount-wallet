@@ -11,7 +11,7 @@ import PortStream from "extension-port-stream";
 import { setupMultiplex } from "@/utils/stream-utils";
 
 import { defaultPostman } from "./postman";
-import { StateObserver, initializeSnapshot } from "./utils";
+import { initializeSnapshot, StateObserver } from "./observer/state";
 import App from "./pages/Routes";
 
 import "react-perfect-scrollbar/dist/css/styles.css";
@@ -21,7 +21,6 @@ import "./index.css";
 function initializeController(port: chrome.runtime.Port) {
   const stream = new PortStream(port);
   const mux = setupMultiplex(stream);
-  mux.ignoreStream("ignore");
   const controllerStream = mux.createStream("controller");
   const engine = new JsonRpcEngine();
   defaultPostman.init(engine);
@@ -39,7 +38,6 @@ async function initialize() {
   const port = chrome.runtime.connect({ name: "Popup" });
   initializeController(port);
   const state = await defaultPostman.getRecoilState();
-
   render(
     <RecoilRoot initializeState={initializeSnapshot(state)}>
       <Fragment>

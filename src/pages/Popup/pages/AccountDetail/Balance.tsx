@@ -1,12 +1,11 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { styled } from "onefx/lib/styletron-react";
-import Skeleton from "react-loading-skeleton";
 import { useRecoilValue } from "recoil";
 
 import { fonts } from "@/styles/style-font";
 import { accountCurrentMeta } from "@/recoil";
 
-export const MyBalance = () => {
+export const BalanceComponent = () => {
   const meta = useRecoilValue(accountCurrentMeta);
   const nums = +meta.balance / 10 ** 18;
   return <span>{`${nums.toFixed(2)} ${"IOTX"}`}</span>;
@@ -15,9 +14,7 @@ export const MyBalance = () => {
 export const Balance = () => {
   return (
     <Container>
-      <Suspense fallback={<Skeleton width={80} />}>
-        <MyBalance></MyBalance>
-      </Suspense>
+      <BalanceComponent></BalanceComponent>
     </Container>
   );
 };

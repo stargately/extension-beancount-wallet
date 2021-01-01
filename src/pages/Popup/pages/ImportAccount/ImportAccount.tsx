@@ -13,14 +13,14 @@ type FormValues = {
 
 export const ImportAccount: React.FC = () => {
   const history = useHistory();
-  const [accounts, setAccount] = useRecoilState(accountsList);
+  const [accounts, setAccounts] = useRecoilState(accountsList);
   const onFinish = async (values: FormValues) => {
     await defaultPostman.createAccount(
       `IoTeX account ${accounts.length}`,
       values.key
     );
     const _accounts = await defaultPostman.getAccounts();
-    setAccount(_accounts);
+    setAccounts(_accounts);
     history.push("/account");
   };
   return (
