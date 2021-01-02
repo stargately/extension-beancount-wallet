@@ -2,10 +2,11 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { styled } from "onefx/lib/styletron-react";
 
-import { ActionItem, IAction } from "./ActionItem";
+import { Action } from "@/wallet-core/wallet-core";
+import { ActionItem } from "./ActionItem";
 
 type Props = {
-  actions: IAction[];
+  actions: Action[];
 };
 
 export const ActionsHistory: React.FC<Props> = ({ actions }) => {
@@ -13,21 +14,17 @@ export const ActionsHistory: React.FC<Props> = ({ actions }) => {
     return <Container>No Activity</Container>;
   }
   const history = useHistory();
-  const onClick = React.useCallback((e: IAction) => {
-    history.push(`/activity/${e.actionHash}`);
+  const onClick = React.useCallback((e: Action) => {
+    history.push(`/activity/${e.actHash}`);
   }, []);
   return (
     <Container>
-      {actions.map((e, id) => {
+      {actions.map((act) => {
         return (
           <ActionItem
-            key={id}
-            actionHash={e.actionHash}
-            address={e.address}
-            recipient={e.recipient}
-            amount={e.amount}
-            raw={e.raw}
             onClick={onClick}
+            action={act}
+            key={act.actHash}
           ></ActionItem>
         );
       })}

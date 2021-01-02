@@ -4,12 +4,10 @@ import { useHistory } from "react-router-dom";
 
 import { defaultPostman } from "@/pages/Popup/postman";
 
-import { useRefreshAccount } from "@/hooks";
 import { TransferTokenForm } from "./TransferTokenForm";
 
 export const TransferToken = () => {
   const history = useHistory();
-  const refreshAccountMeta = useRefreshAccount();
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values: any) => {
@@ -26,7 +24,6 @@ export const TransferToken = () => {
         setTimeout(resolve, 5500);
       });
       message.success("Transfer Success");
-      refreshAccountMeta();
       history.goBack();
     } catch (e) {
       message.error("Transfer Failure");

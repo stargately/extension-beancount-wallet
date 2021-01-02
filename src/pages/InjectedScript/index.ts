@@ -1,13 +1,11 @@
 import pump from "pump";
 import { JsonRpcEngine } from "json-rpc-engine";
+import { createStreamMiddleware } from "json-rpc-middleware-stream";
 
-// @ts-ignore
-import createJsonRpcStream from "json-rpc-middleware-stream";
 // @ts-ignore
 import ObjectMultiplex from "obj-multiplex";
 // @ts-ignore
 import LocalMessageDuplexStream from "post-message-stream";
-
 import { ExtensionSignerPlugin } from "./signer";
 
 // setup background connection
@@ -21,7 +19,7 @@ pump(connectionStream, mux, connectionStream, () => {
   console.log("signer lost connnection");
 });
 
-const jsonRpcConnection = createJsonRpcStream();
+const jsonRpcConnection = createStreamMiddleware();
 pump(
   jsonRpcConnection.stream,
   mux.createStream("signer"),

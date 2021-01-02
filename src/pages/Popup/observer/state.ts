@@ -1,11 +1,11 @@
 import recoil, { MutableSnapshot } from "recoil";
-import { defaultPostman } from "./postman";
+import { defaultPostman } from "@/pages/Popup/postman";
 import {
   networkIndex,
   networkType,
   accountAddress,
   accountsList,
-} from "../../recoil";
+} from "@/recoil";
 
 export const interestedAtoms = {
   [networkIndex.key]: networkIndex,

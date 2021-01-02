@@ -5,49 +5,69 @@ import { fromRau } from "iotex-antenna/lib/account/utils";
 
 import { Action } from "@/wallet-core/wallet-core";
 
-export type IAction = {
-  address: string;
-  actionHash: string;
-  recipient?: string;
-  amount?: string;
-  raw?: Action;
+type Props = {
+  action: Action;
+  onClick?: (e: Action) => void;
 };
 
-type Props = IAction & {
-  onClick?: (e: IAction) => void;
-};
+const ellipsis = (e = "") => `${e.slice(0, 6)}...${e.slice(-4)}`;
 
-// TODO: need cataory items
-export const ActionItem: React.FC<Props> = (props) => {
-  let type;
-  if (!props.recipient || !props.address) {
-    type = "Execution";
-  } else {
-    type = props.address === props.recipient ? "Receive" : "Send";
-  }
-  const account = props.amount ? fromRau(`${props.amount} `, "IOTX") : "";
-  const ellipsis = (e: string) => `${e.slice(0, 6)}...${e.slice(-8)}`;
-  let address = props.address === props.recipient ? "From:  " : "To:  ";
-  address += ellipsis(`${props.recipient || ""}`);
+const ExecutionItem: React.FC<Props> = (props) => {
+  const { execution } = props.action.action.core!;
   return (
-    <Container onClick={() => props.onClick && props.onClick(props)}>
+    <Container onClick={() => props.onClick && props.onClick(props.action)}>
       <ItemContent>
         <OverView>
-          <Tag color="blue">{type}</Tag>
+          <Tag color="blue">Execution</Tag>
           <ActStatus>Success</ActStatus>
         </OverView>
         <DetailView>
-          {account && (
-            <Account>
-              <span>{account}</span>
-              <span> IOTX</span>
-            </Account>
-          )}
-          <Address>{address}</Address>
+          <Account>
+            <span>{fromRau(execution!.amount, "IOTX")}</span>
+            <span> IOTX</span>
+          </Account>
+          <Address>
+            <span>contract: </span>
+            {ellipsis(execution!.contract)}
+          </Address>
         </DetailView>
       </ItemContent>
     </Container>
   );
+};
+
+const TransferItem: React.FC<Props> = (props) => {
+  const { transfer } = props.action.action.core!;
+  return (
+    <Container onClick={() => props.onClick && props.onClick(props.action)}>
+      <ItemContent>
+        <OverView>
+          <Tag color="blue">Transfer</Tag>
+          <ActStatus>Success</ActStatus>
+        </OverView>
+        <DetailView>
+          <Account>
+            <span>{fromRau(transfer!.amount, "IOTX")}</span>
+            <span> IOTX</span>
+          </Account>
+          <Address>
+            <span>recipient: </span>
+            {ellipsis(transfer!.recipient)}
+          </Address>
+        </DetailView>
+      </ItemContent>
+    </Container>
+  );
+};
+
+export const ActionItem: React.FC<Props> = (props) => {
+  if (props.action.action.core?.transfer) {
+    return <TransferItem {...props}></TransferItem>;
+  }
+  if (props.action.action.core?.execution) {
+    return <ExecutionItem {...props}></ExecutionItem>;
+  }
+  return null;
 };
 
 const Container = styled("div", () => ({
