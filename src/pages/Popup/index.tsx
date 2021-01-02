@@ -3,8 +3,7 @@ import { render } from "react-dom";
 import { RecoilRoot } from "recoil";
 import { JsonRpcEngine } from "json-rpc-engine";
 
-// @ts-ignore
-import createJsonRpcStream from "json-rpc-middleware-stream";
+import { createStreamMiddleware } from "json-rpc-middleware-stream";
 import pump from "pump";
 import PortStream from "extension-port-stream";
 
@@ -25,7 +24,7 @@ function initializeController(port: chrome.runtime.Port) {
   const engine = new JsonRpcEngine();
   defaultPostman.init(engine);
 
-  const jsonRpcConnection = createJsonRpcStream();
+  const jsonRpcConnection = createStreamMiddleware();
   engine.push(jsonRpcConnection.middleware);
 
   const clientSideStream = jsonRpcConnection.stream;

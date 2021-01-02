@@ -5,16 +5,15 @@ import { useRecoilValue } from "recoil";
 import { fonts } from "@/styles/style-font";
 import { accountCurrentMeta } from "@/recoil";
 
-export const BalanceComponent = () => {
+export const Balance = () => {
   const meta = useRecoilValue(accountCurrentMeta);
   const nums = +meta.balance / 10 ** 18;
-  return <span>{`${nums.toFixed(2)} ${"IOTX"}`}</span>;
-};
-
-export const Balance = () => {
   return (
     <Container>
-      <BalanceComponent></BalanceComponent>
+      <span>
+        {`${nums.toFixed(2)}`}
+        <span> IOTX</span>
+      </span>
     </Container>
   );
 };

@@ -3,6 +3,7 @@ import "../../assets/img/icon-128.png";
 
 import extension from "extensionizer";
 import PortStream from "extension-port-stream";
+
 import localStore from "../../utils/localStore";
 import { walletSingleton } from "../../wallet-core";
 import { MainController } from "./controller";

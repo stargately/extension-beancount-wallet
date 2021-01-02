@@ -12,11 +12,6 @@ export const accountAddress = recoil.atom<string>({
   default: "",
 });
 
-export const accountVersion = recoil.atom<number>({
-  key: "App.Account.Version",
-  default: 0,
-});
-
 export const accountCurrentMeta = recoil.atom<AccountMeta>({
   key: "App.Account.Meta",
   default: {
