@@ -25,6 +25,10 @@ export function getCurrentNetworkUri() {
   return networks.default[memoryObj["App.Network.Index"] || 0].uri;
 }
 
+export function getXrc20TokenAddressList() {
+  return networks.default[memoryObj["App.Network.Index"] || 0].xrc20.address;
+}
+
 async function update(req: any, res: any) {
   const { params } = req;
   memoryObj = { ...memoryObj, ...params };

@@ -28,6 +28,11 @@ export const accountActions = recoil.atom<Action[]>({
   default: [],
 });
 
+export const accountTokens = recoil.atom<any[]>({
+  key: "App.Account.Tokens",
+  default: [],
+});
+
 export const accountCurrent = recoil.selector<LeanAccount>({
   key: "App.Account.Current",
   get: ({ get }) => {

@@ -8,7 +8,6 @@ type Props = {
   form: FormInstance;
 };
 
-// TODO(tian): should get from hooks
 const baseGasLimit = 200000;
 const baseGasPrice = 1000000000000;
 

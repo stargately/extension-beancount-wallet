@@ -20,6 +20,7 @@ import {
   IOTEX_CONTROLLER_CONFIRM_ACTION,
   IOTEX_CONTROLLER_CANCEL_ACTION,
   IOTEX_CONTROLLER_LASTEST_ACTION,
+  IOTEX_CONTROLLER_XRC20,
 } from "@/constant/iotex";
 
 class Postman extends MessageClient {
@@ -126,6 +127,12 @@ class Postman extends MessageClient {
 
   async getLastestUnapprovedAction() {
     return this.send<void, any>(IOTEX_CONTROLLER_LASTEST_ACTION);
+  }
+
+  async getXrc20Tokens() {
+    return this.send<void, { name: string; balance: any }[]>(
+      IOTEX_CONTROLLER_XRC20
+    );
   }
 }
 

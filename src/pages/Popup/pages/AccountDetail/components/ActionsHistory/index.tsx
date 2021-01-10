@@ -8,7 +8,6 @@ import { ActionsHistory as MyActionsHistory } from "./ActionsHistory";
 export const InnerActionsHistory = () => {
   const actions = recoil.useRecoilValue(accountActions);
   const items = actions.slice(0).reverse();
-  console.log(items);
   return <MyActionsHistory actions={items}></MyActionsHistory>;
 };
 
