@@ -38,7 +38,6 @@ export const Welcome = withRouter(({ history }) => {
           size="large"
           onClick={() => {
             history.push("/importKey");
-            // TODO
           }}
         >
           Import

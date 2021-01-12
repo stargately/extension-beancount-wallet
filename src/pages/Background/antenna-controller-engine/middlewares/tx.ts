@@ -27,13 +27,6 @@ async function transferToken(req: any, res: any) {
     throw new Error("Can find current account");
   }
   acc.setProvider(getCurrentNetworkUri());
-  console.log({
-    from: getCurrentAccountAddress(),
-    to: params.to,
-    amount: params.amount,
-    gasPrice: params.gasPrice,
-    gasLimit: params.gasLimit,
-  });
   await acc.transfer({
     from: getCurrentAccountAddress(),
     to: params.to,

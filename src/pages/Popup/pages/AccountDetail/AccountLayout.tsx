@@ -10,7 +10,8 @@ import { accountCurrent, appTabActiveKey } from "@/recoil";
 import { AccountTitle } from "./AccountTitle";
 import { Balance } from "./Balance";
 import { CommonHeader } from "../CommonHeader";
-import { ActionsHistory } from "../ActionsHistory";
+import { ActionsHistory } from "./components/ActionsHistory";
+import { TokensList } from "./components/TokenList";
 
 const { TabPane } = Tabs;
 export const AccountLayout = () => {
@@ -47,7 +48,11 @@ export const AccountLayout = () => {
           key="asset"
           style={{ textAlign: "center", width: "100%" }}
         >
-          Assets
+          <div style={{ height: "190px" }}>
+            <ScrollBar>
+              <TokensList></TokensList>
+            </ScrollBar>
+          </div>
         </TabPane>
         <TabPane
           tab="Activity"

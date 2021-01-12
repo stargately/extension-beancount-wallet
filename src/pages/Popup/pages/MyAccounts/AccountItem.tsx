@@ -27,7 +27,6 @@ export const AccountItem = (props: AccountItemProps) => {
         <CircleAvatar src={require("@/assets/img/logo.png").default} />
         <AccountNameText>{account.name}</AccountNameText>
       </TopContentContainer>
-      {/* TODO (Di): later add banlance in account list */}
       <BalanceText>TODO</BalanceText>
     </ItemContainer>
   );
