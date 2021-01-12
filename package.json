@@ -1,11 +1,11 @@
 {
-  "name": "chrome-extension-boilerplate-react",
-  "version": "2.7.0",
-  "description": "A chrome extension boilerplate built with React 16 and Webpack 4",
+  "name": "beancount-wallet",
+  "version": "0.1.0",
+  "description": "Beancount Wallet for Crypto Tokens",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lxieyang/chrome-extension-boilerplate-react.git"
+    "url": "https://github.com/puncsky/extension-beancount-wallet.git"
   },
   "scripts": {
     "build": "node utils/build.js",
