@@ -7,7 +7,9 @@ var webpack = require("webpack"),
   HtmlWebpackPlugin = require("html-webpack-plugin"),
   WriteFilePlugin = require("write-file-webpack-plugin");
 
-var alias = {};
+var alias = {
+  "@": path.resolve("src"),
+};
 
 if (env.NODE_ENV == "development") {
   alias["react-dom"] = "@hot-loader/react-dom";
@@ -35,10 +37,8 @@ if (fileSystem.existsSync(secretsPath)) {
 var options = {
   mode: process.env.NODE_ENV || "development",
   entry: {
-    newtab: path.join(__dirname, "src", "pages", "Newtab", "index.tsx"),
-    options: path.join(__dirname, "src", "pages", "Options", "index.tsx"),
     popup: path.join(__dirname, "src", "pages", "Popup", "index.tsx"),
-    background: path.join(__dirname, "src", "pages", "Background", "index.ts"),
+    background: path.join(__dirname, "src", "pages", "background", "index.ts"),
     contentScript: path.join(__dirname, "src", "pages", "Content", "index.ts"),
   },
   chromeExtensionBoilerplate: {
@@ -144,16 +144,6 @@ var options = {
         copyUnmodified: true,
       }
     ),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, "src", "pages", "Newtab", "index.html"),
-      filename: "newtab.html",
-      chunks: ["newtab"],
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, "src", "pages", "Options", "index.html"),
-      filename: "options.html",
-      chunks: ["options"],
-    }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "src", "pages", "Popup", "index.html"),
       filename: "popup.html",

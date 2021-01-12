@@ -1,39 +1,51 @@
 import React, { Fragment } from "react";
 import { render } from "react-dom";
+import { RecoilRoot } from "recoil";
+import { JsonRpcEngine } from "json-rpc-engine";
 
-import { RecoilRoot, MutableSnapshot } from "recoil";
-import { clientSingleton } from "../../daemon/client";
-import { StateObserver, interestedAtoms } from "./utils";
-import { Popup as App } from "./Popup";
+import { createStreamMiddleware } from "json-rpc-middleware-stream";
+import pump from "pump";
+import PortStream from "extension-port-stream";
+
+import { setupMultiplex } from "@/utils/stream-utils";
+
+import { defaultPostman } from "./postman";
+import { initializeSnapshot, StateObserver } from "./observer/state";
+import App from "./pages/Routes";
+
 import "react-perfect-scrollbar/dist/css/styles.css";
+import "@/styles/antd.less";
 import "./index.css";
 
-const port = chrome.runtime.connect({ name: "Popup" });
-clientSingleton.init(port);
+function initializeController(port: chrome.runtime.Port) {
+  const stream = new PortStream(port);
+  const mux = setupMultiplex(stream);
+  const controllerStream = mux.createStream("controller");
+  const engine = new JsonRpcEngine();
+  defaultPostman.init(engine);
 
-clientSingleton
-  .getAppState()
-  .then((state) => {
-    const initializeState = (snapshot: MutableSnapshot) => {
-      const appState = (state || {}) as { [prop: string]: any };
-      Object.keys(appState).forEach((key) => {
-        const value = appState[key];
-        const atom = interestedAtoms[key];
-        if (atom) {
-          snapshot.set(atom, value);
-        }
-      });
-    };
-    render(
-      <RecoilRoot initializeState={initializeState}>
-        <Fragment>
-          <StateObserver></StateObserver>
-          <App />
-        </Fragment>
-      </RecoilRoot>,
-      window.document.querySelector("#app-container")
-    );
-  })
-  .catch((e) => {
-    console.warn(e);
+  const jsonRpcConnection = createStreamMiddleware();
+  engine.push(jsonRpcConnection.middleware);
+
+  const clientSideStream = jsonRpcConnection.stream;
+  pump(clientSideStream, controllerStream, clientSideStream, () => {
+    console.warn("connection Disconnect");
   });
+}
+
+async function initialize() {
+  const port = chrome.runtime.connect({ name: "Popup" });
+  initializeController(port);
+  const state = await defaultPostman.getRecoilState();
+  render(
+    <RecoilRoot initializeState={initializeSnapshot(state)}>
+      <Fragment>
+        <StateObserver></StateObserver>
+        <App />
+      </Fragment>
+    </RecoilRoot>,
+    window.document.querySelector("#app-container")
+  );
+}
+
+initialize();

@@ -25,6 +25,7 @@ export const themeDecorator = () =>
 const MobileContent = styled("div", () => ({
   width: "360px",
   height: "600px",
+  border: "1px solid #DDD",
 }));
 
 const Overlay = styled("div", ({ $theme }) => ({

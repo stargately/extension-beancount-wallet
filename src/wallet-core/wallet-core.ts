@@ -4,6 +4,7 @@ import {
   IActionInfo,
   IAccountMeta,
 } from "iotex-antenna/lib/rpc-method/types";
+import { XRC20 } from "iotex-antenna/lib/token/xrc20";
 import { AntennaAccount } from "./antenna-account";
 
 const KeyringController = require("eth-keyring-controller");
@@ -13,15 +14,12 @@ export type LeanAccount = {
   address: string;
 };
 
-// TODO(di): later remove, should define for different coin to implement
 export type Action = IActionInfo;
 
-// TODO(di): later remove, should define for different coin to implement
 export type AccountMeta = IAccountMeta;
 
 export type CoinType = "IOTX";
 
-// TODO(di): later remove, should define for different coin to implement
 export type IGetActionsRequest = {
   byAddr?: IGetActionsByAddressRequest;
   byHash?: IGetActionsByHashRequest;
@@ -213,12 +211,47 @@ export class WalletCore {
 
     const rows = await Promise.all(waitings);
     rows.forEach(([privateKey], i) => {
-      // IoTeX accout name lost (TODO: Qiu)
-      // CoinType in this case also lost
       this.addAccount(`IoTeX account ${i}`, privateKey);
     });
     this.password = password;
     return !!result;
+  }
+
+  async xrc20List(payload: {
+    address: string;
+    providerUrl: string;
+    xrc20: string[];
+  }) {
+    const acc = this.getAccount(payload.address) as AntennaAccount;
+    if (!acc) {
+      throw new Error("can find out account");
+    }
+    acc.setProvider(payload.providerUrl);
+    const result: {
+      name: string;
+      balance: any;
+      symbol: string;
+      decimals: any;
+    }[] = [];
+    const tokens = payload.xrc20.map(
+      (url) => new XRC20(url, { provider: acc.antenna.iotx })
+    );
+
+    try {
+      /* eslint no-await-in-loop: 0 */
+      for (let i = 0; i < tokens.length; i += 1) {
+        const token = tokens[i];
+        const name = await token.name();
+        const symbol = await token.symbol();
+        const balance = await token.balanceOf(payload.address);
+        const decimals = await token.decimals();
+        result.push({ name, balance, symbol, decimals });
+      }
+    } catch (e) {
+      console.warn(e);
+    }
+
+    return result;
   }
 
   // transfer token
