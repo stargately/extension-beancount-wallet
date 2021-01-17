@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { withRouter } from "react-router-dom";
 import message from "antd/lib/message";
 import { useSetRecoilState } from "recoil";
@@ -26,8 +26,9 @@ export const CreatePassword = withRouter(({ history }) => {
     const accounts = await defaultPostman.getAccounts();
     setAccounts(accounts);
     setAddress(accounts[0].address);
-    history.replace("/account");
+    history.replace("/dashboard");
   };
+  const onCancel = useCallback(() => history.goBack(), []);
 
-  return <CreatePasswordForm onFinish={onFinish} />;
+  return <CreatePasswordForm onFinish={onFinish} onCancel={onCancel} />;
 });

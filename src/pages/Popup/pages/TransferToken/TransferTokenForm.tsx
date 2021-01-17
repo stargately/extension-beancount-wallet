@@ -1,6 +1,5 @@
 import React from "react";
 import Form from "antd/lib/form";
-import { useHistory } from "react-router-dom";
 import { styled } from "onefx/lib/styletron-react";
 import Row from "antd/lib/row";
 import Col from "antd/lib/col";
@@ -12,29 +11,13 @@ import { RecipienInput } from "./RecipienInput";
 
 type Props = {
   onFinish?: (values: any) => void;
+  onCancel?: (values: any) => void;
 };
 
 export const TransferTokenForm: React.FC<Props> = (props: Props) => {
   const [form] = Form.useForm();
-  const history = useHistory();
-  const onGoBack = React.useCallback(() => {
-    history.goBack();
-  }, []);
-
   return (
     <Container>
-      <Header>
-        <Row justify="space-between">
-          <Col>
-            <Title>Send Tokens</Title>
-          </Col>
-          <Col>
-            <Button type="text" onClick={onGoBack}>
-              Cancel
-            </Button>
-          </Col>
-        </Row>
-      </Header>
       <Form form={form} name="form" onFinish={props.onFinish}>
         <RecipienInput />
         <AssetSelect />
@@ -43,13 +26,13 @@ export const TransferTokenForm: React.FC<Props> = (props: Props) => {
         <Form.Item>
           <Row justify="space-between">
             <Col>
-              <Button type="dashed" size="large" onClick={onGoBack}>
-                Cancel
+              <Button type="primary" htmlType="submit" size="large">
+                Next
               </Button>
             </Col>
             <Col>
-              <Button type="default" htmlType="submit" size="large">
-                Next
+              <Button type="dashed" size="large" onClick={props.onCancel}>
+                Cancel
               </Button>
             </Col>
           </Row>
@@ -58,14 +41,6 @@ export const TransferTokenForm: React.FC<Props> = (props: Props) => {
     </Container>
   );
 };
-
-const Header = styled("div", {
-  marginBottom: "10px",
-});
-
-const Title = styled("h3", {
-  margin: 0,
-});
 
 const Container = styled("div", {
   textAlign: "left",

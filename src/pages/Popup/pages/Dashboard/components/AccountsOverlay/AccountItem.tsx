@@ -27,7 +27,7 @@ export const AccountItem = (props: AccountItemProps) => {
         <CircleAvatar src={require("@/assets/img/logo.png").default} />
         <AccountNameText>{account.name}</AccountNameText>
       </TopContentContainer>
-      <BalanceText>TODO</BalanceText>
+      <BalanceText></BalanceText>
     </ItemContainer>
   );
 };

@@ -3,7 +3,6 @@ import { message, Spin } from "antd";
 import { useHistory } from "react-router-dom";
 
 import { defaultPostman } from "@/pages/Popup/postman";
-
 import { TransferTokenForm } from "./TransferTokenForm";
 
 export const TransferToken = () => {
@@ -32,9 +31,16 @@ export const TransferToken = () => {
     }
   };
 
+  const onCancel = React.useCallback(() => {
+    history.goBack();
+  }, []);
+
   return (
     <Spin spinning={loading}>
-      <TransferTokenForm onFinish={onFinish}></TransferTokenForm>
+      <TransferTokenForm
+        onFinish={onFinish}
+        onCancel={onCancel}
+      ></TransferTokenForm>
     </Spin>
   );
 };

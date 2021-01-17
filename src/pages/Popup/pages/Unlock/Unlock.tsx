@@ -19,7 +19,7 @@ export const Unlock = withRouter(({ history }) => {
         await defaultPostman.walletUnlock(values.password);
         const accounts = await defaultPostman.getAccounts();
         setAccounts(accounts);
-        history.push("/account");
+        history.push("/dashboard");
       } else {
         message.info("password incorrect");
       }

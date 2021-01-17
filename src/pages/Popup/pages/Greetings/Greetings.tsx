@@ -13,7 +13,7 @@ const Container = () => {
     return <Redirect to="/unlock"></Redirect>;
   }
   if (initiated) {
-    return <Redirect to="/account"></Redirect>;
+    return <Redirect to="/dashboard"></Redirect>;
   }
   return <Welcome />;
 };

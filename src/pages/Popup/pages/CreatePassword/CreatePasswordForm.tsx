@@ -1,12 +1,6 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { styled } from "onefx/lib/styletron-react";
-
-import Form from "antd/lib/form";
-import Input from "antd/lib/input";
-import Button from "antd/lib/button";
-import Checkbox from "antd/lib/checkbox";
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import { useHistory } from "react-router-dom";
+import { Form, Input, Button, Checkbox, Row, Col } from "antd";
 
 import { CommonMargin } from "@/styles/common-margin";
 import { fonts } from "@/styles/style-font";
@@ -19,18 +13,18 @@ type FormValues = {
 
 type CreatePasswordProps = {
   onFinish: (values: FormValues) => void;
+  onCancel?: () => void;
 };
 
 export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
   onFinish,
+  onCancel,
 }) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
-  const history = useHistory();
-  const onClick = useCallback(() => history.goBack(), []);
+
   return (
     <Container>
-      <BackArrowButton onClick={onClick}></BackArrowButton>
       <CommonMargin />
       <Paragraph>Secure your wallet with a password</Paragraph>
       <CommonMargin />
@@ -101,33 +95,36 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
             </a>
           </Checkbox>
         </Form.Item>
-
         <Form.Item {...layout} shouldUpdate={true}>
           {() => (
-            <Button
-              type="primary"
-              htmlType="submit"
-              size="large"
-              disabled={
-                !form.isFieldsTouched(true) ||
-                form.getFieldsError().filter(({ errors }) => errors.length)
-                  .length !== 0
-              }
-              loading={loading}
-            >
-              {loading ? null : "Create"}
-            </Button>
+            <Row justify="space-between">
+              <Col>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  size="large"
+                  disabled={
+                    !form.isFieldsTouched(true) ||
+                    form.getFieldsError().filter(({ errors }) => errors.length)
+                      .length !== 0
+                  }
+                  loading={loading}
+                >
+                  {loading ? null : "Create"}
+                </Button>
+              </Col>
+              <Col>
+                <Button onClick={onCancel} size="large">
+                  Cancel
+                </Button>
+              </Col>
+            </Row>
           )}
         </Form.Item>
       </Form>
     </Container>
   );
 };
-
-const BackArrowButton = styled(ArrowLeftOutlined, ({ $theme }) => ({
-  fontSize: $theme.sizing[4],
-  marginBlock: $theme.sizing[4],
-}));
 
 const Container = styled("div", ({ $theme }) => ({
   textAlign: "left",

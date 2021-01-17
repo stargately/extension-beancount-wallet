@@ -2,10 +2,10 @@ import { RouteConfig } from "react-router-config";
 import { Greetings } from "../Greetings";
 import { CreatePassword } from "../CreatePassword";
 import { Unlock } from "../Unlock";
-import { AccountDetail } from "../AccountDetail";
+import { Dashboard } from "../Dashboard";
 import { TransferToken } from "../TransferToken";
-import { ImportKey } from "../ImportKey";
-import { ImportAccount } from "../ImportAccount";
+import { Import } from "../Import";
+import { NewAccount } from "../NewAccount";
 import { ActivityDetail } from "../ActivityDetail";
 import { About } from "../About";
 import { ConfirmTransaction } from "../ConfirmTransaction";
@@ -22,8 +22,8 @@ const RouteConfig: RouteConfig[] = [
     exact: true,
   },
   {
-    path: "/account",
-    component: AccountDetail,
+    path: "/dashboard",
+    component: Dashboard,
     exact: true,
   },
   {
@@ -37,13 +37,13 @@ const RouteConfig: RouteConfig[] = [
     exact: true,
   },
   {
-    path: "/importKey",
-    component: ImportKey,
+    path: "/import",
+    component: Import,
     exact: true,
   },
   {
-    path: "/importAccount",
-    component: ImportAccount,
+    path: "/newAccount",
+    component: NewAccount,
     exact: true,
   },
   {

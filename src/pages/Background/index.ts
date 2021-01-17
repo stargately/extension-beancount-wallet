@@ -8,7 +8,7 @@ import localStore from "../../utils/localStore";
 import { walletSingleton } from "../../wallet-core";
 import { MainController } from "./controller";
 
-const SUBSCRIBE_STORE_KEY = "Background.KeyringController.StoreState";
+const SUBSCRIBE_STORE_KEY = "Background_KeyringController_StoreVault";
 const mainController = new MainController();
 
 extension.runtime.onInstalled.addListener(() => {
