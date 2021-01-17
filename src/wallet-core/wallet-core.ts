@@ -5,6 +5,8 @@ import {
   IAccountMeta,
 } from "iotex-antenna/lib/rpc-method/types";
 import { XRC20 } from "iotex-antenna/lib/token/xrc20";
+import SafeEventEmitter from "@metamask/safe-event-emitter";
+
 import { AntennaAccount } from "./antenna-account";
 
 const KeyringController = require("eth-keyring-controller");
@@ -50,17 +52,21 @@ export interface IAccount {
 
   getAccountMeta(): Promise<{ accountMeta: AccountMeta | undefined }>;
 
+  name: string;
   privateKey: string;
 }
 
-export class WalletCore {
+export class WalletCore extends SafeEventEmitter {
   accounts: Array<IAccount>;
 
   keyringController: any;
 
   password: string;
 
+  keynames: Record<string, string> = {};
+
   constructor(opt?: any) {
+    super();
     this.accounts = [];
     this.keyringController = new KeyringController(opt || {});
   }
@@ -72,7 +78,6 @@ export class WalletCore {
     return this.accounts.find((acc) => acc.getAddress() === address);
   }
 
-  // recover account from keyring
   addAccount(
     name: string,
     privateKey?: string,
@@ -82,8 +87,19 @@ export class WalletCore {
       throw new Error(`unimplemented coin type ${coinType}`);
     }
     const acc = new AntennaAccount(name, privateKey);
+    this.keynames[acc.privateKey] = name;
+    this.emit("UpdateKeyname");
     this.accounts.push(acc);
     return acc;
+  }
+
+  editAccount(address: string, name: string) {
+    const acc = this.getAccount(address);
+    if (acc) {
+      acc.name = name;
+      this.keynames[acc.privateKey] = name;
+      this.emit("UpdateKeyname");
+    }
   }
 
   removeAccount(address: string): void {
@@ -102,8 +118,6 @@ export class WalletCore {
     await this.keyringController.persistAllKeyrings(this.password);
   }
 
-  // create totally newaccount and add to keyring
-  // expose to proxy
   async createAccount(
     name: string,
     privateKey?: string,
@@ -156,7 +170,7 @@ export class WalletCore {
     privateKey?: string
   ): Promise<void> {
     await this.keyringController.createNewVaultAndKeychain(password);
-    await this.createAccount("IoTeX account 1", privateKey);
+    await this.createAccount("Defaut Account", privateKey);
     this.password = password;
   }
 
@@ -211,7 +225,10 @@ export class WalletCore {
 
     const rows = await Promise.all(waitings);
     rows.forEach(([privateKey], i) => {
-      this.addAccount(`IoTeX account ${i}`, privateKey);
+      this.addAccount(
+        this.keynames[privateKey] || `IoTeX account ${i}`,
+        privateKey
+      );
     });
     this.password = password;
     return !!result;

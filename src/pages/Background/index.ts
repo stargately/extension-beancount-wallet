@@ -8,7 +8,8 @@ import localStore from "../../utils/localStore";
 import { walletSingleton } from "../../wallet-core";
 import { MainController } from "./controller";
 
-const SUBSCRIBE_STORE_KEY = "Background_KeyringController_StoreVault";
+const KEYRING_VAULT = "Background_KeyringController_Vault";
+const KEY_NAMES = "Background_KeyringController_KeyNames";
 const mainController = new MainController();
 
 extension.runtime.onInstalled.addListener(() => {
@@ -16,10 +17,9 @@ extension.runtime.onInstalled.addListener(() => {
 });
 
 async function start() {
-  const state = await localStore.get();
-  const vaultState =
-    state && (state as Record<string, any>)[SUBSCRIBE_STORE_KEY];
-
+  const state = ((await localStore.get()) as Record<string, any>) || {};
+  // vault init
+  const vaultState = state[KEYRING_VAULT];
   if (vaultState) {
     walletSingleton.keyringController.store.updateState({ vault: vaultState });
   }
@@ -27,7 +27,19 @@ async function start() {
   walletSingleton.keyringController.store.subscribe(async function () {
     const data = walletSingleton.keyringController.store.getState();
     if (data.vault) {
-      await localStore.set({ [SUBSCRIBE_STORE_KEY]: data.vault });
+      await localStore.set({ [KEYRING_VAULT]: data.vault });
+    }
+  });
+
+  const keynames = state[KEY_NAMES];
+  if (keynames) {
+    walletSingleton.keynames = keynames || {};
+  }
+
+  walletSingleton.on("UpdateKeyname", async function () {
+    const { keynames } = walletSingleton;
+    if (keynames) {
+      await localStore.set({ [KEY_NAMES]: keynames });
     }
   });
 
