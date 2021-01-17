@@ -25,7 +25,7 @@ type Props = {
   onInfoHelp?: () => void;
 };
 
-export const MyAccounts: React.FC<Props> = ({
+export const AccountsOverlay: React.FC<Props> = ({
   accounts,
   address,
   onAddAccount,

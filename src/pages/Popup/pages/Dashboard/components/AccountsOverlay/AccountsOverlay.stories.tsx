@@ -1,6 +1,6 @@
 import React from "react";
 import { themeDecorator } from "@/storybookUtils";
-import { MyAccounts } from "./MyAccounts";
+import { AccountsOverlay } from "./AccountsOverlay";
 
 const noop = function () {
   console.log("noop");
@@ -9,7 +9,7 @@ const noop = function () {
 export const Standard: React.FC = () => {
   const [addr, setAddr] = React.useState("test 1");
   return (
-    <MyAccounts
+    <AccountsOverlay
       accounts={[
         { name: "test 1", address: "test 1" },
         { name: "test 2", address: "test 2" },
@@ -25,7 +25,7 @@ export const Standard: React.FC = () => {
 };
 
 export default {
-  title: "Components/MyAccounts",
+  title: "Components/AccountsOverlay",
   decorators: [themeDecorator()],
-  component: MyAccounts,
+  component: AccountsOverlay,
 };

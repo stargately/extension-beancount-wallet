@@ -17,7 +17,7 @@ function FormatAddress({ title }: { title: string }) {
   return <>{`${title.slice(0, 6)}...${title.slice(-6)}`}</>;
 }
 
-export const AccountTitle: React.FC<AccountTitleProps> = ({ account }) => {
+export const Title: React.FC<AccountTitleProps> = ({ account }) => {
   const network = useRecoilValue(networkCurrent);
   const [accountItems, setAccountItems] = useRecoilState(accountsList);
   const setAddress = useSetRecoilState(accountAddress);

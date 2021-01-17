@@ -6,14 +6,14 @@ import { Spin } from "antd";
 import { defaultPostman } from "@/pages/Popup/postman";
 
 import { accountAddress, accountsList } from "@/recoil";
-import { ImportKeyForm } from "./ImportKeyForm";
+import { Import as ImportForm } from "./Import";
 
 type FormValues = {
   password: string;
   key: string;
 };
 
-export const ImportKey: React.FC = () => {
+export const Import: React.FC = () => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const setAddress = useSetRecoilState(accountAddress);
@@ -28,11 +28,14 @@ export const ImportKey: React.FC = () => {
     const accounts = await defaultPostman.getAccounts();
     setAccounts(accounts);
     setAddress(accounts[0].address);
-    history.replace("/account");
+    history.replace("/dashboard");
+  };
+  const onCancel = () => {
+    history.goBack();
   };
   return (
     <Spin spinning={loading}>
-      <ImportKeyForm onFinish={onFinish}></ImportKeyForm>
+      <ImportForm onFinish={onFinish} onCancel={onCancel}></ImportForm>
     </Spin>
   );
 };

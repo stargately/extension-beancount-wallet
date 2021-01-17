@@ -7,22 +7,22 @@ import { useRecoilValue, useRecoilState } from "recoil";
 import ScrollBar from "react-perfect-scrollbar";
 
 import { accountCurrent, appTabActiveKey } from "@/recoil";
-import { AccountTitle } from "./AccountTitle";
+import { Title } from "./Title";
 import { Balance } from "./Balance";
-import { CommonHeader } from "../CommonHeader";
+import { Header } from "./components/Header";
 import { ActionsHistory } from "./components/ActionsHistory";
 import { TokensList } from "./components/TokenList";
 
 const { TabPane } = Tabs;
-export const AccountLayout = () => {
+export const Dashboard = () => {
   const history = useHistory();
   const curAccount = useRecoilValue(accountCurrent);
   const [tabActiveKey, setTabActiveKey] = useRecoilState(appTabActiveKey);
 
   return (
     <Container>
-      <CommonHeader />
-      <AccountTitle account={curAccount} />
+      <Header />
+      <Title account={curAccount} />
       <Balance />
       <ButtonGroups>
         <Button

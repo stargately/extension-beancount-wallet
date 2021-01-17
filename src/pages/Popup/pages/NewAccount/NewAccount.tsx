@@ -13,37 +13,48 @@ import { CommonMargin } from "@/styles/common-margin";
 import { fonts } from "@/styles/style-font";
 
 type FormValues = {
-  key: string;
+  name: string;
+  privateKey: string;
 };
 
-type ImportAccountFormProps = {
+type NewAccountProps = {
   onFinish?: (values: FormValues) => void;
+  mode: "create" | "import";
 };
 
-export const ImportAccountForm: React.FC<ImportAccountFormProps> = ({
-  onFinish,
-}) => {
+export const NewAccount: React.FC<NewAccountProps> = ({ onFinish, mode }) => {
   const history = useHistory();
   return (
     <Container>
       <Logo />
       <CommonMargin />
-      <Title>Import Account</Title>
+      <Title>New Account</Title>
       <Form layout="vertical" onFinish={onFinish} initialValues={{ key: "" }}>
         <Form.Item
-          label="Private Key"
-          name="key"
+          label="Account Name"
+          name="name"
           rules={[
-            { required: true, message: "Please input your Private Key!" },
+            { required: true, message: "Please input your Account Name" },
           ]}
         >
-          <Input.Password size="large" />
+          <Input size="large" />
         </Form.Item>
+        {mode === "import" ? (
+          <Form.Item
+            label="Private Key"
+            name="privateKey"
+            rules={[
+              { required: true, message: "Please input your Private Key" },
+            ]}
+          >
+            <Input.Password size="large" />
+          </Form.Item>
+        ) : null}
         <Form.Item>
           <Row justify="space-between">
             <Col>
               <Button type="primary" htmlType="submit" size="large">
-                Import
+                {mode === "import" ? "Import" : "Create"}
               </Button>
             </Col>
             <Col>

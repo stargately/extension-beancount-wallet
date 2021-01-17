@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
+    "@metamask/safe-event-emitter": "^2.0.0",
     "antd": "^4.6.3",
     "extension-port-stream": "^2.0.0",
     "extensionizer": "^1.0.1",

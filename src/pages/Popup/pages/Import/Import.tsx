@@ -1,9 +1,6 @@
 import React from "react";
 import { styled } from "onefx/lib/styletron-react";
-
-import Form from "antd/lib/form";
-import Input from "antd/lib/input";
-import Button from "antd/lib/button";
+import { Form, Input, Button, Row, Col } from "antd";
 
 import { Logo } from "@/styles/logo";
 import { CommonMargin } from "@/styles/common-margin";
@@ -14,16 +11,17 @@ type FormValues = {
   key: string;
 };
 
-type ImportkeyFormProps = {
+type ImportProps = {
   onFinish?: (values: FormValues) => void;
+  onCancel?: () => void;
 };
 
-export const ImportKeyForm: React.FC<ImportkeyFormProps> = ({ onFinish }) => {
+export const Import: React.FC<ImportProps> = ({ onFinish, onCancel }) => {
   return (
     <Container>
       <Logo />
       <CommonMargin />
-      <Title>Import Key</Title>
+      <Title>Import</Title>
       <Form layout="vertical" onFinish={onFinish} initialValues={{ key: "" }}>
         <Form.Item
           label="Private Key"
@@ -44,9 +42,18 @@ export const ImportKeyForm: React.FC<ImportkeyFormProps> = ({ onFinish }) => {
           <Input.Password size="large" />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" size="large">
-            Import
-          </Button>
+          <Row justify="space-between">
+            <Col>
+              <Button type="primary" htmlType="submit" size="large">
+                Import
+              </Button>
+            </Col>
+            <Col>
+              <Button htmlType="button" size="large" onClick={onCancel}>
+                Cancel
+              </Button>
+            </Col>
+          </Row>
         </Form.Item>
       </Form>
     </Container>
