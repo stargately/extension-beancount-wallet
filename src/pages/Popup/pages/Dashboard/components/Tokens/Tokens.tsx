@@ -11,7 +11,7 @@ const fullname = (input: string) => {
   return names[input] || input;
 };
 
-export const Xrc20TokensList: React.FC<Props> = ({ tokens }) => {
+export const XRC20Tokens: React.FC<Props> = ({ tokens }) => {
   if (tokens.length === 0) {
     return <Container>No Assets</Container>;
   }

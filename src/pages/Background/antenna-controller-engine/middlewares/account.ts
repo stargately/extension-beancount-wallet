@@ -7,6 +7,7 @@ import { walletSingleton } from "@/wallet-core";
 import {
   IOTEX_CONTROLLER_CREATE_ACCOUNT,
   IOTEX_CONTROLLER_DELETE_ACCOUNT,
+  IOTEX_CONTROLLER_EDIT_ACCOUNT,
   IOTEX_CONTROLLER_CREATE_PASSWORD,
   IOTEX_CONTROLLER_GET_ACCOUNTS,
   IOTEX_CONTROLLER_VERIFY_PASSWORD,
@@ -22,6 +23,12 @@ async function createAccount(req: any, res: any) {
   const { name, privateKey } = req.params;
   const addr = await walletSingleton.createAccount(name, privateKey);
   res.result = addr;
+}
+
+async function editAccount(req: any, res: any) {
+  const { name, address } = req.params;
+  walletSingleton.editAccount(address, name);
+  res.result = "OK";
 }
 
 async function deleteAccount(req: any, res: any) {
@@ -47,5 +54,6 @@ export function createAccountMiddleware() {
     [IOTEX_CONTROLLER_CREATE_PASSWORD]: createAsyncMiddleware(createPassword),
     [IOTEX_CONTROLLER_GET_ACCOUNTS]: createAsyncMiddleware(getAccounts),
     [IOTEX_CONTROLLER_VERIFY_PASSWORD]: createAsyncMiddleware(verifyPassword),
+    [IOTEX_CONTROLLER_EDIT_ACCOUNT]: createAsyncMiddleware(editAccount),
   });
 }

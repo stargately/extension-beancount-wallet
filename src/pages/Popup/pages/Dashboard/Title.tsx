@@ -1,10 +1,17 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { styled } from "onefx/lib/styletron-react";
 import { Dropdown, message, Typography, Menu } from "antd";
-import { useRecoilValue, useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 
 import { defaultPostman } from "@/pages/Popup/postman";
-import { networkCurrent, accountsList, accountAddress } from "@/recoil";
+import {
+  networkCurrent,
+  accountsList,
+  accountAddress,
+  accountCurrent,
+} from "@/recoil";
+
+import { AccountDetail } from "./components/AccountDetail";
 
 type AccountTitleProps = {
   account: {
@@ -18,9 +25,11 @@ function FormatAddress({ title }: { title: string }) {
 }
 
 export const Title: React.FC<AccountTitleProps> = ({ account }) => {
+  const [accountVisible, setAccountVisible] = useState(false);
   const network = useRecoilValue(networkCurrent);
   const [accountItems, setAccountItems] = useRecoilState(accountsList);
-  const setAddress = useSetRecoilState(accountAddress);
+  const [address, setAddress] = useRecoilState(accountAddress);
+  const currentAccount = useRecoilValue(accountCurrent);
 
   const onIotexscan = useCallback(() => {
     window.open(`${network.iotexscan}/address/${account.address}`);
@@ -37,6 +46,16 @@ export const Title: React.FC<AccountTitleProps> = ({ account }) => {
     setAddress(accounts[0].address);
   }, [accountItems.length, account.address]);
 
+  const onNameChange = async (name: string) => {
+    await defaultPostman.editAccount(address, name);
+    const accounts = await defaultPostman.getAccounts();
+    setAccountItems(accounts);
+  };
+
+  const onExport = () => {
+    message.info("Under development!!");
+  };
+
   const onClick = (e: any) => {
     switch (e.key) {
       default: {
@@ -47,11 +66,24 @@ export const Title: React.FC<AccountTitleProps> = ({ account }) => {
         onRemoveAccount();
         break;
       }
+      case "detail": {
+        setAccountVisible(true);
+        break;
+      }
     }
   };
 
   return (
     <Container>
+      <AccountDetail
+        visible={accountVisible}
+        onExport={onExport}
+        onNameChange={onNameChange}
+        onView={onIotexscan}
+        address={address}
+        name={currentAccount.name}
+        onCancel={() => setAccountVisible(false)}
+      ></AccountDetail>
       <Content>
         <Account>{account?.name}</Account>
         <AddressView>
@@ -71,6 +103,7 @@ export const Title: React.FC<AccountTitleProps> = ({ account }) => {
           overlay={
             <Menu onClick={onClick}>
               <Menu.Item key="view">View on IoTeXScan</Menu.Item>
+              <Menu.Item key="detail">Account Detail</Menu.Item>
               <Menu.Item key="remove">Remove Account</Menu.Item>
             </Menu>
           }
