@@ -2,13 +2,13 @@ import React from "react";
 import { useRecoilValue } from "recoil";
 
 import { accountTokens } from "@/recoil/account";
-import { Xrc20TokensList } from "./TokenList";
+import { XRC20Tokens } from "./Tokens";
 
-export const TokensList = () => {
+export const Tokens = () => {
   const tokens = useRecoilValue(accountTokens);
   return (
     <React.Fragment>
-      <Xrc20TokensList tokens={tokens}></Xrc20TokensList>
+      <XRC20Tokens tokens={tokens}></XRC20Tokens>
     </React.Fragment>
   );
 };

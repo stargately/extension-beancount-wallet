@@ -10,6 +10,7 @@ export const IOTEX_CONTROLLER_CANCEL_ACTION = "iotex.signer.cancel.action";
 
 export const IOTEX_CONTROLLER_GET_ACCOUNTS = "iotex.controller.getAccounts";
 export const IOTEX_CONTROLLER_CREATE_ACCOUNT = "iotex.controller.createAccount";
+export const IOTEX_CONTROLLER_EDIT_ACCOUNT = "iotex.controller.editAccount";
 export const IOTEX_CONTROLLER_DELETE_ACCOUNT = "iotex.controller.deleteAccount";
 export const IOTEX_CONTROLLER_CREATE_PASSWORD =
   "iotex.controller.createPassword";

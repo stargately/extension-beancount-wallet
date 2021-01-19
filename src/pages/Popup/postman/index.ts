@@ -12,6 +12,7 @@ import {
   IOTEX_CONTROLLER_INITED,
   IOTEX_CONTROLLER_VERIFY_PASSWORD,
   IOTEX_CONTROLLER_CREATE_ACCOUNT,
+  IOTEX_CONTROLLER_EDIT_ACCOUNT,
   IOTEX_CONTROLLER_DELETE_ACCOUNT,
   IOTEX_CONTROLLER_ACCOUNT_META,
   IOTEX_CONTROLLER_TRANSFER_TOKEN,
@@ -32,6 +33,13 @@ class Postman extends MessageClient {
     return this.send<{ name: string; privateKey?: string }, string>(
       IOTEX_CONTROLLER_CREATE_ACCOUNT,
       { name, privateKey }
+    );
+  }
+
+  async editAccount(address: string, name: string) {
+    return this.send<{ name: string; address?: string }, string>(
+      IOTEX_CONTROLLER_EDIT_ACCOUNT,
+      { name, address }
     );
   }
 

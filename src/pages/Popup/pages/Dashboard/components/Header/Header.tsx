@@ -5,12 +5,12 @@ import UserOutlined from "@ant-design/icons/UserOutlined";
 
 import { Logo } from "@/styles/logo";
 
-type Props = {
+type HeaderProps = {
   networks: React.ReactElement;
   overlay: React.ReactElement;
 };
 
-export const CommonHeader: React.FC<Props> = ({ networks, overlay }) => {
+export const Header: React.FC<HeaderProps> = ({ networks, overlay }) => {
   return (
     <Container>
       <Logo size="small" />

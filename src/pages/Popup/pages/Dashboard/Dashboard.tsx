@@ -11,7 +11,7 @@ import { Title } from "./Title";
 import { Balance } from "./Balance";
 import { Header } from "./components/Header";
 import { ActionsHistory } from "./components/ActionsHistory";
-import { TokensList } from "./components/TokenList";
+import { Tokens } from "./components/Tokens";
 
 const { TabPane } = Tabs;
 export const Dashboard = () => {
@@ -50,7 +50,7 @@ export const Dashboard = () => {
         >
           <div style={{ height: "190px" }}>
             <ScrollBar>
-              <TokensList></TokensList>
+              <Tokens></Tokens>
             </ScrollBar>
           </div>
         </TabPane>

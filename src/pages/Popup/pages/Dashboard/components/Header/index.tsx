@@ -1,13 +1,13 @@
 import React from "react";
-import { CommonHeader as MyCommonHeader } from "./CommonHeader";
+import { Header as DashboardHeader } from "./Header";
 import { Networks } from "./Networks";
 import { AccountsOverlay } from "../AccountsOverlay";
 
 export const Header = () => {
   return (
-    <MyCommonHeader
+    <DashboardHeader
       networks={<Networks />}
       overlay={<AccountsOverlay />}
-    ></MyCommonHeader>
+    ></DashboardHeader>
   );
 };
