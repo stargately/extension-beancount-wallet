@@ -1,11 +1,10 @@
-var webpack = require("webpack"),
-  path = require("path"),
-  fileSystem = require("fs-extra"),
-  env = require("./utils/env"),
-  { CleanWebpackPlugin } = require("clean-webpack-plugin"),
-  CopyWebpackPlugin = require("copy-webpack-plugin"),
-  HtmlWebpackPlugin = require("html-webpack-plugin"),
-  WriteFilePlugin = require("write-file-webpack-plugin");
+var webpack = require("webpack");
+var path = require("path");
+var fileSystem = require("fs-extra");
+var env = require("./utils/env");
+var { CleanWebpackPlugin } = require("clean-webpack-plugin");
+var CopyWebpackPlugin = require("copy-webpack-plugin");
+var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 var alias = {
   "@": path.resolve("src"),
@@ -149,7 +148,6 @@ var options = {
       filename: "popup.html",
       chunks: ["popup"],
     }),
-    new WriteFilePlugin(),
   ],
 };
 
