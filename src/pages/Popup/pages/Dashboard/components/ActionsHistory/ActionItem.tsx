@@ -60,6 +60,57 @@ const TransferItem: React.FC<Props> = (props) => {
   );
 };
 
+const RestakeItem: React.FC<Props> = (props) => {
+  const { stakeRestake } = props.action.action.core!;
+  return (
+    <Container onClick={() => props.onClick && props.onClick(props.action)}>
+      <ItemContent>
+        <OverView>
+          <Tag color="blue">Restake</Tag>
+          <ActStatus>Success</ActStatus>
+        </OverView>
+        <DetailView>
+          <Account>
+            <span>stakedDuration: </span>
+            <span>{stakeRestake?.stakedDuration}</span>
+          </Account>
+          <Address>
+            <span>autoStake: </span>
+            <span>{String(stakeRestake?.autoStake)}</span>
+          </Address>
+        </DetailView>
+      </ItemContent>
+    </Container>
+  );
+};
+
+const StakeItem: React.FC<Props> = (props) => {
+  const { stakeCreate } = props.action.action.core!;
+  return (
+    <Container onClick={() => props.onClick && props.onClick(props.action)}>
+      <ItemContent>
+        <OverView>
+          <Tag color="blue">Stake</Tag>
+          <span>
+            <span>stakedAmount: </span>
+            <span>{fromRau(stakeCreate!.stakedAmount, "IOTX")}</span>
+          </span>
+        </OverView>
+        <DetailView>
+          <Account>
+            <span>stakedDuration: </span>
+            <span>{stakeCreate?.stakedDuration}</span>
+          </Account>
+          <Address>
+            <span>candidateName: </span>
+            <span>{String(stakeCreate?.candidateName)}</span>
+          </Address>
+        </DetailView>
+      </ItemContent>
+    </Container>
+  );
+};
+
 export const ActionItem: React.FC<Props> = (props) => {
   if (props.action.action.core?.transfer) {
     return <TransferItem {...props}></TransferItem>;
@@ -67,6 +118,13 @@ export const ActionItem: React.FC<Props> = (props) => {
   if (props.action.action.core?.execution) {
     return <ExecutionItem {...props}></ExecutionItem>;
   }
+  if (props.action.action.core?.stakeRestake) {
+    return <RestakeItem {...props}></RestakeItem>;
+  }
+  if (props.action.action.core?.stakeCreate) {
+    return <StakeItem {...props}></StakeItem>;
+  }
+  console.log(props.action.action);
   return null;
 };
 
