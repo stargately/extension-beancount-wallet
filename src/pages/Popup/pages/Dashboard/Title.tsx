@@ -168,7 +168,7 @@ const ButtonContainer = styled("div", {
 const DotButton = styled("div", () => ({
   display: "flex",
   flexDirection: "column",
-  width: "10px",
+  padding: "10px",
   height: "100%",
   cursor: "pointer",
 }));

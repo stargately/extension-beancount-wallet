@@ -18,6 +18,7 @@ const LogoWithStyle = styled("img", (props: LogoStypeTypeProps) => {
     size = "32";
   }
   return {
+    cursor: "pointer",
     width: `${size}px`,
     height: `${size}px`,
   };
@@ -26,7 +27,11 @@ const LogoWithStyle = styled("img", (props: LogoStypeTypeProps) => {
 export const Logo: React.FC<LogoStyleProps> = ({ size = "large" }) => (
   <Row justify="center">
     <Col>
-      <LogoWithStyle src={logo} $size={size} />
+      <LogoWithStyle
+        onClick={() => window.open("https://beancount.io/")}
+        src={logo}
+        $size={size}
+      />
     </Col>
   </Row>
 );
