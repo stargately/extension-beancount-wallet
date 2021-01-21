@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { styled } from "onefx/lib/styletron-react";
-import { Dropdown, message, Typography, Menu } from "antd";
+import { Dropdown, message, Typography, Menu, Modal } from "antd";
 import { useRecoilValue, useRecoilState } from "recoil";
 
 import { defaultPostman } from "@/pages/Popup/postman";
@@ -53,7 +53,18 @@ export const Title: React.FC<AccountTitleProps> = ({ account }) => {
   };
 
   const onExport = () => {
-    message.info("Under development!!");
+    setAccountVisible(false);
+    defaultPostman.exportPrivateKey(address).then((privatekey) => {
+      Modal.confirm({
+        title: "Private Key",
+        content: (
+          <Typography.Paragraph copyable={{ text: privatekey }}>
+            {privatekey}
+          </Typography.Paragraph>
+        ),
+        icon: null,
+      });
+    });
   };
 
   const onClick = (e: any) => {

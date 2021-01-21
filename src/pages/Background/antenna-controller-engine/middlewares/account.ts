@@ -11,6 +11,7 @@ import {
   IOTEX_CONTROLLER_CREATE_PASSWORD,
   IOTEX_CONTROLLER_GET_ACCOUNTS,
   IOTEX_CONTROLLER_VERIFY_PASSWORD,
+  IOTEX_CONTROLLER_EXPORT_PRIVATEKEY,
 } from "@/constant/iotex";
 
 async function createPassword(req: any, res: any) {
@@ -47,6 +48,11 @@ async function verifyPassword(req: any, res: any) {
   res.result = await walletSingleton.verifyPassword(password);
 }
 
+async function exportPrivateKey(req: any, res: any) {
+  const { address } = req.params;
+  res.result = walletSingleton.exportPrivateKey(address);
+}
+
 export function createAccountMiddleware() {
   return createScaffoldMiddleware({
     [IOTEX_CONTROLLER_CREATE_ACCOUNT]: createAsyncMiddleware(createAccount),
@@ -55,5 +61,8 @@ export function createAccountMiddleware() {
     [IOTEX_CONTROLLER_GET_ACCOUNTS]: createAsyncMiddleware(getAccounts),
     [IOTEX_CONTROLLER_VERIFY_PASSWORD]: createAsyncMiddleware(verifyPassword),
     [IOTEX_CONTROLLER_EDIT_ACCOUNT]: createAsyncMiddleware(editAccount),
+    [IOTEX_CONTROLLER_EXPORT_PRIVATEKEY]: createAsyncMiddleware(
+      exportPrivateKey
+    ),
   });
 }

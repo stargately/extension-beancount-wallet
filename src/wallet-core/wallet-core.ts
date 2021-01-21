@@ -71,6 +71,16 @@ export class WalletCore extends SafeEventEmitter {
     this.keyringController = new KeyringController(opt || {});
   }
 
+  exportPrivateKey(address: string) {
+    const acc = this.accounts.find((acc) => acc.getAddress() === address);
+    if (!acc) {
+      throw new Error(
+        "Unable to find the account associated with this address"
+      );
+    }
+    return acc.privateKey;
+  }
+
   getAccount(address?: string): IAccount | undefined {
     if (!address) {
       return this.accounts[0];
