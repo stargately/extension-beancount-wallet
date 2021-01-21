@@ -22,6 +22,7 @@ import {
   IOTEX_CONTROLLER_CANCEL_ACTION,
   IOTEX_CONTROLLER_LASTEST_ACTION,
   IOTEX_CONTROLLER_XRC20,
+  IOTEX_CONTROLLER_EXPORT_PRIVATEKEY,
 } from "@/constant/iotex";
 
 class Postman extends MessageClient {
@@ -140,6 +141,13 @@ class Postman extends MessageClient {
   async getXrc20Tokens() {
     return this.send<void, { name: string; balance: any }[]>(
       IOTEX_CONTROLLER_XRC20
+    );
+  }
+
+  async exportPrivateKey(address: string) {
+    return this.send<{ address: string }, string>(
+      IOTEX_CONTROLLER_EXPORT_PRIVATEKEY,
+      { address }
     );
   }
 }
