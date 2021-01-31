@@ -27,7 +27,7 @@ export const AccountDetail: React.FC<AccountDetailProps> = function (props) {
       footer={
         <Space>
           <Button type="primary" onClick={props.onView}>
-            View on IoTex
+            View on IoTeXScan
           </Button>
           <Button type="primary" onClick={props.onExport}>
             Export Private Key
