@@ -19,7 +19,7 @@ type ImportProps = {
 export const Import: React.FC<ImportProps> = ({ onFinish, onCancel }) => {
   return (
     <Container>
-      <Logo />
+      <Logo margin={80} />
       <CommonMargin />
       <Title>Import</Title>
       <Form layout="vertical" onFinish={onFinish} initialValues={{ key: "" }}>
@@ -41,16 +41,21 @@ export const Import: React.FC<ImportProps> = ({ onFinish, onCancel }) => {
         >
           <Input.Password size="large" />
         </Form.Item>
-        <Form.Item>
+        <Form.Item
+          style={{
+            marginBottom: 0,
+            marginTop: 87,
+          }}
+        >
           <Row justify="space-between">
-            <Col>
-              <Button type="primary" htmlType="submit" size="large">
-                Import
-              </Button>
-            </Col>
             <Col>
               <Button htmlType="button" size="large" onClick={onCancel}>
                 Cancel
+              </Button>
+            </Col>
+            <Col>
+              <Button type="primary" htmlType="submit" size="large">
+                Import
               </Button>
             </Col>
           </Row>

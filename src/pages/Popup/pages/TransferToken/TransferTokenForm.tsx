@@ -18,7 +18,12 @@ export const TransferTokenForm: React.FC<Props> = (props: Props) => {
   const [form] = Form.useForm();
   return (
     <Container>
-      <Form form={form} name="form" onFinish={props.onFinish}>
+      <Form
+        form={form}
+        name="form"
+        onFinish={props.onFinish}
+        className="transferForm"
+      >
         <RecipienInput />
         <AssetSelect />
         <AmountInput />
@@ -26,13 +31,13 @@ export const TransferTokenForm: React.FC<Props> = (props: Props) => {
         <Form.Item>
           <Row justify="space-between">
             <Col>
-              <Button type="primary" htmlType="submit" size="large">
-                Next
+              <Button size="large" onClick={props.onCancel}>
+                Cancel
               </Button>
             </Col>
             <Col>
-              <Button type="dashed" size="large" onClick={props.onCancel}>
-                Cancel
+              <Button type="primary" htmlType="submit" size="large">
+                Next
               </Button>
             </Col>
           </Row>

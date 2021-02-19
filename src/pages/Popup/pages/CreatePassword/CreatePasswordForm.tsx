@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "onefx/lib/styletron-react";
 import { Form, Input, Button, Checkbox, Row, Col } from "antd";
-
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import { CommonMargin } from "@/styles/common-margin";
 import { fonts } from "@/styles/style-font";
 
@@ -25,8 +25,14 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
 
   return (
     <Container>
-      <CommonMargin />
-      <Paragraph>Secure your wallet with a password</Paragraph>
+      <Row onClick={onCancel}>
+        <Col>
+          <ArrowLeftOutlined style={{ fontSize: 24 }} />
+        </Col>
+      </Row>
+      <Paragraph style={{ marginTop: 56 }}>
+        Secure your wallet with a password
+      </Paragraph>
       <CommonMargin />
       <Form
         {...layout}
@@ -95,30 +101,22 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
             </a>
           </Checkbox>
         </Form.Item>
-        <Form.Item {...layout} shouldUpdate={true}>
+        <Form.Item {...layout} shouldUpdate={true} style={{ marginBottom: 0 }}>
           {() => (
-            <Row justify="space-between">
-              <Col>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  size="large"
-                  disabled={
-                    !form.isFieldsTouched(true) ||
-                    form.getFieldsError().filter(({ errors }) => errors.length)
-                      .length !== 0
-                  }
-                  loading={loading}
-                >
-                  {loading ? null : "Create"}
-                </Button>
-              </Col>
-              <Col>
-                <Button onClick={onCancel} size="large">
-                  Cancel
-                </Button>
-              </Col>
-            </Row>
+            <Button
+              style={{ width: "100%", marginTop: "110px" }}
+              type="primary"
+              htmlType="submit"
+              size="large"
+              disabled={
+                !form.isFieldsTouched(true) ||
+                form.getFieldsError().filter(({ errors }) => errors.length)
+                  .length !== 0
+              }
+              loading={loading}
+            >
+              {loading ? null : "Create"}
+            </Button>
           )}
         </Form.Item>
       </Form>

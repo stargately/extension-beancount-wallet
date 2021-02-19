@@ -6,7 +6,6 @@ import Input from "antd/lib/input";
 import Button from "antd/lib/button";
 
 import { Logo } from "@/styles/logo";
-import { CommonMargin } from "@/styles/common-margin";
 import { fonts } from "@/styles/style-font";
 
 type FormValues = {
@@ -20,7 +19,7 @@ type UnlockFormProps = {
 export const UnlockForm: React.FC<UnlockFormProps> = ({ onFinish }) => {
   return (
     <Container>
-      <Logo />
+      <Logo margin={80} />
       <Title
         style={{
           marginTop: "21px",

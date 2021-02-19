@@ -10,7 +10,6 @@
   overflow-x: hidden;
   overflow-y: auto;
   background: white;
-  padding-top: 80px;
   box-sizing: border-box;
 }
 
@@ -20,4 +19,58 @@
   font-size: 18px;
   font-family: Open Sans;
   font-weight: 600;
+}
+
+.ant-form-item-label > label {
+  font-weight: 600;
+}
+
+.transferForm .ant-form-item {
+  flex-wrap: nowrap;
+}
+
+.transferForm .ant-form-item .ant-form-item-label {
+  width: 80px !important;
+  flex: 0 0 85px;
+}
+
+.transferForm .ant-form-item .ant-form-item-control {
+  flex: 0 0 calc(100% - 85px);
+}
+
+.transferForm .ant-form-item:last-child .ant-form-item-control {
+  flex: 0 0 100%;
+}
+
+.transferForm
+  .ant-form-item-label
+  > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+  display: none;
+}
+
+.transferForm .ant-form-item-label > label {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  color: #666666;
+}
+
+.netWorkSelect {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: #666666;
+}
+
+.netWorkSelect:not(.ant-select-customize-input) .ant-select-selector {
+  border-radius: 20px;
+}
+
+.transferAddress {
+  background-color: #fff;
+  color: #00b4a0 !important;
+}
+
+.transferAddress .ant-alert-message {
+  color: #00b4a0 !important;
 }

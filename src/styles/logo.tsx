@@ -6,10 +6,12 @@ import logo from "../assets/img/logo.png";
 
 type LogoStyleProps = {
   size?: "small" | "large";
+  margin?: number;
 };
 
 type LogoStypeTypeProps = {
   $size: LogoStyleProps["size"];
+  $margin: LogoStyleProps["margin"];
 };
 
 const LogoWithStyle = styled("img", (props: LogoStypeTypeProps) => {
@@ -21,16 +23,18 @@ const LogoWithStyle = styled("img", (props: LogoStypeTypeProps) => {
     cursor: "pointer",
     width: `${size}px`,
     height: `${size}px`,
+    marginTop: `${props.$margin}px`,
   };
 });
 
-export const Logo: React.FC<LogoStyleProps> = ({ size = "large" }) => (
+export const Logo: React.FC<LogoStyleProps> = ({ size = "large", margin }) => (
   <Row justify="center">
     <Col>
       <LogoWithStyle
         onClick={() => window.open("https://beancount.io/")}
         src={logo}
         $size={size}
+        $margin={margin}
       />
     </Col>
   </Row>

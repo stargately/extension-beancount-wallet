@@ -8,7 +8,7 @@ import { fonts } from "@/styles/style-font";
 export const Welcome = withRouter(({ history }) => {
   return (
     <Container>
-      <Logo />
+      <Logo margin={80} />
       <Title
         style={{
           textAlign: "center",
@@ -31,7 +31,7 @@ export const Welcome = withRouter(({ history }) => {
       </Paragraph>
       <div
         style={{
-          marginTop: "157px",
+          marginTop: "150px",
           display: "flex",
           justifyContent: "space-between",
         }}

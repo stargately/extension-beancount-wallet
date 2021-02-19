@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import Input from "antd/lib/input";
 import Form, { FormInstance } from "antd/lib/form";
 import Radio, { RadioChangeEvent } from "antd/lib/radio";
-import { formItemLayout } from "./formStyles";
 
 type Props = {
   form: FormInstance;
@@ -43,7 +42,6 @@ export const TransactionFeeInput: React.FC<Props> = (props) => {
   return (
     <Fragment>
       <Form.Item
-        {...formItemLayout}
         label="Transaction Fee"
         name="transactionFee"
         initialValue="average"
