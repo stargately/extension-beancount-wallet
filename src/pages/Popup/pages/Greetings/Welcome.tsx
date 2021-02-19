@@ -3,23 +3,25 @@ import { styled } from "onefx/lib/styletron-react";
 import { withRouter } from "react-router-dom";
 import Button from "antd/lib/button";
 import { Logo } from "@/styles/logo";
-import { CommonMargin } from "@/styles/common-margin";
 import { fonts } from "@/styles/style-font";
 
 export const Welcome = withRouter(({ history }) => {
   return (
     <Container>
       <Logo />
-      <CommonMargin />
       <Title
         style={{
           textAlign: "center",
+          marginTop: "22px",
+          fontSize: "24px",
+          fontWeight: 600,
+          lineHeight: "33px",
+          marginBottom: "22px",
         }}
       >
         Welcome to <br />
-        Beancount Wallet
+        ioPay Wallet for Chrome
       </Title>
-      <CommonMargin />
       <Paragraph>
         Connecting you to IoTeX and the
         <br />
@@ -29,7 +31,7 @@ export const Welcome = withRouter(({ history }) => {
       </Paragraph>
       <div
         style={{
-          marginTop: "50px",
+          marginTop: "157px",
           display: "flex",
           justifyContent: "space-between",
         }}
@@ -68,4 +70,5 @@ const Title = styled("h1", {
 const Paragraph = styled("div", {
   ...fonts.normal,
   textAlign: "center",
+  lineHeight: "22px",
 });

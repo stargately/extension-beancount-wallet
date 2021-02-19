@@ -133,6 +133,8 @@ const Container = styled("div", ({ $theme }) => ({
 
 const Paragraph = styled("div", {
   ...fonts.normal,
+  fontWeight: 600,
+  lineHeight: "22px",
 });
 
 const layout = {

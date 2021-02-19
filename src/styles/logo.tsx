@@ -13,7 +13,7 @@ type LogoStypeTypeProps = {
 };
 
 const LogoWithStyle = styled("img", (props: LogoStypeTypeProps) => {
-  let size = "125";
+  let size = "90";
   if (props.$size === "small") {
     size = "32";
   }

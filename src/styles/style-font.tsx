@@ -4,5 +4,6 @@ export const fonts = {
   },
   normal: {
     fontSize: "16px",
+    fontFamily: "Open Sans",
   },
 };

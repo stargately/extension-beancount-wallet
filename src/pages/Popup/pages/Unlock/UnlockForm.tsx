@@ -21,8 +21,16 @@ export const UnlockForm: React.FC<UnlockFormProps> = ({ onFinish }) => {
   return (
     <Container>
       <Logo />
-      <CommonMargin />
-      <Title>Welcome Back!</Title>
+      <Title
+        style={{
+          marginTop: "21px",
+          fontSize: "24px",
+          lineHeight: "33px",
+          fontWeight: 600,
+        }}
+      >
+        Welcome Back!
+      </Title>
       <Form
         layout="vertical"
         onFinish={onFinish}
@@ -40,7 +48,7 @@ export const UnlockForm: React.FC<UnlockFormProps> = ({ onFinish }) => {
             type="primary"
             htmlType="submit"
             size="large"
-            style={{ width: "100%" }}
+            style={{ width: "100%", marginTop: "148px" }}
           >
             Unlock
           </Button>
