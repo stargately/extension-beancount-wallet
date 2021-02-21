@@ -44,6 +44,24 @@ export const CreatePasswordForm: React.FC<CreatePasswordProps> = ({
           name="newPassword"
           rules={[
             { required: true, message: "Please input your New Password!" },
+            () => ({
+              validator(_, value) {
+                if (
+                  !(
+                    /[a-zA-Z]+/.test(value) &&
+                    /[0-9]*/.test(value) &&
+                    String(value).length >= 6
+                  )
+                ) {
+                  return Promise.reject(
+                    new Error(
+                      "Passwords must consist of letters and numbers and be longer than 6"
+                    )
+                  );
+                }
+                return Promise.resolve();
+              },
+            }),
           ]}
         >
           <Input.Password size="large" />

@@ -12,7 +12,7 @@ export const AccountMetaObserver = () => {
   };
   useEffect(() => {
     onQuery();
-    const timer = setInterval(onQuery, 10 * 1000);
+    const timer = setInterval(onQuery, 30 * 1000);
     return () => {
       clearInterval(timer);
     };

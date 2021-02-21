@@ -11,6 +11,7 @@ import {
   accountCurrent,
 } from "@/recoil";
 
+import { PasswordValidatorModal } from "@/pages/Popup/components/password-validator-modal";
 import { AccountDetail } from "./components/AccountDetail";
 
 type AccountTitleProps = {
@@ -25,6 +26,8 @@ function FormatAddress({ title }: { title: string }) {
 }
 
 export const Title: React.FC<AccountTitleProps> = ({ account }) => {
+  const [privatekeyModalVisible, setPrivatekeyModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   const [accountVisible, setAccountVisible] = useState(false);
   const network = useRecoilValue(networkCurrent);
   const [accountItems, setAccountItems] = useRecoilState(accountsList);
@@ -40,10 +43,7 @@ export const Title: React.FC<AccountTitleProps> = ({ account }) => {
       message.info("You only have one account now");
       return;
     }
-    await defaultPostman.removeAccount(account.address);
-    const accounts = await defaultPostman.getAccounts();
-    setAccountItems(accounts);
-    setAddress(accounts[0].address);
+    setModalVisible(true);
   }, [accountItems.length, account.address]);
 
   const onNameChange = async (name: string) => {
@@ -54,17 +54,7 @@ export const Title: React.FC<AccountTitleProps> = ({ account }) => {
 
   const onExport = () => {
     setAccountVisible(false);
-    defaultPostman.exportPrivateKey(address).then((privatekey) => {
-      Modal.confirm({
-        title: "Private Key",
-        content: (
-          <Typography.Paragraph copyable={{ text: privatekey }}>
-            {privatekey}
-          </Typography.Paragraph>
-        ),
-        icon: null,
-      });
-    });
+    setPrivatekeyModalVisible(true);
   };
 
   const onClick = (e: any) => {
@@ -81,6 +71,40 @@ export const Title: React.FC<AccountTitleProps> = ({ account }) => {
         setAccountVisible(true);
         break;
       }
+    }
+  };
+
+  const onValidatePasswordForPrivateKey = async (password: string) => {
+    const isOk = await defaultPostman.verifyPasswd(password);
+    if (isOk) {
+      setPrivatekeyModalVisible(false);
+      defaultPostman.exportPrivateKey(address).then((privatekey) => {
+        Modal.confirm({
+          title: "Private Key",
+          content: (
+            <Typography.Paragraph copyable={{ text: privatekey }}>
+              {privatekey}
+            </Typography.Paragraph>
+          ),
+          icon: null,
+        });
+      });
+    } else {
+      message.error("The password that you entered is incorrect");
+    }
+  };
+
+  const onValidatePassword = async (password: string) => {
+    const isOk = await defaultPostman.verifyPasswd(password);
+    if (isOk) {
+      await defaultPostman.removeAccount(account.address);
+      const accounts = await defaultPostman.getAccounts();
+      setAccountItems(accounts);
+      setAddress(accounts[0].address);
+      setModalVisible(false);
+      message.success("remove account success");
+    } else {
+      message.error("The password that you entered is incorrect");
     }
   };
 
@@ -126,6 +150,20 @@ export const Title: React.FC<AccountTitleProps> = ({ account }) => {
           </DotButton>
         </Dropdown>
       </ButtonContainer>
+      {modalVisible && (
+        <PasswordValidatorModal
+          visible={modalVisible}
+          onOk={onValidatePassword}
+          onCancel={() => setModalVisible(false)}
+        ></PasswordValidatorModal>
+      )}
+      {privatekeyModalVisible && (
+        <PasswordValidatorModal
+          visible={privatekeyModalVisible}
+          onOk={onValidatePasswordForPrivateKey}
+          onCancel={() => setPrivatekeyModalVisible(false)}
+        ></PasswordValidatorModal>
+      )}
     </Container>
   );
 };
