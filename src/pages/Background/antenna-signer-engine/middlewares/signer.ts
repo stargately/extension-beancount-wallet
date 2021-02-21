@@ -12,7 +12,7 @@ import {
   IOTEX_SIGNER_SIGN_MESSAGE,
 } from "@/constant/iotex";
 
-import { actionsSigner } from "../libs/antenna-action-signer";
+import { actionsSigner } from "../../libs/antenna-action-signer";
 
 export function createAntennaSignerMiddleware() {
   return createScaffoldMiddleware({

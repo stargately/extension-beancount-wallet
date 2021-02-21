@@ -5,6 +5,7 @@ import {
   networkType,
   accountAddress,
   accountsList,
+  accountTokens,
 } from "@/recoil";
 
 export const interestedAtoms = {
@@ -12,6 +13,7 @@ export const interestedAtoms = {
   [networkType.key]: networkType,
   [accountAddress.key]: accountAddress,
   [accountsList.key]: accountsList,
+  [accountTokens.key]: accountTokens,
 };
 
 export const initializeSnapshot = function (

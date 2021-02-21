@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
-import Loading from "@/pages/Popup/components/Loading";
+import Loading from "@/pages/Popup/components/loading";
 import { walletInitiated, walletLocked } from "@/recoil/wallet";
 import { Welcome } from "./Welcome";
 

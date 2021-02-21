@@ -14,7 +14,7 @@ export const AccountTokensObserver = () => {
   };
   useEffect(() => {
     onQuery();
-    const timer = setInterval(onQuery, 10 * 1000);
+    const timer = setInterval(onQuery, 60 * 1000);
     return () => {
       clearInterval(timer);
     };

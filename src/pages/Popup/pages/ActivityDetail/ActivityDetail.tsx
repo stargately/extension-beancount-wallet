@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
-import Loading from "@/pages/Popup/components/Loading";
+import Loading from "@/pages/Popup/components/loading";
 import { Action } from "@/wallet-core/wallet-core";
 import { accountAddress } from "@/recoil";
 import { defaultPostman } from "@/pages/Popup/postman";

@@ -247,7 +247,7 @@ export class WalletCore extends SafeEventEmitter {
   async xrc20List(payload: {
     address: string;
     providerUrl: string;
-    xrc20: string[];
+    xrc20: { name: string; url: string }[];
   }) {
     const acc = this.getAccount(payload.address) as AntennaAccount;
     if (!acc) {
@@ -261,14 +261,15 @@ export class WalletCore extends SafeEventEmitter {
       decimals: any;
     }[] = [];
     const tokens = payload.xrc20.map(
-      (url) => new XRC20(url, { provider: acc.antenna.iotx })
+      (e) => new XRC20(e.url, { provider: acc.antenna.iotx })
     );
 
     try {
       /* eslint no-await-in-loop: 0 */
       for (let i = 0; i < tokens.length; i += 1) {
         const token = tokens[i];
-        const name = await token.name();
+        const { name } = payload.xrc20[i];
+        // const name = await token.name();
         const symbol = await token.symbol();
         const balance = await token.balanceOf(payload.address);
         const decimals = await token.decimals();
