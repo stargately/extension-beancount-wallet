@@ -22,6 +22,7 @@ import {
   IOTEX_CONTROLLER_CANCEL_ACTION,
   IOTEX_CONTROLLER_LASTEST_ACTION,
   IOTEX_CONTROLLER_XRC20,
+  IOTEX_CONTROLLER_XRC20_TRANSFER,
   IOTEX_CONTROLLER_EXPORT_PRIVATEKEY,
 } from "@/constant/iotex";
 
@@ -106,6 +107,22 @@ class Postman extends MessageClient {
       amount,
       gasPrice,
       gasLimit,
+    });
+  }
+
+  async xrc20Transfer(
+    to: string,
+    amount: number,
+    gasPrice: number,
+    gasLimit: number,
+    asset: string
+  ) {
+    return this.send(IOTEX_CONTROLLER_XRC20_TRANSFER, {
+      to,
+      amount,
+      gasPrice,
+      gasLimit,
+      asset,
     });
   }
 

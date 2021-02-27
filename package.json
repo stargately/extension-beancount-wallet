@@ -43,6 +43,7 @@
     "@ant-design/icons": "^4.2.2",
     "@metamask/safe-event-emitter": "^2.0.0",
     "antd": "^4.6.3",
+    "bignumber.js": "9.0.0",
     "extension-port-stream": "^2.0.0",
     "extensionizer": "^1.0.1",
     "iotex-antenna": "^0.30.1",

@@ -20,7 +20,7 @@ export const TransferTokenForm: React.FC<Props> = (props: Props) => {
     <Container>
       <Form form={form} name="form" onFinish={props.onFinish}>
         <RecipienInput />
-        <AssetSelect />
+        <AssetSelect form={form} />
         <AmountInput />
         <TransactionFeeInput form={form} />
         <Form.Item>

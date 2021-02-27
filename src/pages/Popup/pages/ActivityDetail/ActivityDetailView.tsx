@@ -10,6 +10,7 @@ type Prop = {
   gasFee?: string;
   gasLimit?: string;
   gasPrice?: string;
+  date?: string;
   nonce?: string;
   payload?: any;
 };
@@ -18,11 +19,11 @@ export const ActivityDetailView: React.FC<Prop> = ({
   actHash,
   from,
   to,
-  gasFee,
   gasLimit,
   gasPrice,
   payload,
   nonce,
+  date,
 }) => {
   const history = useHistory();
   return (
@@ -34,8 +35,12 @@ export const ActivityDetailView: React.FC<Prop> = ({
       ></BackArrowButton>
       <Content>
         <Row>
-          <Label>Action Hash</Label>
+          <Label>Hash</Label>
           <Value>{actHash}</Value>
+        </Row>
+        <Row>
+          <Label>Date</Label>
+          <Value>{date}</Value>
         </Row>
         <Row>
           <Label>From</Label>
@@ -48,10 +53,6 @@ export const ActivityDetailView: React.FC<Prop> = ({
         <Row>
           <Label>Payload</Label>
           <Value>{payload}</Value>
-        </Row>
-        <Row>
-          <Label>Gas Fee</Label>
-          <Value>{gasFee}</Value>
         </Row>
         <Row>
           <Label>Gas Limit</Label>

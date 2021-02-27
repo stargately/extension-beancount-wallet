@@ -23,16 +23,23 @@ const ActivityDetailContainer = () => {
   if (!state) {
     return <Loading></Loading>;
   }
+  const to =
+    state.action.core?.transfer?.recipient ||
+    state.action.core?.execution?.contract ||
+    "";
+  const d = new Date(state.timestamp.seconds * 1000);
+  const date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDay() + 1}`;
 
   return (
     <ActivityDetailView
       actHash={state.actHash}
       from={address}
-      to={state.action.core?.transfer?.recipient}
+      to={to}
       gasPrice={state.action.core?.gasPrice}
       gasLimit={state.action.core?.gasLimit}
       nonce={state.action.core?.nonce}
-      payload={state.action.core?.transfer?.payload}
+      date={date}
+      payload={state.action.core?.transfer?.payload || "-"}
     ></ActivityDetailView>
   );
 };

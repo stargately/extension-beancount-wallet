@@ -33,5 +33,7 @@ export const IOTEX_CONTROLLER_GET_RECOIL_STATE =
   "iotex.controller.get.recoilState";
 
 export const IOTEX_CONTROLLER_XRC20 = "iotex.controller.xrc20";
+export const IOTEX_CONTROLLER_XRC20_TRANSFER =
+  "iotex.controller.xrc20.transfer";
 export const IOTEX_CONTROLLER_EXPORT_PRIVATEKEY =
   "iotex.controller.export.private.key";
