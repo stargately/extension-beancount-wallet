@@ -44,7 +44,11 @@ async function getActions(req: any, res: any) {
     throw new Error("Can find current account");
   }
   acc.setProvider(getCurrentNetworkUri());
-  res.result = await acc.getActions(start, count);
+  const result = await acc.getActions(start, count);
+  result.actionInfo.forEach((e) => {
+    e.timestamp = (e.timestamp as any).toObject();
+  });
+  res.result = result;
 }
 
 async function queryAction(req: any, res: any) {
@@ -55,6 +59,11 @@ async function queryAction(req: any, res: any) {
   }
   acc?.setProvider(getCurrentNetworkUri());
   const { actionInfo } = await acc.getActionByHash(actionHash);
+  if (actionInfo[0]) {
+    actionInfo[0].timestamp = (actionInfo[0].timestamp as any).toObject();
+  } else {
+    throw new Error(`can find action about hash ${actionHash}`);
+  }
   res.result = actionInfo;
 }
 

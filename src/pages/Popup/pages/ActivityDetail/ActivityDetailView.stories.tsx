@@ -12,6 +12,7 @@ export const Standard: React.FC = () => {
       gasFee="10000"
       gasLimit="10000"
       gasPrice="10000"
+      date="2020-10-11"
       nonce="10000"
     ></ActivityDetailView>
   );

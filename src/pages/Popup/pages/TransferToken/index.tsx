@@ -12,12 +12,22 @@ export const TransferToken = () => {
   const onFinish = async (values: any) => {
     try {
       setLoading(true);
-      await defaultPostman.transferToken(
-        values.recipient,
-        values.amount,
-        values.gasPrice,
-        values.gasLimit
-      );
+      if (values.asset === "IOTX") {
+        await defaultPostman.transferToken(
+          values.recipient,
+          values.amount,
+          values.gasPrice,
+          values.gasLimit
+        );
+      } else {
+        await defaultPostman.xrc20Transfer(
+          values.recipient,
+          values.amount,
+          values.gasPrice,
+          values.gasLimit,
+          values.asset
+        );
+      }
       // force wait 5.5 seconds for transaction completed
       await new Promise((resolve) => {
         setTimeout(resolve, 5500);
