@@ -5,8 +5,10 @@ import Button from "antd/lib/button";
 import { Logo } from "@/styles/logo";
 import { CommonMargin } from "@/styles/common-margin";
 import { fonts } from "@/styles/style-font";
+import { useTranslation } from "react-i18next";
 
 export const Welcome = withRouter(({ history }) => {
+  const { t } = useTranslation();
   return (
     <Container>
       <Logo />
@@ -15,10 +17,8 @@ export const Welcome = withRouter(({ history }) => {
         style={{
           textAlign: "center",
         }}
-      >
-        Welcome to <br />
-        Beancount Wallet
-      </Title>
+        dangerouslySetInnerHTML={{ __html: t("welcome") }}
+      ></Title>
       <CommonMargin />
       <Paragraph>
         Connecting you to IoTeX and the

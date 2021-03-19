@@ -5,6 +5,7 @@ import { renderRoutes } from "react-router-config";
 import { WrapThemeProvider as ThemeProvider } from "@/styles/theme-provider";
 
 import routeConfig from "./routes";
+import "../../../../translations/i18n";
 
 const Routes = () => {
   return (
